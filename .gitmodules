@@ -1,0 +1,3 @@
+[submodule "SillyStoreCommon"]
+	path = SillyStoreCommon
+	url = https://github.com/JeromeRReduta/SillyStoreCommon
