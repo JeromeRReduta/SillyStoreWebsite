@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router";
-import paths from "./shared/Paths";
+import paths from "./routing/Paths";
 
 function App() {
   const {
