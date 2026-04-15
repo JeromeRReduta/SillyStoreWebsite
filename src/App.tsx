@@ -1,8 +1,17 @@
 import "./App.css";
 import { Route, Routes } from "react-router";
 import paths from "./routing/Paths";
+import LoginPage from "./account/LoginPage";
+import RegisterPage from "./account/RegisterPage";
+import ErrorPage from "./error/ErrorPage";
+import AboutPage from "./info/AboutPage";
+import BaseLayout from "./layouts/BaseLayout";
+import CartPage from "./store/CartPage";
+import CheckoutSuccessPage from "./store/CheckoutSuccessPage";
+import LockedOutPage from "./store/LockedOutPage";
+import StorePage from "./store/StorePage";
 
-function App() {
+export default function App() {
   const {
     store: { lockedOut, checkoutSuccess },
     info: { about },
@@ -30,5 +39,3 @@ function App() {
     </Routes>
   );
 }
-
-export default App;
