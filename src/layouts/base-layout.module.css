@@ -1,0 +1,233 @@
+/** BASE */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* https://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/** LAYOUT */
+.layout_base {
+  height: 100vh;
+}
+
+.layout_header,
+.layout_main {
+  padding: 1.5rem;
+}
+
+@media (width <= 1199px) {
+  .layout_base {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .layout_header {
+    flex: 10 1 10%;
+    width: 100%;
+  }
+
+  .layout_main {
+    flex: 90 1 90%;
+    width: 100%;
+  }
+}
+
+@media (width >= 1200px) {
+  .layout_base {
+    display: grid;
+    grid-template-areas:
+      "header     header      header"
+      ".          main        .";
+    grid-template-rows: 10fr 90fr;
+    grid-template-columns: 20fr 60fr 20fr;
+  }
+
+  .layout_header {
+    grid-area: header;
+  }
+
+  .layout_main {
+    grid-area: main;
+  }
+}
+
+/** THEMES */
+:root {
+  --color_light: #f0ead6;
+  --color_dark: #1f1f1f;
+  --color_primary: #97b2d8;
+  --color_secondary: #993955;
+  --color_accent: #cc3363;
+}
+
+.layout_base {
+  background-color: var(--color_primary);
+}
+
+.layout_header {
+  background-color: var(--color_secondary);
+}
+
+.layout_header p,
+.layout_header div {
+  color: var(--color_light);
+}
+
+.layout_main p,
+.layout_main div {
+  color: var(--color_dark);
+}
+
+p,
+div,
+a {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h1 {
+  font-size: 3rem;
+}
