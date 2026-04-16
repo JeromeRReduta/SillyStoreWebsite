@@ -141,7 +141,11 @@ html {
 }
 
 /** LAYOUT */
+
+body,
+body > div,
 .layout_base {
+  width: 100vw;
   height: 100vh;
 }
 
