@@ -1,11 +1,8 @@
 import type { JSX } from "react";
 import css from "./locked-out.module.css";
 
-export default function LockedOutPage({
-    forbiddenProduct,
-}: {
-    forbiddenProduct: "HUMAN SKIN" | "UNETHICALLY SOURCED BONES";
-}): JSX.Element {
+export default function LockedOutPage(): JSX.Element {
+    const forbiddenProduct: "HUMAN SKIN" | "UNETHICALLY SOURCED BONES" = "HUMAN SKIN" // TODO: make this a cookie or smth
     // todo: create cookie - locked_out_skin and locked_out_bones
     return (
         <section className={css.locked_out}>

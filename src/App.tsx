@@ -30,7 +30,6 @@ export default function App() {
                         path={checkoutSuccess}
                         element={<CheckoutSuccessPage />}
                     />
-                    <Route path={lockedOut} element={<LockedOutPage />} />
                 </Route>
                 <Route path="account">
                     <Route path={login} element={<LoginPage />} />
@@ -38,6 +37,7 @@ export default function App() {
                 </Route>
                 <Route path="*" element={<ErrorPage />} />
             </Route>
+            <Route path={lockedOut} element={<LockedOutPage />} />;
         </Routes>
     );
 }

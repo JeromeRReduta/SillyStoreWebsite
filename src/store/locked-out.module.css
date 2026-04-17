@@ -1,5 +1,6 @@
 /** LAYOUT */
-.layout_locked_out {
+.locked_out {
+    padding: 1.5rem;
 }
 
 /** MODULE */
