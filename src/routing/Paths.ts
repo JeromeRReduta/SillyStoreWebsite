@@ -1,6 +1,6 @@
 const paths: Record<string, Record<string, string>> = {
     info: {
-        about: "",
+        about: "about",
     },
     store: {
         base: "",
@@ -11,6 +11,10 @@ const paths: Record<string, Record<string, string>> = {
     account: {
         login: "login",
         register: "register",
+    },
+    external: {
+        portfolio: "https://jeromerreduta.netlify.app/",
+        github: "https://github.com/JeromeRReduta/SillyStore",
     },
 };
 
