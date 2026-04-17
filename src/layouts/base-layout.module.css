@@ -197,7 +197,8 @@ body > div,
     --color_dark: #1f1f1f;
     --color_primary: #97b2d8;
     --color_secondary: #993955;
-    --color_accent: #cc3363;
+    --color_accent_brighter: #ec0b53;
+    --color_accent: #b52c57;
 }
 
 .layout_base {
@@ -222,6 +223,15 @@ p,
 div,
 a {
     font-size: 1.5rem;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color_accent);
+}
+
+a:hover {
+    color: var(--color_accent_brighter);
 }
 
 h3 {
