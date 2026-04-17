@@ -14,9 +14,9 @@ export default function AboutPage(): JSX.Element {
                 This site lets you create an account, view items, add them to cart, and
                 "check out" - since it's a fake site though there's no actual payment processing.
             </div>
-            <nav className={css.links}>
-                <Link to={github}>Github link</Link>
-                <Link to={portfolio}>Other projects</Link>
+            <nav className={css.about_links}>
+                <Link to={github}>Source Code</Link>
+                <Link to={portfolio}>Portfolio</Link>
             </nav>
         </section>
     );
