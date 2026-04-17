@@ -7,32 +7,32 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import { importX } from "eslint-plugin-import-x";
 
 export default defineConfig([
-  {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
-    plugins: {
-      js,
-      "import-x": importX,
-    },
-    extends: ["js/recommended"],
+    {
+        files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
+        plugins: {
+            js,
+            "import-x": importX,
+        },
+        extends: ["js/recommended"],
 
-    languageOptions: {
-      globals: globals.node,
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-        allowDefaultProject: ["eslint.config.ts"],
-      },
+        languageOptions: {
+            globals: globals.node,
+            parserOptions: {
+                projectService: true,
+                tsconfigRootDir: import.meta.dirname,
+                allowDefaultProject: ["eslint.config.ts"],
+            },
+        },
+        rules: {
+            "import-x/no-dynamic-require": "error",
+            "import-x/no-nodejs-modules": "error",
+            "import-x/extensions": ["error", "always"],
+        },
     },
-    rules: {
-      "import-x/no-dynamic-require": "error",
-      "import-x/no-nodejs-modules": "error",
-      "import-x/extensions": ["error", "always"],
-    },
-  },
 
-  tseslint.configs.strictTypeChecked,
-  tseslint.configs.stylisticTypeChecked,
-  reactHooks.configs.flat.recommended,
-  reactRefresh.configs.vite,
-  globalIgnores(["dist"]),
+    tseslint.configs.strictTypeChecked,
+    tseslint.configs.stylisticTypeChecked,
+    reactHooks.configs.flat.recommended,
+    reactRefresh.configs.vite,
+    globalIgnores(["dist"]),
 ]);
