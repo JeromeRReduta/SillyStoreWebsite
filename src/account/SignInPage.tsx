@@ -1,47 +1,56 @@
 import type { JSX } from "react";
-import { useCookies } from "react-cookie";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import css from "./sign-in.module.css";
 import paths from "../routing/Paths";
-import registerAsync from "./RegisterAsync";
-import loginAsync from "./LoginAsync";
 import LabeledTextInput from "../utils/LabeledTextInput";
 
 type SupportedMethods = "LOGIN" | "REGISTER";
 
 
 export default function SignInPage({ method }: { method: SupportedMethods }): JSX.Element {
+    const navigate = useNavigate();
+    // const action: (formData: FormData) => Promise<void> = method === "LOGIN" ? loginAsync : registerAsync;
+    const action: (formData: FormData) => Promise<void> = mockSignIn;
+    const onSubmit: () => void = () => navigate("/" + paths.store.base);
+    const labelNames: string[] = ["email", "username", "password"];
+
     return <section className={css.sign_in}>
-        <SignInForm method={method} />
+        <SignInForm action={action} onSubmit={onSubmit} labelNames={labelNames} />
         <LinkToOther method={method} />
     </section>
 
 }
 
-function SignInForm({ method }: { method: SupportedMethods }): JSX.Element {
-    const handleSignInAsync: (formData: FormData) => Promise<void> = method === "LOGIN"
-        ? loginAsync
-        : registerAsync;
-    return <form className={css.sign_in_form} action={async (formData) => handleSignInAsync(formData)}>
-        <LabeledTextInput
-            required={true}
-            label="email"
-            text="Email"
-            autoComplete="off"
-        />
-        <LabeledTextInput
-            required={true}
-            label="username"
-            text="Username"
-            autoComplete="off"
-        />
-        <LabeledTextInput
-            required={true}
-            label="password"
-            text="Password"
-            autoComplete="off"
-        />
-    </form>
+async function mockSignIn(formData: FormData): Promise<void> {
+    console.log("signing in!");
+    const entries = formData.entries();
+    for (const entry of entries) {
+        console.log(entry)
+    }
+}
+
+interface SignInFormInfo {
+    readonly action: (formData: FormData) => void | Promise<void>;
+    readonly labelNames: string[];
+    readonly onSubmit: () => void | Promise<void>;
+}
+
+function SignInForm({ action, labelNames, onSubmit }: SignInFormInfo): JSX.Element {
+    return <form
+        action={action}
+        onSubmit={onSubmit}
+    >
+        {labelNames.map((name) =>
+            <LabeledTextInput
+                key={name}
+                label={name}
+                text={name}
+                autoComplete="off"
+                required={true}
+            />
+        )}
+        <button>Submit</button>
+    </form >
 }
 
 function LinkToOther({ method }: { method: SupportedMethods }): JSX.Element {
