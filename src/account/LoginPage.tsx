@@ -1,6 +1,6 @@
 import type { JSX } from "react";
+import SignInPage from "./SignInPage";
 
-// TODO: make base sign-in page for both loginpage and registerpage
-export default function LoginPage(/** TODO - props */): JSX.Element {
-    return <div>LoginPage</div>;
+export default function LoginPage(): JSX.Element {
+    return <SignInPage method={"LOGIN"} />
 }
