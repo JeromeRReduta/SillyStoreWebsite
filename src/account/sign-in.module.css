@@ -1,0 +1,25 @@
+/** MODULE */
+.sign_in {
+}
+.sign_in_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.sign_in_form > input,
+.sign_in_submit_button {
+    margin-bottom: 1.5rem;
+}
+.sign_in_link_to_other {
+}
+
+/** THEMES */
+.sign_in {
+}
+.sign_in_form {
+}
+.sign_in_submit_button {
+}
+.sign_in_link_to_other {
+}

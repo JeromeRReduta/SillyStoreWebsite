@@ -12,7 +12,7 @@ export default function SignInPage({ method }: { method: SupportedMethods }): JS
     // const action: (formData: FormData) => Promise<void> = method === "LOGIN" ? loginAsync : registerAsync;
     const action: (formData: FormData) => Promise<void> = mockSignIn;
     const onSubmit: () => void = () => navigate("/" + paths.store.base);
-    const labelNames: string[] = ["email", "username", "password"];
+    const labelNames: string[] = ["Email", "Username", "Password"];
 
     return <section className={css.sign_in}>
         <SignInForm action={action} onSubmit={onSubmit} labelNames={labelNames} />
@@ -21,7 +21,8 @@ export default function SignInPage({ method }: { method: SupportedMethods }): JS
 
 }
 
-async function mockSignIn(formData: FormData): Promise<void> {
+
+async function mockSignIn(formData: FormData): Promise<void> { // TODO: delete?
     console.log("signing in!");
     const entries = formData.entries();
     for (const entry of entries) {
@@ -39,17 +40,18 @@ function SignInForm({ action, labelNames, onSubmit }: SignInFormInfo): JSX.Eleme
     return <form
         action={action}
         onSubmit={onSubmit}
+        className={css.sign_in_form}
     >
         {labelNames.map((name) =>
             <LabeledTextInput
-                key={name}
                 label={name}
                 text={name}
                 autoComplete="off"
                 required={true}
+                key={name}
             />
         )}
-        <button>Submit</button>
+        <button className={css.sign_in_submit_button}>Submit</button>
     </form >
 }
 
