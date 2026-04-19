@@ -9,3 +9,4 @@ export interface IFrontendConfigs {
 const frontendConfigs: IFrontendConfigs = {
     minLogLevel: requireNumber("MIN LOG LEVEL", import.meta.env.VITE_MIN_LOG_LEVEL);
 }
+export default frontendConfigs
