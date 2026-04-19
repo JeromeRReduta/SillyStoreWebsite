@@ -36,6 +36,7 @@
         "requests",
         "domain-objects",
         "logging",
-        "configs"
+        "configs",
+        "SilyStoreCommon"
     ]
 }
