@@ -1,12 +1,43 @@
 import { requireNumber } from "../../SillyStoreCommon/configs/ConfigValidation";
 
-
 export interface IFrontendConfigs {
-    readonly minLogLevel: number;
+    readonly logging: {
+        readonly minLogLevel: number;
+    };
+    readonly absolutePaths: {
+        readonly internal: Record<string, string>;
+        readonly external: Record<string, string>;
+    };
+    readonly queryKeys: Record<string, string>;
     // readonly port: number; // is defining port useful here?
 }
 
 const frontendConfigs: IFrontendConfigs = {
-    minLogLevel: requireNumber("MIN LOG LEVEL", import.meta.env.VITE_MIN_LOG_LEVEL);
-}
-export default frontendConfigs
+    logging: {
+        minLogLevel: requireNumber(
+            "MIN LOG LEVEL",
+            import.meta.env.VITE_MIN_LOG_LEVEL,
+        ),
+    },
+    absolutePaths: {
+        internal: {
+            about: "/info/about",
+            store: "/",
+            cart: "/checkout",
+            checkoutSucess: "/checkout/success",
+            lockedOut: "/no",
+            login: "/accounts/login",
+            register: "/accounts/register",
+        },
+        external: {
+            portfolio: "https://jeromerreduta.netlify.app",
+            github: "https://github.com/JeromeRReduta/SillyStore",
+        },
+    },
+    queryKeys: {
+        allProducts: "ALL_PRODUCTS",
+        allOwnedOrders: "ALL_OWNED_ORDERS",
+    },
+};
+
+export default frontendConfigs;
