@@ -1,8 +1,4 @@
-import { loggerEnvironment } from "tslog";
 import { requireNumber } from "../../SillyStoreCommon/configs/ConfigValidation";
-
-console.log("ENVIRONMENT", import.meta.env);
-console.log(import.meta.env.VITE_MIN_LOG_LEVEL);
 
 export interface IFrontendConfigs {
     readonly logging: {
