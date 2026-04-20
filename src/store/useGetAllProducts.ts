@@ -1,17 +1,30 @@
-import useStandardQuery from "../utils/UseStandardQuery";
-import frontendConfigs from "../configs/FrontendConfigs";
-import type { IRequestFnAsync } from "../utils/IRequestFnAsync";
-import type { IProductResponse } from "../../SillyStoreCommon/dtos/responses/IProductResponse";
+import { useQuery } from "@tanstack/react-query";
+import queryKeys from "../utils/queryKeys";
+import { configs } from "eslint-plugin-import-x";
 
-export default function useGetAllProducts(
-    requestFnAsync: IRequestFnAsync<IProductResponse> = defaultFnAsync,
-) {
-    return useStandardQuery({
-        queryKeys: [frontendConfigs.queryKeys.products],
-        requestFnAsync,
+export default function useGetAllProducts() {
+    return useQuery({
+        queryKey: [queryKeys.products],
+        queryFn: async function (): Promise<ProductData[]> {
+            const url: string = `${configs.apiUrl}/products`;
+            const response: Response = await fetch(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const isJson: boolean = /json/.test(
+                response.headers.get("Content-Type") ?? "",
+            );
+            const result: ProductData[] | undefined = isJson
+                ? await response.json()
+                : undefined;
+            if (!isJson) {
+                throw new Error(result?.toString() ?? "Something went wrong");
+            }
+            if (!response.ok) {
+                throw new Error(result?.toString() ?? "Something went wrong");
+            }
+            return result;
+        },
     });
 }
-
-const defaultFnAsync: IRequestFnAsync<IProductResponse> = async () => {
-    return { isError: true, body: new Error("default") };
-};

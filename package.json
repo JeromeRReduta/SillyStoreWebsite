@@ -5,12 +5,13 @@
     "type": "module",
     "scripts": {
         "build": "tsc -b && vite build",
-        "dev": "vite NODE_ENV='development'",
+        "dev": "vite",
         "lint": "eslint .",
         "preview": "vite preview"
     },
     "dependencies": {
         "@tanstack/react-query": "^5.99.0",
+        "eslint-plugin-import-x": "^4.16.2",
         "react": "^19.2.4",
         "react-cookie": "^8.1.0",
         "react-dom": "^19.2.4",

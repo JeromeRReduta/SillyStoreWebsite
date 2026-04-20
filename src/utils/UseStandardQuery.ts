@@ -1,22 +1,18 @@
-import { useQuery, type UseQueryResult } from "@tanstack/react-query";
-import type { SimpleResponse } from "./StandardResponseData";
-import getValidBodyOrThrow from "./GetValidBodyOrThrow";
-import type { IRequestFnAsync } from "./IRequestFnAsync";
+import { useQuery } from "@tanstack/react-query";
+import processResponseOrThrow from "./ProcessResponseOrThrow";
 
-export default function useStandardQuery<TResponseBody>({
+export default function useStandardQuery<E>({
     queryKeys,
     requestFnAsync,
 }: {
     queryKeys: string[];
-    requestFnAsync: IRequestFnAsync<TResponseBody>;
-}): UseQueryResult<TResponseBody, Error> {
+    requestFnAsync: () => Promise<Response>;
+}) {
     return useQuery({
         queryKey: queryKeys,
-        queryFn: async (): Promise<TResponseBody> => {
-            const simpleResponse: SimpleResponse<TResponseBody> =
-                await requestFnAsync();
-            return getValidBodyOrThrow(simpleResponse);
+        queryFn: async (): Promise<E | undefined> => {
+            const response: Response = await requestFnAsync();
+            return processResponseOrThrow(response);
         },
-        throwOnError: true,
     });
 }

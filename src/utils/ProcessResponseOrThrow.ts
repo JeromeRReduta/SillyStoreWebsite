@@ -1,15 +1,21 @@
 import frontendLogger from "../configs/FrontendLogger";
-import type { SimpleResponse } from "./StandardResponseData";
 
-export default function processResponseOrThrow<TResponseBody>({
-    isError,
-    body,
-}: SimpleResponse<TResponseBody>): TResponseBody {
-    frontendLogger.debug("data found:", { isError, body });
-    if (isError) {
+export default async function processResponseOrThrow<TResponseBody>(
+    response: Response,
+): Promise<TResponseBody | undefined> {
+    frontendLogger.debug("response to process", response);
+    const isBodyJson: boolean = /json/.test(
+        response.headers.get("Content-Type") ?? "",
+    );
+    const jsonBody: TResponseBody | Error | undefined = isBodyJson
+        ? await response.json()
+        : undefined;
+    frontendLogger.debug("body (json format) is", jsonBody);
+    const hasErrorOccurred: boolean = !response.ok;
+    if (hasErrorOccurred) {
         const errorMessage: string =
-            (body as Error).message ?? "Something went wrong!";
+            (jsonBody as Error).message ?? "Something went wrong!";
         throw new Error(errorMessage);
     }
-    return body as TResponseBody; // safe since we throw in the event of an error (BASED ON CURRENT BACKEND ARCHITECTURE)
+    return jsonBody as TResponseBody | undefined; // safe since we throw in the event of an error (BASED ON CURRENT BACKEND ARCHITECTURE)
 }
