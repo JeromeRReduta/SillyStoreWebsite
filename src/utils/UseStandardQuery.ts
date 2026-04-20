@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import processResponseOrThrow from "./ProcessResponseOrThrow";
 
 export default function useStandardQuery<E>({
     queryKeys,
