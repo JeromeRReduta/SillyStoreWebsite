@@ -1,30 +1,33 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, type UseQueryResult } from "@tanstack/react-query";
 import queryKeys from "../utils/queryKeys";
-import { configs } from "eslint-plugin-import-x";
+import type { IProductResponse } from "../../SillyStoreCommon/dtos/responses/IProductResponse";
+import frontendConfigs from "../configs/FrontendConfigs";
 
-export default function useGetAllProducts() {
+export default function useGetAllProducts(): UseQueryResult<
+    IProductResponse[],
+    Error
+> {
     return useQuery({
-        queryKey: [queryKeys.products],
-        queryFn: async function (): Promise<ProductData[]> {
-            const url: string = `${configs.apiUrl}/products`;
-            const response: Response = await fetch(url, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            const isJson: boolean = /json/.test(
-                response.headers.get("Content-Type") ?? "",
-            );
-            const result: ProductData[] | undefined = isJson
-                ? await response.json()
-                : undefined;
-            if (!isJson) {
-                throw new Error(result?.toString() ?? "Something went wrong");
-            }
-            if (!response.ok) {
-                throw new Error(result?.toString() ?? "Something went wrong");
-            }
-            return result;
-        },
+        queryKey: [frontendConfigs.queryKeys.allProducts],
+        queryFn: mockProducts,
     });
+}
+
+async function mockProducts(): Promise<IProductResponse[]> {
+    return await Array.from(
+        {
+            length: 10,
+        },
+        (_: unknown, i: number) => generateProduct(i + 1),
+    );
+}
+
+function generateProduct(i: number): IProductResponse {
+    return {
+        id: i,
+        imageSrc: "image " + i,
+        title: "title " + i,
+        description: i.toString(),
+        price: i * 1.11,
+    };
 }
