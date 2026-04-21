@@ -1,7 +1,7 @@
 import type { JSX } from "react";
+import css from "./locked-out.module.css";
 import { useCookies } from "react-cookie";
-import FadeInElem from "../../animated/FadeInElem";
-import css from "../css/locked-out.module.css"
+import FadeInElem from "../animated/FadeInElem";
 
 export default function LockedOutPage(): JSX.Element {
     const [cookies, _setCookie, removeCookie] = useCookies<"locked_out", { locked_out: string }>(["locked_out"]);
