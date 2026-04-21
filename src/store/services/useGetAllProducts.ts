@@ -1,8 +1,6 @@
-import { useQuery, type UseQueryResult } from "@tanstack/react-query";
-import queryKeys from "../utils/queryKeys";
-import type { IProductResponse } from "../../SillyStoreCommon/dtos/responses/IProductResponse";
-import frontendConfigs from "../configs/FrontendConfigs";
-import frontendLogger from "../configs/FrontendLogger";
+import { type UseQueryResult, useQuery } from "@tanstack/react-query";
+import type { IProductResponse } from "../../../SillyStoreCommon/dtos/responses/IProductResponse";
+import frontendConfigs from "../../configs/FrontendConfigs";
 
 export default function useGetAllProducts(
     queryFn: () => Promise<IProductResponse[]> = defaultQuery,

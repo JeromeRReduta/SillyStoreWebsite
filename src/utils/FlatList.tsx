@@ -3,7 +3,7 @@ import type { JSX } from "react";
 import css from "./flat-list.module.css"
 
 /** Lovingly stolen from react native - credit to them */
-export default function FlatList<TData>(
+export default function FlatList<TData>( // TODO: add classname w/ default = css.flat_list
     { data, renderItem, keyExtractor }: {
         data: TData[],
         renderItem: (elem: TData) => JSX.Element,

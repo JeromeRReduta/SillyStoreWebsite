@@ -1,6 +1,6 @@
 import type { JSX } from "react";
-import type { IProductResponse } from "../../SillyStoreCommon/dtos/responses/IProductResponse";
-import css from "./product-card.module.css"
+import type { IProductResponse } from "../../../SillyStoreCommon/dtos/responses/IProductResponse";
+import css from "../css/product-card.module.css"
 
 export default function ProductCard({
     product
