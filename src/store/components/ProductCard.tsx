@@ -10,7 +10,7 @@ export default function ProductCard({
 }): JSX.Element {
     const { imageSrc, title, description, price } = product;
     const descriptionLength: number = frontendConfigs.limits.descriptionLength;
-    const truncatedDescription =
+    const truncatedDescription: string =
         description.length < descriptionLength
             ? description
             : description.substring(0, descriptionLength) + "...";
