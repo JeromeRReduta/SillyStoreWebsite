@@ -3,7 +3,7 @@ import type { IProductResponse } from "../../SillyStoreCommon/dtos/responses/IPr
 export default function mockProduct(i: number): IProductResponse {
     return {
         id: i,
-        imageSrc: "image " + i,
+        imageSrc: "/placeholder.webp",
         title: "title " + i,
         description: i.toString(),
         price: i * 1.11,

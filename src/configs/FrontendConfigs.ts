@@ -9,6 +9,7 @@ export interface IFrontendConfigs {
         readonly external: Record<string, string>;
     };
     readonly queryKeys: Record<string, string>;
+    readonly limits: Record<string, number>;
     // readonly port: number; // is defining port useful here?
 }
 
@@ -38,6 +39,9 @@ const frontendConfigs: IFrontendConfigs = {
     queryKeys: {
         allProducts: "ALL_PRODUCTS",
         allOwnedOrders: "ALL_OWNED_ORDERS",
+    },
+    limits: {
+        descriptionLength: 150,
     },
 };
 
