@@ -4,31 +4,23 @@ import type { IProductResponse } from "../../SillyStoreCommon/dtos/responses/IPr
 import frontendConfigs from "../configs/FrontendConfigs";
 import frontendLogger from "../configs/FrontendLogger";
 
-export default function useGetAllProducts(): UseQueryResult<
-    IProductResponse[],
-    Error
-> {
+export default function useGetAllProducts(
+    queryFn: () => Promise<IProductResponse[]> = defaultQuery,
+): UseQueryResult<IProductResponse[], Error> {
     return useQuery({
         queryKey: [frontendConfigs.queryKeys.allProducts],
-        queryFn: mockProducts,
+        queryFn,
     });
 }
 
-async function mockProducts(): Promise<IProductResponse[]> {
-    return await Array.from(
-        {
-            length: 10,
-        },
-        (_: unknown, i: number) => generateProduct(i + 1),
-    );
-}
-
-function generateProduct(i: number): IProductResponse {
-    return {
-        id: i,
-        imageSrc: "image " + i,
-        title: "title " + i,
-        description: i.toString(),
-        price: i * 1.11,
-    };
+async function defaultQuery(): Promise<IProductResponse[]> {
+    const url: string = `${frontendConfigs.absolutePaths.external.api}/products`;
+    const response: Response = await fetch(url);
+    if (!response.ok) {
+        throw new Error("Something went wrong!");
+    }
+    if (response.status === 204) {
+        return [];
+    }
+    return (await response.json()) as IProductResponse[];
 }

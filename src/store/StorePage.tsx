@@ -1,16 +1,21 @@
 import type { JSX } from "react";
 import useGetAllProducts from "./useGetAllProducts";
-import frontendLogger from "../configs/FrontendLogger";
-
+import mockProduct from "../mocks/MockProduct";
+import Error from "../utils/Error";
+import Loading from "../utils/Loading";
+import ProductList from "./ProductList";
 export default function StorePage(/** TODO - props */): JSX.Element {
-    const { data, status, error } = useGetAllProducts();
-    // frontendLogger.debug("DATA: ", data);
-    // frontendLogger.debug("STATUS: ", status);
-    frontendLogger.debug(`
-        data: ${data},
-        status: ${status},
-        error: ${error}
-        `)
-    return <div>StorePage</div>;
+    const { data: products, status, error } = useGetAllProducts(
+        async () => { return Array.from({ length: 10 }, (_, i) => mockProduct(i + 1)) }
+    );
+    // const status: "error" | "pending" | "success" = "pending"; // mock
+    if (status === "error") {
+        return <Error message={`Sorry, something went wrong: ${error.message}`} />
+    }
+    if (status === "pending") {
+        return <Loading message={`Loading products for you...`} />
+    }
+    // success case
+    return <ProductList products={products!} />
 }
 
