@@ -1,11 +1,11 @@
 import type { JSX } from "react";
-import useGetAllProducts from "./useGetAllProducts";
-import mockProduct from "../mocks/MockProduct";
-import Error from "../utils/Error";
-import Loading from "../utils/Loading";
-import FlatList from "../utils/FlatList";
-import type { IProductResponse } from "../../SillyStoreCommon/dtos/responses/IProductResponse";
+import type { IProductResponse } from "../../../SillyStoreCommon/dtos/responses/IProductResponse";
+import mockProduct from "../../mocks/MockProduct";
+import FlatList from "../../utils/FlatList";
+import Loading from "../../utils/Loading";
+import useGetAllProducts from "../services/useGetAllProducts";
 import ProductCard from "./ProductCard";
+import Error from "../../utils/Error";
 
 export default function StorePage(): JSX.Element {
     const { data: products, status, error } = useGetAllProducts(
