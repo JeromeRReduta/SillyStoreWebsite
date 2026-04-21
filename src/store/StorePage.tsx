@@ -4,7 +4,8 @@ import mockProduct from "../mocks/MockProduct";
 import Error from "../utils/Error";
 import Loading from "../utils/Loading";
 import ProductList from "./ProductList";
-export default function StorePage(/** TODO - props */): JSX.Element {
+
+export default function StorePage(): JSX.Element {
     const { data: products, status, error } = useGetAllProducts(
         async () => { return Array.from({ length: 10 }, (_, i) => mockProduct(i + 1)) }
     );
