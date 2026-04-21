@@ -1,7 +1,44 @@
 /** MODULE */
+
 .product_card {
+    display: grid;
+    grid-template-areas:
+        "title  title   title title"
+        "img_c  img_c desc desc"
+        "img_c     img_c price   price";
+    grid-template-columns: 12.5fr 12.5fr 37.5fr 37.5fr;
+    grid-template-rows: repeat(3, 1fr);
+}
+.product_card_title {
+    grid-area: title;
+}
+.product_card_img_container {
+    grid-area: img_c;
+}
+
+.product_card_img {
+    width: 100%;
+    height: 100%;
+}
+.product_card_img {
+}
+.product_card_description {
+    grid-area: desc;
+}
+.product_card_price {
+    grid-area: price;
 }
 
 /** THEMES */
 .product_card {
+}
+.product_card_title {
+}
+.product_card_img_container {
+}
+.product_card_img {
+}
+.product_card_description {
+}
+.product_card_price {
 }
