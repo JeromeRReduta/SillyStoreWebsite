@@ -3,7 +3,9 @@ import useGetAllProducts from "./useGetAllProducts";
 import mockProduct from "../mocks/MockProduct";
 import Error from "../utils/Error";
 import Loading from "../utils/Loading";
-import ProductList from "./ProductList";
+import FlatList from "../utils/FlatList";
+import type { IProductResponse } from "../../SillyStoreCommon/dtos/responses/IProductResponse";
+import ProductCard from "./ProductCard";
 
 export default function StorePage(): JSX.Element {
     const { data: products, status, error } = useGetAllProducts(
@@ -16,6 +18,9 @@ export default function StorePage(): JSX.Element {
         return <Loading message={`Loading products for you...`} />
     }
     // success case
-    return <ProductList products={products} />
+    return <FlatList
+        data={products}
+        renderItem={(product: IProductResponse) => <ProductCard product={product} />}
+        keyExtractor={(product: IProductResponse) => product.id} />
 }
 
