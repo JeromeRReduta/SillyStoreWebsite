@@ -8,7 +8,6 @@ export default function StorePage(/** TODO - props */): JSX.Element {
     const { data: products, status, error } = useGetAllProducts(
         async () => { return Array.from({ length: 10 }, (_, i) => mockProduct(i + 1)) }
     );
-    // const status: "error" | "pending" | "success" = "pending"; // mock
     if (status === "error") {
         return <Error message={`Sorry, something went wrong: ${error.message}`} />
     }
@@ -16,6 +15,6 @@ export default function StorePage(/** TODO - props */): JSX.Element {
         return <Loading message={`Loading products for you...`} />
     }
     // success case
-    return <ProductList products={products!} />
+    return <ProductList products={products} />
 }
 
