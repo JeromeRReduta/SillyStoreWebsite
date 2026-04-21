@@ -16,7 +16,7 @@ export default function ProductCard({
             : description.substring(0, descriptionLength) + "...";
     return (
         <div className={css.product_card}>
-            <div className={css.product_card_title}>{title}</div>
+            <h3 className={css.product_card_title}>{title}</h3>
             <div className={css.product_card_img_container}>
                 <img
                     className={css.product_card_img}

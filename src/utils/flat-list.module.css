@@ -1,5 +1,11 @@
 /** MODULE */
 .flat_list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
 }
 
 .flat_list_item {
