@@ -28,12 +28,12 @@ export default function ProductCard({
             {/* <div className={css.product_card_description}>
                 {truncatedDescription}
             </div> */}
-            <div
+            <button
                 className={css.product_card_buy_now}
                 onClick={() => frontendLogger.debug("TODO: POST REQUEST")}
             >
-                ADD TO CART: ${price}
-            </div>
+                ADD TO CART: ${price.toFixed(2)}
+            </button>
         </div>
     );
 }
