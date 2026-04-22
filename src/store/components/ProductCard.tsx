@@ -2,6 +2,7 @@ import css from "../css/product-card.module.css";
 import type { IProductResponse } from "../../../SillyStoreCommon/dtos/responses/IProductResponse";
 import type { JSX } from "react";
 import frontendConfigs from "../../configs/FrontendConfigs";
+import frontendLogger from "../../configs/frontendLogger";
 
 export default function ProductCard({
     product,
@@ -16,7 +17,6 @@ export default function ProductCard({
             : description.substring(0, descriptionLength) + "...";
     return (
         <div className={css.product_card}>
-            <h3 className={css.product_card_title}>{title}</h3>
             <div className={css.product_card_img_container}>
                 <img
                     className={css.product_card_img}
@@ -24,10 +24,16 @@ export default function ProductCard({
                     alt="image"
                 />
             </div>
-            <div className={css.product_card_description}>
+            <h3 className={css.product_card_title}>{title}</h3>
+            {/* <div className={css.product_card_description}>
                 {truncatedDescription}
+            </div> */}
+            <div
+                className={css.product_card_buy_now}
+                onClick={() => frontendLogger.debug("TODO: POST REQUEST")}
+            >
+                ADD TO CART: ${price}
             </div>
-            <div className={css.product_card_price}>${price}</div>
         </div>
     );
 }
