@@ -27,6 +27,7 @@ export default function StorePage(): JSX.Element {
     // success case
     return (
         <FlatList
+            listClassName={css.product_card_grid}
             data={products}
             renderItem={(product: IProductResponse) => (
                 <ProductCard product={product} />
