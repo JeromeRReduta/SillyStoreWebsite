@@ -1,9 +1,9 @@
 import type { JSX } from "react";
 import { Link, useNavigate } from "react-router";
-import css from "./sign-in.module.css";
-import paths from "../routing/Paths";
-import LabeledTextInput from "../utils/LabeledTextInput";
-import frontendLogger from "../configs/frontendLogger";
+import css from "../css/sign-in.module.css";
+import frontendLogger from "../../configs/frontendLogger";
+import paths from "../../routing/Paths";
+import LabeledTextInput from "../../utils/LabeledTextInput";
 
 type SupportedMethods = "LOGIN" | "REGISTER";
 
