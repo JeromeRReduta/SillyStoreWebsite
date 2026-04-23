@@ -6,7 +6,6 @@ import frontendConfigs from "../configs/FrontendConfigs";
 import { useCookies } from "react-cookie";
 import frontendLogger from "../configs/frontendLogger";
 import type { TokenResponse } from "../../SillyStoreCommon/dtos/responses/TokenResponse";
-import JustAddedBar from "../utils/JustAddedBar";
 
 export default function Nav(): JSX.Element {
     const [cookies, _setCookies, _removeCookies] = useCookies<
@@ -17,7 +16,6 @@ export default function Nav(): JSX.Element {
     return (
         <nav className={css.layout_nav}>
             <LeftLinks />
-            <JustAddedBar />
             <RightLinks />
         </nav>
     );

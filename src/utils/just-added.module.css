@@ -6,13 +6,16 @@
 /** THEMES */
 
 .just_added {
-    animation: fade-out 5s;
+    font-size: 3rem;
+    animation: fade-out 1s;
     color: transparent;
+    height: 4rem;
+    text-align: center;
 }
 
 @keyframes fade-out {
     from {
-        color: var(--color_light);
+        color: var(--color_dark);
         opacity: 1;
     }
     to {

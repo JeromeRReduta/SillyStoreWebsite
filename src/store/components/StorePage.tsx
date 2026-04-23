@@ -7,6 +7,7 @@ import useGetAllProducts from "../services/useGetAllProducts";
 import ProductCard from "./ProductCard";
 import Error from "../../utils/Error";
 import css from "../css/store-page.module.css";
+import JustAddedBar from "../../utils/JustAddedBar";
 
 export default function StorePage(): JSX.Element {
     const {
@@ -26,13 +27,16 @@ export default function StorePage(): JSX.Element {
     }
     // success case
     return (
-        <FlatList
-            listClassName={css.product_card_grid}
-            data={products}
-            renderItem={(product: IProductResponse) => (
-                <ProductCard product={product} />
-            )}
-            keyExtractor={(product: IProductResponse) => product.id}
-        />
+        <>
+            <JustAddedBar />
+            <FlatList
+                listClassName={css.product_card_grid}
+                data={products}
+                renderItem={(product: IProductResponse) => (
+                    <ProductCard product={product} />
+                )}
+                keyExtractor={(product: IProductResponse) => product.id}
+            />
+        </>
     );
 }

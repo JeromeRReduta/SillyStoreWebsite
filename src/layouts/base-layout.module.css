@@ -210,10 +210,10 @@ body > div,
     background-color: var(--color_secondary);
 }
 
-.layout_main p,
+/* .layout_main p,
 .layout_main div {
     color: var(--color_dark);
-}
+} */
 
 p,
 div,
