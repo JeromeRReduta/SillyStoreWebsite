@@ -1,7 +1,7 @@
 import type { JSX } from "react";
 import css from "../css/error.module.css";
 
-export default function Error({
+export default function ErrorComponent({
     message = "Sorry, something wrong!",
 }: {
     message?: string;

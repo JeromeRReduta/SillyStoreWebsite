@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router";
 import { CookiesProvider } from "react-cookie";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthProvider from "./account/data-storage/AuthProvider.tsx";
-import JustAddedProvider from "./utils/JustAddedProvider.tsx";
+import JustAddedProvider from "./utils/components/JustAddedProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>

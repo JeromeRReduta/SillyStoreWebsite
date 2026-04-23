@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router";
 import css from "../css/sign-in.module.css";
 import frontendLogger from "../../configs/frontendLogger";
 import paths from "../../routing/Paths";
-import LabeledTextInput from "../../utils/LabeledTextInput";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import { useCookies } from "react-cookie";
+import LabeledTextInput from "../../utils/components/LabeledTextInput";
 
 type SupportedMethods = "LOGIN" | "REGISTER";
 

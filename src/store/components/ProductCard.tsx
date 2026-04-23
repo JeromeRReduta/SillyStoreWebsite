@@ -3,7 +3,7 @@ import type { IProductResponse } from "../../../SillyStoreCommon/dtos/responses/
 import type { JSX } from "react";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import frontendLogger from "../../configs/frontendLogger";
-import useJustAdded from "../../utils/useJustAdded";
+import useJustAdded from "../../utils/services/useJustAdded";
 
 export default function ProductCard({
     product,

@@ -7,7 +7,8 @@ import css from "../css/store-page.module.css";
 import FlatList from "../../utils/components/FlatList";
 import JustAddedBar from "../../utils/components/JustAddedBar";
 import Loading from "../../utils/components/Loading";
-import Error from "../../utils/components/Error";
+import ErrorComponent from "../../utils/components/Error";
+
 export default function StorePage(): JSX.Element {
     const {
         data: products,
@@ -18,7 +19,9 @@ export default function StorePage(): JSX.Element {
     });
     if (status === "error") {
         return (
-            <Error message={`Sorry, something went wrong: ${error.message}`} />
+            <ErrorComponent
+                message={`Sorry, something went wrong: ${error.message}`}
+            />
         );
     }
     if (status === "pending") {
