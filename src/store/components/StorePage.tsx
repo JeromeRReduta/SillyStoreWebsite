@@ -30,7 +30,8 @@ export default function StorePage(): JSX.Element {
         <>
             <JustAddedBar />
             <FlatList
-                listClassName={css.product_card_grid}
+                listClassName={css.product_list}
+                listItemClassName={css.product_list_item}
                 data={products}
                 renderItem={(product: IProductResponse) => (
                     <ProductCard product={product} />
