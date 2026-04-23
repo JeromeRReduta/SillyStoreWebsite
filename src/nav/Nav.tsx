@@ -6,6 +6,7 @@ import frontendConfigs from "../configs/FrontendConfigs";
 import { useCookies } from "react-cookie";
 import frontendLogger from "../configs/frontendLogger";
 import type { TokenResponse } from "../../SillyStoreCommon/dtos/responses/TokenResponse";
+import JustAddedBar from "../utils/JustAddedBar";
 
 export default function Nav(): JSX.Element {
     const { isLoggedIn } = useAuth();
@@ -17,6 +18,9 @@ export default function Nav(): JSX.Element {
     return (
         <nav className={css.layout_nav}>
             <div className={css.layout_nav_left}>LEFT</div>
+            <div className={css.layout_nav_middle}>
+                <JustAddedBar />
+            </div>
             <div className={css.layout_nav_right}>
                 {isLoggedIn() ? <SignedInLinks /> : <SignedOutLinks />}
             </div>

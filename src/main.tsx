@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router";
 import { CookiesProvider } from "react-cookie";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthProvider from "./account/data-storage/AuthProvider.tsx";
+import JustAddedProvider from "./utils/JustAddedProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
@@ -12,7 +13,9 @@ createRoot(document.getElementById("root")!).render(
             <QueryClientProvider client={new QueryClient()}>
                 <CookiesProvider defaultSetOptions={{ path: "/" }}>
                     <AuthProvider>
-                        <App />
+                        <JustAddedProvider>
+                            <App />
+                        </JustAddedProvider>
                     </AuthProvider>
                 </CookiesProvider>
             </QueryClientProvider>

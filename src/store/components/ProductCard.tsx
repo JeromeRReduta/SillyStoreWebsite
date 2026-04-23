@@ -3,6 +3,7 @@ import type { IProductResponse } from "../../../SillyStoreCommon/dtos/responses/
 import type { JSX } from "react";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import frontendLogger from "../../configs/frontendLogger";
+import useJustAdded from "../../utils/useJustAdded";
 
 export default function ProductCard({
     product,
@@ -11,6 +12,7 @@ export default function ProductCard({
 }): JSX.Element {
     const { imageSrc, title, description, price } = product;
     const descriptionLength: number = frontendConfigs.limits.descriptionLength;
+    const { emit } = useJustAdded();
     const truncatedDescription: string =
         description.length < descriptionLength
             ? description
@@ -30,7 +32,7 @@ export default function ProductCard({
             </div> */}
             <button
                 className={css.product_card_buy_now}
-                onClick={() => frontendLogger.debug("TODO: POST REQUEST")}
+                onClick={() => emit(product)}
             >
                 ADD TO CART: ${price.toFixed(2)}
             </button>

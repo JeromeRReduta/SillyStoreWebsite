@@ -1,0 +1,22 @@
+/** MODULE */
+
+.just_added {
+}
+
+/** THEMES */
+
+.just_added {
+    animation: fade-out 5s;
+    color: transparent;
+}
+
+@keyframes fade-out {
+    from {
+        color: var(--color_light);
+        opacity: 1;
+    }
+    to {
+        color: transparent;
+        opacity: 0;
+    }
+}

@@ -210,11 +210,6 @@ body > div,
     background-color: var(--color_secondary);
 }
 
-.layout_header p,
-.layout_header div {
-    color: var(--color_light);
-}
-
 .layout_main p,
 .layout_main div {
     color: var(--color_dark);
