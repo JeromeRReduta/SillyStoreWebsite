@@ -6,7 +6,7 @@
 .product_card_grid {
     display: grid;
     grid-auto-rows: 15rem;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, 10rem);
     gap: 3rem 3rem;
 }
 
