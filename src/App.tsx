@@ -9,13 +9,11 @@ import CartPage from "./store/components/CartPage";
 import CheckoutSuccessPage from "./store/components/CheckoutSuccessPage";
 import LockedOutPage from "./store/components/LockedOutPage";
 import StorePage from "./store/components/StorePage";
+import frontendConfigs from "./configs/FrontendConfigs";
 
 export default function App() {
-    const {
-        store: { lockedOut, checkoutSuccess },
-        info: { about },
-        account: { login, register },
-    } = paths;
+    const { about, store, cart, checkoutSuccess, lockedOut, login, register } =
+        frontendConfigs.absolutePaths.internal;
 
     return (
         <Routes>
