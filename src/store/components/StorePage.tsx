@@ -1,14 +1,13 @@
 import type { JSX } from "react";
 import type { IProductResponse } from "../../../SillyStoreCommon/dtos/responses/IProductResponse";
 import mockProduct from "../../mocks/MockProduct";
-import FlatList from "../../utils/FlatList";
-import Loading from "../../utils/Loading";
 import useGetAllProducts from "../services/useGetAllProducts";
 import ProductCard from "./ProductCard";
-import Error from "../../utils/Error";
 import css from "../css/store-page.module.css";
-import JustAddedBar from "../../utils/JustAddedBar";
-
+import FlatList from "../../utils/components/FlatList";
+import JustAddedBar from "../../utils/components/JustAddedBar";
+import Loading from "../../utils/components/Loading";
+import Error from "../../utils/components/Error";
 export default function StorePage(): JSX.Element {
     const {
         data: products,
