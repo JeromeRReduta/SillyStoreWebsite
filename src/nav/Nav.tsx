@@ -9,7 +9,6 @@ import type { TokenResponse } from "../../SillyStoreCommon/dtos/responses/TokenR
 import JustAddedBar from "../utils/JustAddedBar";
 
 export default function Nav(): JSX.Element {
-    const { isLoggedIn } = useAuth();
     const [cookies, _setCookies, _removeCookies] = useCookies<
         "token",
         { token: TokenResponse }
@@ -17,30 +16,41 @@ export default function Nav(): JSX.Element {
     frontendLogger.debug(cookies.token);
     return (
         <nav className={css.layout_nav}>
-            <div className={css.layout_nav_left}>LEFT</div>
-            <div className={css.layout_nav_middle}>
-                <JustAddedBar />
-            </div>
-            <div className={css.layout_nav_right}>
-                {isLoggedIn() ? <SignedInLinks /> : <SignedOutLinks />}
-            </div>
+            <LeftLinks />
+            <JustAddedBar />
+            <RightLinks />
         </nav>
     );
 }
 
-function SignedInLinks(): JSX.Element {
-    const { logout } = useAuth();
+function LeftLinks(): JSX.Element {
     return (
         <>
-            <Link className={css.nav_link} to="#" onClick={logout}>
-                Logout
+            <Link
+                className={css.nav_link}
+                to={frontendConfigs.absolutePaths.internal.store}
+            >
+                SILLY STORE
+            </Link>
+            <Link
+                className={css.nav_link}
+                to={frontendConfigs.absolutePaths.internal.about}
+            >
+                About
             </Link>
         </>
     );
 }
 
-function SignedOutLinks(): JSX.Element {
-    return (
+function RightLinks(): JSX.Element {
+    const { isLoggedIn, logout } = useAuth();
+    const accountLinks: JSX.Element = isLoggedIn() ? (
+        <>
+            <Link className={css.nav_link} to="#" onClick={logout}>
+                Logout
+            </Link>
+        </>
+    ) : (
         <>
             <Link
                 className={css.nav_link}
@@ -50,4 +60,5 @@ function SignedOutLinks(): JSX.Element {
             </Link>
         </>
     );
+    return <>{accountLinks}</>;
 }

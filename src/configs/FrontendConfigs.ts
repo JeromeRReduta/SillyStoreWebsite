@@ -22,7 +22,7 @@ const frontendConfigs: IFrontendConfigs = {
     },
     absolutePaths: {
         internal: {
-            about: "/info/about",
+            about: "/about",
             store: "/",
             cart: "/checkout",
             checkoutSucess: "/checkout/success",

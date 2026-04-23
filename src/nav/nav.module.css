@@ -12,7 +12,6 @@
 }
 
 .nav_link {
-    color: var(--color_light);
     border-radius: 2rem;
     padding: 0.5rem;
     border: 1px solid;
@@ -26,6 +25,7 @@
 /** THEMES */
 .nav_link {
     border-color: transparent;
+    color: var(--color_light);
 }
 
 .nav_link:hover {
