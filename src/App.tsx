@@ -4,7 +4,6 @@ import RegisterPage from "./account/components/RegisterPage";
 import ErrorPage from "./error/ErrorPage";
 import AboutPage from "./info/AboutPage";
 import BaseLayout from "./layouts/BaseLayout";
-import paths from "./routing/Paths";
 import CartPage from "./store/components/CartPage";
 import CheckoutSuccessPage from "./store/components/CheckoutSuccessPage";
 import LockedOutPage from "./store/components/LockedOutPage";
@@ -12,7 +11,7 @@ import StorePage from "./store/components/StorePage";
 import frontendConfigs from "./configs/FrontendConfigs";
 
 export default function App() {
-    const { about, store, cart, checkoutSuccess, lockedOut, login, register } =
+    const { about, checkoutSuccess, lockedOut, login, register } =
         frontendConfigs.absolutePaths.internal;
 
     return (
