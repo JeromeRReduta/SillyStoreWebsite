@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import JustAddedContext, {
-    JustAddedValues,
+    type JustAddedValues,
 } from "../components/JustAddedContext";
 
 export default function useJustAdded(): JustAddedValues {
