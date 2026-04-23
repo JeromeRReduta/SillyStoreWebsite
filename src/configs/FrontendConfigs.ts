@@ -27,8 +27,8 @@ const frontendConfigs: IFrontendConfigs = {
             cart: "/checkout",
             checkoutSucess: "/checkout/success",
             lockedOut: "/no",
-            login: "/accounts/login",
-            register: "/accounts/register",
+            login: "/account/login",
+            register: "/account/register",
         },
         external: {
             portfolio: "https://jeromerreduta.netlify.app",

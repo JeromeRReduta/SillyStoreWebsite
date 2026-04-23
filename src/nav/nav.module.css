@@ -11,6 +11,24 @@
 .layout_nav_right {
 }
 
+.nav_link {
+    color: var(--color_light);
+    border-radius: 2rem;
+    padding: 0.5rem;
+    border: 1px solid;
+}
+
+.nav_link:hover {
+}
+
 /** MODULE */
 
 /** THEMES */
+.nav_link {
+    border-color: transparent;
+}
+
+.nav_link:hover {
+    color: var(--color_light);
+    border-color: var(--color_light);
+}

@@ -4,6 +4,8 @@ import css from "../css/sign-in.module.css";
 import frontendLogger from "../../configs/frontendLogger";
 import paths from "../../routing/Paths";
 import LabeledTextInput from "../../utils/LabeledTextInput";
+import frontendConfigs from "../../configs/FrontendConfigs";
+import { useCookies } from "react-cookie";
 
 type SupportedMethods = "LOGIN" | "REGISTER";
 
@@ -12,15 +14,12 @@ export default function SignInPage({
 }: {
     method: SupportedMethods;
 }): JSX.Element {
-    const navigate = useNavigate();
-    const action: (formData: FormData) => Promise<void> = mockSignIn;
-    const onSubmit: () => void = () => navigate("/" + paths.store.base);
     const labelNames: string[] = ["Email", "Username", "Password"];
-
+    const { signIn, onSubmit } = mockSignInData();
     return (
         <section className={css.sign_in}>
             <SignInForm
-                action={action}
+                action={signIn}
                 onSubmit={onSubmit}
                 labelNames={labelNames}
             />
@@ -29,13 +28,30 @@ export default function SignInPage({
     );
 }
 
-async function mockSignIn(formData: FormData): Promise<void> {
-    // TODO: delete?
-    frontendLogger.debug("signing in!");
-    const entries = formData.entries();
-    for (const entry of entries) {
-        frontendLogger.debug(entry);
+function mockSignInData(): {
+    signIn: (formData: FormData) => Promise<void>;
+    onSubmit: () => void;
+} {
+    const navigate = useNavigate();
+    const [cookies, setCookies, _removeCookies] = useCookies<
+        "token",
+        { token: "token" }
+    >();
+
+    async function signIn(formData: FormData): Promise<void> {
+        frontendLogger.debug("signing in!");
+        const entries = formData.entries();
+        for (const entry of entries) {
+            frontendLogger.debug(entry);
+        }
     }
+
+    function onSubmit(): void {
+        setCookies("token", "bababooey");
+        frontendLogger.debug("TOKEN: ", cookies.token);
+        navigate(frontendConfigs.absolutePaths.internal.store);
+    }
+    return { signIn, onSubmit };
 }
 
 interface SignInFormInfo {
