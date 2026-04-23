@@ -1,7 +1,7 @@
 import type React from "react";
-import JustAddedContext, { type JustAddedValues } from "./JustAddedContext";
 import { useState } from "react";
-import type { IProductResponse } from "../../SillyStoreCommon/dtos/responses/IProductResponse";
+import type { IProductResponse } from "../../../SillyStoreCommon/dtos/responses/IProductResponse";
+import JustAddedContext, { type JustAddedValues } from "./JustAddedContext";
 
 export default function JustAddedProvider({
     children,

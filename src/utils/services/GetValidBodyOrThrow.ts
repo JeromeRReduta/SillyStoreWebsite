@@ -1,5 +1,5 @@
-import frontendLogger from "../configs/FrontendLogger";
-import type { SimpleResponse } from "./StandardResponseData";
+import frontendLogger from "../../configs/frontendLogger";
+import type { SimpleResponse } from "../entities/StandardResponseData";
 
 export default function getValidBodyOrThrow<TResponseBody>({
     isError,

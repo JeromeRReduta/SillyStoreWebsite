@@ -1,6 +1,6 @@
 import type { JSX } from "react";
-import useJustAdded from "./useJustAdded";
-import css from "./just-added.module.css";
+import css from "../css/just-added.module.css";
+import useJustAdded from "../services/useJustAdded";
 
 export default function JustAddedBar(): JSX.Element {
     const { product, serialKey } = useJustAdded();

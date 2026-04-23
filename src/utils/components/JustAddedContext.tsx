@@ -1,5 +1,5 @@
 import { createContext, type Context } from "react";
-import type { IProductResponse } from "../../SillyStoreCommon/dtos/responses/IProductResponse";
+import type { IProductResponse } from "../../../SillyStoreCommon/dtos/responses/IProductResponse";
 
 export interface JustAddedValues {
     readonly product: IProductResponse | null;
