@@ -22,6 +22,10 @@
 
 /** MODULE */
 
+.nav_cart {
+    color: var(--color_primary) !important;
+}
+
 /** THEMES */
 .nav_link {
     border-color: transparent;
@@ -31,4 +35,19 @@
 .nav_link:hover {
     color: var(--color_light);
     border-color: var(--color_light);
+}
+
+.nav_left_links,
+.nav_right_links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav_left_links {
+    justify-content: flex-start;
+}
+
+.nav_right_links {
+    justify-content: flex-end;
 }

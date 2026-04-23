@@ -21,5 +21,5 @@
         "erasableSyntaxOnly": true,
         "noFallthroughCasesInSwitch": true
     },
-    "include": ["src", "SillyStoreCommon"]
+    "include": ["src", "SillyStoreCommon", "vite-env.d.ts"]
 }

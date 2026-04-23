@@ -6,6 +6,7 @@ import frontendConfigs from "../configs/FrontendConfigs";
 import { useCookies } from "react-cookie";
 import frontendLogger from "../configs/frontendLogger";
 import type { TokenResponse } from "../../SillyStoreCommon/dtos/responses/TokenResponse";
+import ShoppingCartSvg from "./shopping-cart.svg?react";
 
 export default function Nav(): JSX.Element {
     const [cookies, _setCookies, _removeCookies] = useCookies<
@@ -23,7 +24,7 @@ export default function Nav(): JSX.Element {
 
 function LeftLinks(): JSX.Element {
     return (
-        <>
+        <section className={css.nav_left_links}>
             <Link
                 className={css.nav_link}
                 to={frontendConfigs.absolutePaths.internal.store}
@@ -36,12 +37,14 @@ function LeftLinks(): JSX.Element {
             >
                 About
             </Link>
-        </>
+        </section>
     );
 }
 
 function RightLinks(): JSX.Element {
     const { isLoggedIn, logout } = useAuth();
+    const { login, cart } = frontendConfigs.absolutePaths.internal;
+
     const accountLinks: JSX.Element = isLoggedIn() ? (
         <>
             <Link className={css.nav_link} to="#" onClick={logout}>
@@ -50,13 +53,19 @@ function RightLinks(): JSX.Element {
         </>
     ) : (
         <>
-            <Link
-                className={css.nav_link}
-                to={frontendConfigs.absolutePaths.internal.login}
-            >
+            <Link className={css.nav_link} to={login}>
                 Sign In
             </Link>
         </>
     );
-    return <>{accountLinks}</>;
+    return (
+        <section className={css.nav_right_links}>
+            {accountLinks}
+            <Link to={cart}>
+                <ShoppingCartSvg
+                    className={`${css.nav_link} ${css.nav_cart}`}
+                />
+            </Link>
+        </section>
+    );
 }
