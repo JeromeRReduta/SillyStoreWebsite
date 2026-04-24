@@ -39,6 +39,7 @@ const frontendConfigs: IFrontendConfigs = {
     queryKeys: {
         allProducts: "ALL_PRODUCTS",
         allOwnedOrders: "ALL_OWNED_ORDERS",
+        cart: "CART",
     },
     limits: {
         descriptionLength: 150,
