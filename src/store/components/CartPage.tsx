@@ -8,6 +8,23 @@ import css from "../css/cart.module.css";
 import useCart from "../services/useCart";
 import CartItemCard from "./CartItemCard";
 
+/** TODO:
+ *
+ *
+ * Backend:
+ * * orders should have new column: status = "pending" | "completed" | "canceled"
+ * * make unique index pending_order ON table orders (user_id) WHERE (status = "PENDING")
+ * * make way to get user's pending order (or return null if entity not found)
+ * Frontend:
+ * * make useMutation for cart data - 1 usemutation/action:
+ * * useMutation: change user token, run query again - run when user logs in or out
+ * * useMutation: update values in db - run when user logs out or when we finalize order
+ *      - should be able to update both the values of order-products (i.e. cart items) and
+ *          the order status
+ *
+ *
+ *
+ */
 export default function CartPage(): JSX.Element {
     const {
         data: cart,

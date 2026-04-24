@@ -6,6 +6,8 @@ import paths from "../../routing/Paths";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import { useCookies } from "react-cookie";
 import LabeledTextInput from "../../utils/components/LabeledTextInput";
+import useCart from "../../store/services/useCart";
+import mockProduct from "../../mocks/MockProduct";
 
 type SupportedMethods = "LOGIN" | "REGISTER";
 
@@ -33,6 +35,15 @@ function mockSignInData(): {
     onSubmit: () => void;
 } {
     const navigate = useNavigate();
+    const {
+        data: cart,
+        status,
+        error,
+    } = useCart(async () => {
+        return Array.from({ length: 10 }, (_, i) => {
+            return { ...mockProduct(i), quantity: i };
+        });
+    });
     const [cookies, setCookies, _removeCookies] = useCookies<
         "token",
         { token: "token" }
@@ -44,12 +55,16 @@ function mockSignInData(): {
         for (const entry of entries) {
             frontendLogger.debug(entry);
         }
+        onSignIn();
     }
 
     function onSubmit(): void {
-        setCookies("token", "bababooey");
-        frontendLogger.debug("TOKEN: ", cookies.token);
         navigate(frontendConfigs.absolutePaths.internal.store);
+    }
+
+    function onSignIn(): void {
+        setCookies("token", "bababooey");
+        // have auth context - when you set token cookie, run effect: update cart
     }
     return { signIn, onSubmit };
 }
