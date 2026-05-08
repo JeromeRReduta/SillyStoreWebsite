@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import mockProduct from "../../mocks/MockProduct";
+import mockProduct from "../../../mocks/MockProduct";
 import ErrorComponent from "../../utils/components/Error";
 import Loading from "../../utils/components/Loading";
 import FlatList from "../../utils/components/FlatList";

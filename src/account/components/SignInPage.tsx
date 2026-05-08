@@ -7,7 +7,8 @@ import frontendConfigs from "../../configs/FrontendConfigs";
 import { useCookies } from "react-cookie";
 import LabeledTextInput from "../../utils/components/LabeledTextInput";
 import useCart from "../../store/services/useCart";
-import mockProduct from "../../mocks/MockProduct";
+import mockProduct from "../../../mocks/MockProduct";
+import { ICartItem } from "../../store/entities/ICartItem";
 
 type SupportedMethods = "LOGIN" | "REGISTER";
 
@@ -16,13 +17,13 @@ export default function SignInPage({
 }: {
     method: SupportedMethods;
 }): JSX.Element {
+    const { signIn, handleSubmit } = MockSignInData();
     const labelNames: string[] = ["Email", "Username", "Password"];
-    const { signIn, onSubmit } = mockSignInData();
     return (
         <section className={css.sign_in}>
             <SignInForm
                 action={signIn}
-                onSubmit={onSubmit}
+                handleSubmit={handleSubmit}
                 labelNames={labelNames}
             />
             <LinkToOther method={method} />
@@ -30,9 +31,9 @@ export default function SignInPage({
     );
 }
 
-function mockSignInData(): {
-    signIn: (formData: FormData) => Promise<void>;
-    onSubmit: () => void;
+function MockSignInData(): {
+    signIn: (formData: FormData) => void;
+    handleSubmit: () => void;
 } {
     const navigate = useNavigate();
     const {
@@ -41,15 +42,15 @@ function mockSignInData(): {
         error,
     } = useCart(async () => {
         return Array.from({ length: 10 }, (_, i) => {
-            return { ...mockProduct(i), quantity: i };
+            return { ...mockProduct(i), quantity: i } as ICartItem;
         });
     });
-    const [cookies, setCookies, _removeCookies] = useCookies<
+    const [_cookies, setCookies, _removeCookies] = useCookies<
         "token",
         { token: "token" }
-    >();
+    >(["token"]);
 
-    async function signIn(formData: FormData): Promise<void> {
+    function signIn(formData: FormData): void {
         frontendLogger.debug("signing in!");
         const entries = formData.entries();
         for (const entry of entries) {
@@ -58,30 +59,35 @@ function mockSignInData(): {
         onSignIn();
     }
 
-    function onSubmit(): void {
-        navigate(frontendConfigs.absolutePaths.internal.store);
+    function handleSubmit(): void {
+        void (async (): Promise<void> => {
+            await navigate(frontendConfigs.absolutePaths.internal.store);
+        })();
     }
 
     function onSignIn(): void {
         setCookies("token", "bababooey");
         // have auth context - when you set token cookie, run effect: update cart
     }
-    return { signIn, onSubmit };
+    return { signIn, handleSubmit };
 }
 
 interface SignInFormInfo {
     readonly action: (formData: FormData) => void | Promise<void>;
     readonly labelNames: string[];
-    readonly onSubmit: () => void | Promise<void>;
+    readonly handleSubmit: React.SubmitEventHandler<HTMLFormElement>;
 }
-
 function SignInForm({
     action,
     labelNames,
-    onSubmit,
+    handleSubmit,
 }: SignInFormInfo): JSX.Element {
     return (
-        <form action={action} onSubmit={onSubmit} className={css.sign_in_form}>
+        <form
+            action={action}
+            onSubmit={handleSubmit}
+            className={css.sign_in_form}
+        >
             {labelNames.map((name) => (
                 <LabeledTextInput
                     label={name}

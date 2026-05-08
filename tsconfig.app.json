@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
         "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-        "target": "es2023",
-        "lib": ["ES2023", "DOM", "DOM.Iterable"],
+        "target": "esnext",
+        "lib": ["ESNext", "DOM", "DOM.Iterable"],
         "module": "esnext",
         "types": ["vite/client"],
         "skipLibCheck": true,
@@ -10,16 +10,24 @@
         /* Bundler mode */
         "moduleResolution": "bundler",
         "allowImportingTsExtensions": true,
-        "verbatimModuleSyntax": true,
         "moduleDetection": "force",
         "noEmit": true,
         "jsx": "react-jsx",
 
         /* Linting */
+        "strict": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "esModuleInterop": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "erasableSyntaxOnly": true,
-        "noFallthroughCasesInSwitch": true
+        "noImplicitReturns": true
     },
-    "include": ["src", "SillyStoreCommon", "vite-env.d.ts"]
+    "include": [
+        "src",
+        "SillyStoreCommon",
+        "vite-env.d.ts",
+        "eslint.config.ts",
+        "mocks"
+    ]
 }

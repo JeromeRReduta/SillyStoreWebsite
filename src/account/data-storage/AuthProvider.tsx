@@ -1,7 +1,7 @@
 import type React from "react";
 import AuthContext, { type AuthContextValues } from "./AuthContext";
 import { useCookies } from "react-cookie";
-import { type TokenResponse } from "../../../SillyStoreCommon/dtos/responses/TokenResponse";
+import { TokenResponse } from "../../../SillyStoreCommon/dtos/userDtos";
 
 export default function AuthProvider({
     children,

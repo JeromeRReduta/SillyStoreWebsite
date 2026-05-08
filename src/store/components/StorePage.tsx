@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import type { IProductResponse } from "../../../SillyStoreCommon/dtos/responses/IProductResponse";
-import mockProduct from "../../mocks/MockProduct";
+import mockProduct from "../../../mocks/MockProduct";
 import useGetAllProducts from "../services/useGetAllProducts";
 import ProductCard from "./ProductCard";
 import css from "../css/store-page.module.css";
