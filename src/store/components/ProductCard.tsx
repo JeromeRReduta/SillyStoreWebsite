@@ -1,9 +1,8 @@
 import css from "../css/product-card.module.css";
-import type { IProductResponse } from "../../../SillyStoreCommon/dtos/responses/IProductResponse";
 import type { JSX } from "react";
 import frontendConfigs from "../../configs/FrontendConfigs";
-import frontendLogger from "../../configs/frontendLogger";
 import useJustAdded from "../../utils/services/useJustAdded";
+import { IProductResponse } from "../../../SillyStoreCommon/dtos/productDtos";
 
 export default function ProductCard({
     product,

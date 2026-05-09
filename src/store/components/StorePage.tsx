@@ -8,15 +8,15 @@ import FlatList from "../../utils/components/FlatList";
 import JustAddedBar from "../../utils/components/JustAddedBar";
 import Loading from "../../utils/components/Loading";
 import ErrorComponent from "../../utils/components/Error";
+import MockServices from "../../../mocks/MockServices";
 
 export default function StorePage(): JSX.Element {
     const {
         data: products,
         status,
         error,
-    } = useGetAllProducts(async () => {
-        return Array.from({ length: 10 }, (_, i) => mockProduct(i + 1));
-    });
+    } = useGetAllProducts(MockServices.getProducts);
+
     if (status === "error") {
         return (
             <ErrorComponent

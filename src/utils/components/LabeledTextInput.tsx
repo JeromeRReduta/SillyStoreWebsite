@@ -8,16 +8,20 @@ export interface LabeledTextInputProps {
 }
 
 export default function LabeledTextInput({
-    required, label, text, autoComplete
+    required,
+    label,
+    text,
+    autoComplete,
 }: LabeledTextInputProps): JSX.Element {
+    const lowercaseLabel = label.toLowerCase();
     return (
         <>
-            <label htmlFor={label}>{text}</label>
+            <label htmlFor={lowercaseLabel}>{text}</label>
             <input
                 required={required}
                 type="text"
-                id={label}
-                name={label}
+                id={lowercaseLabel}
+                name={lowercaseLabel}
                 autoComplete={autoComplete}
             />
         </>

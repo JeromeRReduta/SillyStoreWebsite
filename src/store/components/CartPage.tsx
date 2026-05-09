@@ -1,12 +1,12 @@
 import type { JSX } from "react";
-import mockProduct from "../../../mocks/MockProduct";
 import ErrorComponent from "../../utils/components/Error";
 import Loading from "../../utils/components/Loading";
 import FlatList from "../../utils/components/FlatList";
-import type { IProductResponse } from "../../../SillyStoreCommon/dtos/responses/IProductResponse";
 import css from "../css/cart.module.css";
 import useCart from "../services/useCart";
 import CartItemCard from "./CartItemCard";
+import MockServices from "../../../mocks/MockServices";
+import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
 
 /** TODO:
  *
@@ -26,15 +26,7 @@ import CartItemCard from "./CartItemCard";
  *
  */
 export default function CartPage(): JSX.Element {
-    const {
-        data: cart,
-        status,
-        error,
-    } = useCart(async () => {
-        return Array.from({ length: 10 }, (_, i) => {
-            return { ...mockProduct(i), quantity: i };
-        });
-    });
+    const { data: cart, status, error } = useCart(MockServices.getCart);
 
     if (status === "error") {
         return (
@@ -53,12 +45,12 @@ export default function CartPage(): JSX.Element {
                 data={cart}
                 listClassName={css.cart_list}
                 listItemClassName={css.cart_list_item}
-                renderItem={(
-                    cartItem: IProductResponse & { quantity: number },
-                ) => <CartItemCard cartItem={cartItem} />}
-                keyExtractor={(
-                    cartItem: IProductResponse & { quantity: number },
-                ) => cartItem.id}
+                renderItem={(cartItem: ICartItemResponse) => (
+                    <CartItemCard cartItem={cartItem} />
+                )}
+                keyExtractor={(cartItem: ICartItemResponse) =>
+                    cartItem.productId
+                }
             />
         </>
     );
