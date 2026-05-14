@@ -1,6 +1,4 @@
 import type { JSX } from "react";
-import type { IProductResponse } from "../../../SillyStoreCommon/dtos/responses/IProductResponse";
-import mockProduct from "../../../mocks/MockProduct";
 import useGetAllProducts from "../services/useGetAllProducts";
 import ProductCard from "./ProductCard";
 import css from "../css/store-page.module.css";
@@ -9,6 +7,7 @@ import JustAddedBar from "../../utils/components/JustAddedBar";
 import Loading from "../../utils/components/Loading";
 import ErrorComponent from "../../utils/components/Error";
 import MockServices from "../../../mocks/MockServices";
+import { IProductResponse } from "../../../SillyStoreCommon/dtos/productDtos";
 
 export default function StorePage(): JSX.Element {
     const {

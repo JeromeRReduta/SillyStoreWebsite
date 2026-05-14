@@ -3,7 +3,7 @@ import ErrorComponent from "../../utils/components/Error";
 import Loading from "../../utils/components/Loading";
 import FlatList from "../../utils/components/FlatList";
 import css from "../css/cart.module.css";
-import useCart from "../services/useCart";
+import useGetPendingCart from "../services/useGetPendingCart";
 import CartItemCard from "./CartItemCard";
 import MockServices from "../../../mocks/MockServices";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
@@ -26,7 +26,11 @@ import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
  *
  */
 export default function CartPage(): JSX.Element {
-    const { data: cart, status, error } = useCart(MockServices.getCart);
+    const {
+        data: cart,
+        status,
+        error,
+    } = useGetPendingCart(MockServices.getCart);
 
     if (status === "error") {
         return (

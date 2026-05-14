@@ -1,13 +1,8 @@
 import type { JSX } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import css from "../css/sign-in.module.css";
-import frontendLogger from "../../configs/frontendLogger";
-import paths from "../../routing/Paths";
 import frontendConfigs from "../../configs/FrontendConfigs";
-import { useCookies } from "react-cookie";
 import LabeledTextInput from "../../utils/components/LabeledTextInput";
-import useCart from "../../store/services/useCart";
-import { ICartItem } from "../../store/entities/ICartItem";
 import useAuth from "../services/useAuth";
 import {
     ICreateUserRequest,

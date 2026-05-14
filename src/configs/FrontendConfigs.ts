@@ -17,7 +17,7 @@ const frontendConfigs: IFrontendConfigs = {
     logging: {
         minLogLevel: requireNumber(
             "MIN LOG LEVEL",
-            import.meta.env.VITE_MIN_LOG_LEVEL,
+            import.meta.env.VITE_MIN_LOG_LEVEL as string | undefined,
         ),
     },
     absolutePaths: {

@@ -17,6 +17,18 @@ export default defineConfig(
                 projectService: true,
             },
         },
+        rules: {
+            "no-unused-vars": "off",
+            "@typescript-eslint/no-unused-vars": [
+                // ty https://stackoverflow.com/questions/64052318/how-to-disable-warn-about-some-unused-params-but-keep-typescript-eslint-no-un
+                "warn",
+                {
+                    argsIgnorePattern: "^_",
+                    varsIgnorePattern: "^_",
+                    caughtErrorsIgnorePattern: "^_",
+                },
+            ],
+        },
     },
     globalIgnores(["SillyStoreCommon/"]),
 );

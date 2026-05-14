@@ -31,7 +31,9 @@ export default function ProductCard({
             </div> */}
             <button
                 className={css.product_card_buy_now}
-                onClick={() => emit(product)}
+                onClick={() => {
+                    emit(product);
+                }}
             >
                 ADD TO CART: ${price.toFixed(2)}
             </button>

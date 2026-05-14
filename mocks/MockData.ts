@@ -27,6 +27,8 @@ const mockProducts = Array.from(
 );
 
 const mockToken: TokenResponse = "bababooey";
+const acornUrl =
+    "https://i.etsystatic.com/17321049/r/il/b3bed3/4245092906/il_570xN.4245092906_9caz.jpg";
 
 const mockCart = Array.from(
     { length: MOCK_CART_SIZE },
@@ -35,6 +37,10 @@ const mockCart = Array.from(
             orderId: ARBITRARY_ORDER_ID,
             productId: i,
             quantity: i * 10,
+            description: `description ${i.toString()}`,
+            imageSrc: acornUrl,
+            price: i * 10,
+            title: `Title ${i.toString()}`,
         };
     },
 );
