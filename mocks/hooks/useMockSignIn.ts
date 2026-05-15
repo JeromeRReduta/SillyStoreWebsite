@@ -1,18 +1,13 @@
-import {
-    MutationFunctionContext,
-    useMutation,
-    UseMutationResult,
-} from "@tanstack/react-query";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import {
     ICreateUserRequest,
     IGetUserByCredentialsRequest,
     TokenResponse,
 } from "../../SillyStoreCommon/dtos/userDtos";
-import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router";
-import frontendConfigs from "../../src/configs/FrontendConfigs";
 import frontendLogger from "../../src/configs/frontendLogger";
 import wasteTime from "../utils/wasteTime";
+
+const defaultToken = "bababooey";
 
 export default function useMockSignIn(
     method: "LOGIN" | "REGISTER",
@@ -21,12 +16,6 @@ export default function useMockSignIn(
     Error,
     ICreateUserRequest | IGetUserByCredentialsRequest
 > {
-    const [_cookies, setCookies, _removeCookies] = useCookies<
-        "token",
-        { token: string }
-    >(["token"]);
-    const navigate = useNavigate();
-
     async function mutationFn(
         dto: ICreateUserRequest | IGetUserByCredentialsRequest,
     ): Promise<TokenResponse> {
@@ -39,5 +28,3 @@ export default function useMockSignIn(
         mutationFn,
     });
 }
-
-const defaultToken = "bababooey";
