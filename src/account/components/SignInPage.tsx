@@ -1,40 +1,21 @@
 import type { JSX } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import css from "../css/sign-in.module.css";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import LabeledTextInput from "../../utils/components/LabeledTextInput";
-import useAuth from "../services/useAuth";
 import {
     ICreateUserRequest,
     IGetUserByCredentialsRequest,
 } from "../../../SillyStoreCommon/dtos/userDtos";
+import useMockSignIn from "../../../mocks/hooks/useMockSignIn";
+import { MutationFunctionContext } from "@tanstack/react-query";
+import { useCookies } from "react-cookie";
 
 type SupportedMethods = "LOGIN" | "REGISTER";
 
-function handleLoginAsync(
-    loginAsync: (dto: IGetUserByCredentialsRequest) => Promise<unknown>,
-) {
-    return async (formData: FormData) => {
-        const dto: IGetUserByCredentialsRequest = {
-            email: formData.get("email") as string,
-            pw: formData.get("pw") as string,
-        };
-        void (await loginAsync(dto));
-    };
-}
-
-function handleRegisterAsync(
-    registerAsync: (dto: ICreateUserRequest) => Promise<unknown>,
-) {
-    return async (formData: FormData) => {
-        const dto: ICreateUserRequest = {
-            username: formData.get("username") as string,
-            email: formData.get("email") as string,
-            pw: formData.get("pw") as string,
-            role: "client",
-        };
-        void (await registerAsync(dto));
-    };
+interface SignInPageData {
+    readonly labelNames: string[];
+    readonly linkToOther: JSX.Element;
 }
 
 export default function SignInPage({
@@ -42,33 +23,50 @@ export default function SignInPage({
 }: {
     method: SupportedMethods;
 }): JSX.Element {
-    const { loginAsync, registerAsync } = useAuth();
-    const data =
+    const { mutate: signIn } = useMockSignIn(method);
+    const navigate = useNavigate();
+    const [_cookies, setCookies, _removeCookies] = useCookies<
+        "token",
+        { token: string }
+    >(["token"]);
+
+    function handleSignIn(formData: FormData): void {
+        const dto: ICreateUserRequest | IGetUserByCredentialsRequest = {
+            username: formData.get("username") as string,
+            email: formData.get("email") as string,
+            pw: formData.get("name") as string,
+            role: "client",
+        };
+        signIn(dto, {
+            onSuccess: function (
+                data: string,
+                _variables: ICreateUserRequest | IGetUserByCredentialsRequest,
+                _onMutateResult: unknown,
+                _context: MutationFunctionContext,
+            ): void {
+                setCookies("token", data);
+                void navigate(frontendConfigs.absolutePaths.internal.store);
+            },
+        });
+    }
+
+    const { register, login } = frontendConfigs.absolutePaths.internal;
+    const { labelNames, linkToOther }: SignInPageData =
         method === "LOGIN"
             ? {
-                  handleSubmit: handleLoginAsync(loginAsync),
                   labelNames: ["Email", "Password"],
-                  linkToOther: (
-                      <Link
-                          to={frontendConfigs.absolutePaths.internal.register}
-                      >
-                          New? Register here.
-                      </Link>
-                  ),
+                  linkToOther: <Link to={register}>New? Register here.</Link>,
               }
             : {
-                  handleSubmit: handleRegisterAsync(registerAsync),
                   labelNames: ["Username", "Email", "Password"],
                   linkToOther: (
-                      <Link to={frontendConfigs.absolutePaths.internal.login}>
-                          Have an account? Login here.
-                      </Link>
+                      <Link to={login}>Have an account? Login here.</Link>
                   ),
               };
-    const { handleSubmit, labelNames, linkToOther } = data;
+
     return (
         <section className={css.sign_in}>
-            <form action={handleSubmit} className={css.sign_in_form}>
+            <form action={handleSignIn} className={css.sign_in_form}>
                 {labelNames.map((name) => (
                     <LabeledTextInput
                         label={name}
