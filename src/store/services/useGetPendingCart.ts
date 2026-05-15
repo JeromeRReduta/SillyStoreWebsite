@@ -1,6 +1,7 @@
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
+import { TokenResponse } from "../../../SillyStoreCommon/dtos/userDtos";
 
 export interface IFetchInfo extends ResponseInit {
     readonly headers: Record<string, string>;

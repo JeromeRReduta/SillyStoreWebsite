@@ -8,13 +8,10 @@ import Loading from "../../utils/components/Loading";
 import ErrorComponent from "../../utils/components/Error";
 import MockServices from "../../../mocks/MockServices";
 import { IProductResponse } from "../../../SillyStoreCommon/dtos/productDtos";
+import useMockGetAllProducts from "../../../mocks/hooks/useMockGetAllProducts";
 
 export default function StorePage(): JSX.Element {
-    const {
-        data: products,
-        status,
-        error,
-    } = useGetAllProducts(MockServices.getProducts);
+    const { data: products, status, error } = useMockGetAllProducts();
 
     if (status === "error") {
         return (

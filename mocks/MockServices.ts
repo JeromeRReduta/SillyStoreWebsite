@@ -16,8 +16,12 @@ async function wasteTime(ms: number = delay) {
     await new Promise((res) => setTimeout(res, ms));
 }
 
-async function getCart(): Promise<ICartItemResponse[]> {
-    frontendLogger.debug("Getting your cart...");
+async function getCart(token: TokenResponse): Promise<ICartItemResponse[]> {
+    frontendLogger.debug("Getting cart w/ token " + token + " ...");
+    if (!token) {
+        frontendLogger.warn("Not logged in - returning empty arr");
+        return [];
+    }
     await wasteTime();
     return mockData.cart;
 }
