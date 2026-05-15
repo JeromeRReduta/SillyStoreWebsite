@@ -11,6 +11,7 @@ import {
     ICreateUserRequest,
     IGetUserByCredentialsRequest,
 } from "../SillyStoreCommon/dtos/userDtos.ts";
+import MockAuthProvider from "../mocks/components/MockAuthProvider.tsx";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 createRoot(document.getElementById("root")!).render(
@@ -18,18 +19,11 @@ createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
             <QueryClientProvider client={new QueryClient()}>
                 <CookiesProvider defaultSetOptions={{ path: "/" }}>
-                    <AuthProvider
-                        loginService={async (
-                            dto: IGetUserByCredentialsRequest,
-                        ) => await MockServices.signIn("LOGIN", dto)}
-                        registerService={async (dto: ICreateUserRequest) =>
-                            await MockServices.signIn("REGISTER", dto)
-                        }
-                    >
+                    <MockAuthProvider>
                         <JustAddedProvider>
                             <App />
                         </JustAddedProvider>
-                    </AuthProvider>
+                    </MockAuthProvider>
                 </CookiesProvider>
             </QueryClientProvider>
         </BrowserRouter>

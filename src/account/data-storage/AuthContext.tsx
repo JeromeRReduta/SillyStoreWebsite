@@ -1,25 +1,20 @@
-import { UseMutateAsyncFunction } from "@tanstack/react-query";
+import { UseMutateFunction } from "@tanstack/react-query";
 import { createContext, type Context } from "react";
 import {
     ICreateUserRequest,
     IGetUserByCredentialsRequest,
-    TokenResponse,
 } from "../../../SillyStoreCommon/dtos/userDtos";
 
 export interface AuthContextValues {
-    isLoggedIn(): boolean;
-    isLoggedOut(): boolean;
-    readonly registerAsync: UseMutateAsyncFunction<
-        TokenResponse,
-        Error,
-        ICreateUserRequest
-    >;
-    readonly loginAsync: UseMutateAsyncFunction<
-        TokenResponse,
+    readonly isLoggedIn: () => boolean;
+    readonly isLoggedOut: () => boolean;
+    readonly logout: () => void;
+    readonly register: UseMutateFunction<string, Error, ICreateUserRequest>;
+    readonly login: UseMutateFunction<
+        string,
         Error,
         IGetUserByCredentialsRequest
     >;
-    logout(): void;
 }
 
 const AuthContext: Context<AuthContextValues | null> =

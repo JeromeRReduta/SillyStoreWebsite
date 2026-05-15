@@ -5,8 +5,9 @@ import useAuth from "../account/services/useAuth";
 import frontendConfigs from "../configs/FrontendConfigs";
 import { useCookies } from "react-cookie";
 import frontendLogger from "../configs/frontendLogger";
-import type { TokenResponse } from "../../SillyStoreCommon/dtos/responses/TokenResponse";
 import ShoppingCartSvg from "./shopping-cart.svg?react";
+import { TokenResponse } from "../../SillyStoreCommon/dtos/userDtos";
+import useMockAuth from "../../mocks/useMockAuth";
 
 export default function Nav(): JSX.Element {
     const [cookies, _setCookies, _removeCookies] = useCookies<
@@ -42,7 +43,7 @@ function LeftLinks(): JSX.Element {
 }
 
 function RightLinks(): JSX.Element {
-    const { isLoggedIn, logout } = useAuth();
+    const { isLoggedIn, logout } = useMockAuth();
     const { login, cart } = frontendConfigs.absolutePaths.internal;
 
     const accountLinks: JSX.Element = isLoggedIn() ? (

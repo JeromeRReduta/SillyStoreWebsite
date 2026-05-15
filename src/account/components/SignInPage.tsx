@@ -6,16 +6,23 @@ import LabeledTextInput from "../../utils/components/LabeledTextInput";
 import {
     ICreateUserRequest,
     IGetUserByCredentialsRequest,
+    TokenResponse,
 } from "../../../SillyStoreCommon/dtos/userDtos";
-import useMockSignIn from "../../../mocks/hooks/useMockSignIn";
-import { MutationFunctionContext } from "@tanstack/react-query";
+import {
+    MutationFunctionContext,
+    UseMutateFunction,
+} from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
+import useMockAuth from "../../../mocks/useMockAuth";
 
 type SupportedMethods = "LOGIN" | "REGISTER";
 
-interface SignInPageData {
+interface ISignInPageData {
     readonly labelNames: string[];
     readonly linkToOther: JSX.Element;
+    readonly mutate:
+        | UseMutateFunction<TokenResponse, Error, ICreateUserRequest>
+        | UseMutateFunction<TokenResponse, Error, IGetUserByCredentialsRequest>;
 }
 
 export default function SignInPage({
@@ -23,12 +30,27 @@ export default function SignInPage({
 }: {
     method: SupportedMethods;
 }): JSX.Element {
-    const { mutate: signIn } = useMockSignIn(method);
+    const { register, login } = useMockAuth();
     const navigate = useNavigate();
-    const [_cookies, setCookies, _removeCookies] = useCookies<
-        "token",
-        { token: string }
-    >(["token"]);
+
+    const { register: registerPath, login: loginPath } =
+        frontendConfigs.absolutePaths.internal;
+    const { labelNames, linkToOther, mutate }: ISignInPageData =
+        method === "LOGIN"
+            ? {
+                  labelNames: ["Email", "Password"],
+                  linkToOther: (
+                      <Link to={registerPath}>New? Register here.</Link>
+                  ),
+                  mutate: login,
+              }
+            : {
+                  labelNames: ["Username", "Email", "Password"],
+                  linkToOther: (
+                      <Link to={loginPath}>Have an account? Login here.</Link>
+                  ),
+                  mutate: register,
+              };
 
     function handleSignIn(formData: FormData): void {
         const dto: ICreateUserRequest | IGetUserByCredentialsRequest = {
@@ -37,32 +59,11 @@ export default function SignInPage({
             pw: formData.get("name") as string,
             role: "client",
         };
-        signIn(dto, {
-            onSuccess: function (
-                data: string,
-                _variables: ICreateUserRequest | IGetUserByCredentialsRequest,
-                _onMutateResult: unknown,
-                _context: MutationFunctionContext,
-            ): void {
-                setCookies("token", data);
-                void navigate(frontendConfigs.absolutePaths.internal.store);
-            },
+        mutate(dto, {
+            onSuccess: () =>
+                void navigate(frontendConfigs.absolutePaths.internal.store),
         });
     }
-
-    const { register, login } = frontendConfigs.absolutePaths.internal;
-    const { labelNames, linkToOther }: SignInPageData =
-        method === "LOGIN"
-            ? {
-                  labelNames: ["Email", "Password"],
-                  linkToOther: <Link to={register}>New? Register here.</Link>,
-              }
-            : {
-                  labelNames: ["Username", "Email", "Password"],
-                  linkToOther: (
-                      <Link to={login}>Have an account? Login here.</Link>
-                  ),
-              };
 
     return (
         <section className={css.sign_in}>
