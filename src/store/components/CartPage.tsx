@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+import { useState, type JSX } from "react";
 import ErrorComponent from "../../utils/components/Error";
 import Loading from "../../utils/components/Loading";
 import FlatList from "../../utils/components/FlatList";
@@ -32,7 +32,8 @@ import frontendLogger from "../../configs/frontendLogger";
 export default function CartPage(): JSX.Element {
     const { isLoggedOut } = useMockAuth();
     const { data: cart, status, error, purchase } = useMockCart();
-    const navigate = useNavigate();
+    const [disabled, setDisabled] = useState<boolean>(false);
+    const [buttonText, setButtonText] = useState<string>("Buy");
 
     if (isLoggedOut()) {
         return (
@@ -79,14 +80,16 @@ export default function CartPage(): JSX.Element {
 
             <button
                 className={css.cart_purchase}
+                disabled={disabled}
                 onClick={() => {
                     purchase();
-                    void navigate(
-                        frontendConfigs.absolutePaths.internal.checkoutSuccess,
+                    setDisabled(true);
+                    setButtonText(
+                        "Your purchase has been sent! Enjoy your order in [9999] business days!",
                     );
                 }}
             >
-                Buy
+                {buttonText}
             </button>
         </>
     );
