@@ -1,7 +1,6 @@
 import { UseMutateFunction, useQueryClient } from "@tanstack/react-query";
 import type { JSX } from "react";
 import { Link, useNavigate } from "react-router";
-import useMockAuth from "../../../mocks/useMockAuth";
 import {
     ICreateUserRequest,
     IGetUserByCredentialsRequest,
@@ -11,6 +10,7 @@ import frontendConfigs from "../../configs/FrontendConfigs";
 import frontendLogger from "../../configs/frontendLogger";
 import LabeledTextInput from "../../utils/components/LabeledTextInput";
 import css from "../css/sign-in.module.css";
+import useAuth from "../services/useAuth";
 
 type SupportedMethods = "LOGIN" | "REGISTER";
 
@@ -27,7 +27,7 @@ export default function SignInPage({
 }: {
     method: SupportedMethods;
 }): JSX.Element {
-    const { register, login } = useMockAuth();
+    const { register, login } = useAuth();
     const navigate = useNavigate();
 
     const { register: registerPath, login: loginPath } =
@@ -53,7 +53,7 @@ export default function SignInPage({
         const dto: ICreateUserRequest | IGetUserByCredentialsRequest = {
             username: formData.get("username") as string,
             email: formData.get("email") as string,
-            pw: formData.get("name") as string,
+            pw: formData.get("password") as string,
             role: "client",
         };
         mutate(dto, {

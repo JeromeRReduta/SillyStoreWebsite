@@ -7,6 +7,7 @@ import MockAuthProvider from "../mocks/components/MockAuthProvider.tsx";
 import MockCartProvider from "../mocks/components/MockCartProvider.tsx";
 import App from "./App.tsx";
 import JustAddedProvider from "./utils/components/JustAddedProvider.tsx";
+import AuthProvider from "./account/data-storage/AuthProvider.tsx";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 createRoot(document.getElementById("root")!).render(
@@ -15,11 +16,11 @@ createRoot(document.getElementById("root")!).render(
             <QueryClientProvider client={new QueryClient()}>
                 <CookiesProvider defaultSetOptions={{ path: "/" }}>
                     <MockCartProvider>
-                        <MockAuthProvider>
+                        <AuthProvider>
                             <JustAddedProvider>
                                 <App />
                             </JustAddedProvider>
-                        </MockAuthProvider>
+                        </AuthProvider>
                     </MockCartProvider>
                 </CookiesProvider>
             </QueryClientProvider>

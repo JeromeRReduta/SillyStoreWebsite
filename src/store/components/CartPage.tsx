@@ -3,7 +3,6 @@ import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
 import useMockCart from "../../../mocks/hooks/useMockCart";
-import useMockAuth from "../../../mocks/useMockAuth";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import frontendLogger from "../../configs/frontendLogger";
 import ErrorComponent from "../../utils/components/Error";
@@ -11,6 +10,7 @@ import FlatList from "../../utils/components/FlatList";
 import Loading from "../../utils/components/Loading";
 import css from "../css/cart.module.css";
 import CartItemCard from "./CartItemCard";
+import useAuth from "../../account/services/useAuth";
 
 /** TODO:
  *
@@ -34,7 +34,7 @@ export default function CartPage(): JSX.Element {
         "locked_out",
         { locked_out: string }
     >(["locked_out"]);
-    const { isLoggedOut } = useMockAuth();
+    const { isLoggedOut } = useAuth();
     const navigate = useNavigate();
     const { data: cart, status, error, purchase } = useMockCart();
     const [disabled, setDisabled] = useState<boolean>(false);

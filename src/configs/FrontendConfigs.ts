@@ -33,7 +33,7 @@ const frontendConfigs: IFrontendConfigs = {
         external: {
             portfolio: "https://jeromerreduta.netlify.app",
             github: "https://github.com/JeromeRReduta/SillyStore",
-            api: "https://localhost:3000",
+            api: "http://localhost:3000",
         },
     },
     queryKeys: {

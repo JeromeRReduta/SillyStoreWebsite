@@ -2,7 +2,7 @@ import type { JSX } from "react";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router";
 import { TokenResponse } from "../../SillyStoreCommon/dtos/userDtos";
-import useMockAuth from "../../mocks/useMockAuth";
+import useAuth from "../account/services/useAuth";
 import frontendConfigs from "../configs/FrontendConfigs";
 import frontendLogger from "../configs/frontendLogger";
 import css from "./nav.module.css";
@@ -42,7 +42,7 @@ function LeftLinks(): JSX.Element {
 }
 
 function RightLinks(): JSX.Element {
-    const { isLoggedIn, logout } = useMockAuth();
+    const { isLoggedIn, logout } = useAuth();
     const { login, cart } = frontendConfigs.absolutePaths.internal;
 
     const accountLinks: JSX.Element = isLoggedIn() ? (

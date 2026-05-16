@@ -6,23 +6,23 @@ import {
     IGetUserByCredentialsRequest,
     TokenResponse,
 } from "../../../SillyStoreCommon/dtos/userDtos";
-import useLogin from "../services/useLogin";
-import useRegister from "../services/useRegister";
+import { MutateOptions, useQueryClient } from "@tanstack/react-query";
+import useCart from "../../store/services/useCart";
+import frontendConfigs from "../../configs/FrontendConfigs";
+import { useLogin, useRegister } from "../services/useSignIn";
 
 export default function AuthProvider({
     children,
-    loginService,
-    registerService,
 }: {
     children: React.ReactNode;
-    loginService: (dto: IGetUserByCredentialsRequest) => Promise<TokenResponse>;
-    registerService: (dto: ICreateUserRequest) => Promise<TokenResponse>;
 }) {
-    const { mutateAsync: loginAsync } = useLogin(loginService);
-    const { mutateAsync: registerAsync } = useRegister(registerService);
+    const queryClient = useQueryClient();
+    // const { savePendingCart } = useCart();
+    const { mutate: register } = useRegister();
+    const { mutate: login } = useLogin();
     const [cookies, _setCookies, removeCookies] = useCookies<
         "token",
-        { token: TokenResponse }
+        { token: string }
     >(["token"]);
 
     function isLoggedIn(): boolean {
@@ -33,16 +33,23 @@ export default function AuthProvider({
         return !isLoggedIn();
     }
 
-    function logout(): void {
-        removeCookies("token");
-    }
+    // function logout(): void {
+    //     savePendingCart();
+    //     queryClient.removeQueries({
+    //         queryKey: [frontendConfigs.queryKeys.cart],
+    //         exact: true,
+    //     });
+    //     removeCookies("token");
+    // }
 
     const values: AuthContextValues = {
         isLoggedIn,
         isLoggedOut,
-        registerAsync,
-        loginAsync,
-        logout,
+        logout: function (): void {
+            throw new Error("Function not implemented.");
+        },
+        register,
+        login,
     };
 
     return (
