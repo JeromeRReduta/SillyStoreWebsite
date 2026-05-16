@@ -12,6 +12,7 @@ import {
     IGetUserByCredentialsRequest,
 } from "../SillyStoreCommon/dtos/userDtos.ts";
 import MockAuthProvider from "../mocks/components/MockAuthProvider.tsx";
+import MockCartProvider from "../mocks/components/MockCartProvider.tsx";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 createRoot(document.getElementById("root")!).render(
@@ -19,11 +20,13 @@ createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
             <QueryClientProvider client={new QueryClient()}>
                 <CookiesProvider defaultSetOptions={{ path: "/" }}>
-                    <MockAuthProvider>
-                        <JustAddedProvider>
-                            <App />
-                        </JustAddedProvider>
-                    </MockAuthProvider>
+                    <MockCartProvider>
+                        <MockAuthProvider>
+                            <JustAddedProvider>
+                                <App />
+                            </JustAddedProvider>
+                        </MockAuthProvider>
+                    </MockCartProvider>
                 </CookiesProvider>
             </QueryClientProvider>
         </BrowserRouter>

@@ -9,6 +9,8 @@ import useMockGetPendingCart from "../../../mocks/hooks/useMockGetPendingCart";
 import { data, Link } from "react-router";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import useMockAuth from "../../../mocks/useMockAuth";
+import useMockCart from "../../../mocks/hooks/useMockCart";
+import frontendLogger from "../../configs/frontendLogger";
 
 /** TODO:
  *
@@ -28,8 +30,13 @@ import useMockAuth from "../../../mocks/useMockAuth";
  *
  */
 export default function CartPage(): JSX.Element {
-    const { data: cart, status, error } = useMockGetPendingCart();
     const { isLoggedOut } = useMockAuth();
+    const { data: cart, status, error, purchaseAsync } = useMockCart();
+    function handlePurchase(): void {
+        void (async () => {
+            await purchaseAsync();
+        })();
+    }
 
     if (isLoggedOut()) {
         return (
@@ -43,11 +50,11 @@ export default function CartPage(): JSX.Element {
     if (status === "error") {
         return (
             <ErrorComponent
-                message={`Sorry, something went wrong: ${error.message}`}
+                message={`Sorry, something went wrong: ${error?.message ?? ""}`}
             />
         );
     }
-    if (status === "pending") {
+    if (status === "pending" || cart === undefined) {
         return <Loading message={"Fetching cart..."} />;
     }
     if (cart.length === 0) {
@@ -73,6 +80,10 @@ export default function CartPage(): JSX.Element {
                     cartItem.productId
                 }
             />
+
+            <button className={css.cart_purchase} onClick={handlePurchase}>
+                Buy
+            </button>
         </>
     );
 }

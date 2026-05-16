@@ -2,13 +2,15 @@ import type { JSX } from "react";
 import css from "../css/cart-item-card.module.css";
 import { ICartItem } from "../../../SillyStoreCommon/domain-objects/CartItem";
 import ArrowSvg from "../../assets/right-arrow.svg?react";
+import useMockCart from "../../../mocks/hooks/useMockCart";
 
 // TODO - holy shit refactor this & css
 export default function CartItemCard({
-    cartItem: { imageSrc, price, quantity, title },
+    cartItem: { imageSrc, price, productId, quantity, title },
 }: {
     cartItem: ICartItem;
 }): JSX.Element {
+    const { updateCartItemQuantity } = useMockCart();
     return (
         <section className={css.cart_item_card}>
             <div className={css.cart_item_card_img_container}>
@@ -20,11 +22,21 @@ export default function CartItemCard({
             </div>
             <h1 className={css.cart_item_card_title}>{title}</h1>
             <div className={css.cart_item_card_quantity_bar}>
-                <div className={css.cart_item_card_decrement_arrow}>
+                <div
+                    className={css.cart_item_card_decrement_arrow}
+                    onClick={() => {
+                        updateCartItemQuantity(productId, quantity - 1);
+                    }}
+                >
                     <ArrowSvg />
                 </div>
                 <div className={css.cart_item_card_quantity}>{quantity}</div>
-                <div className={css.cart_item_card_increment_arrow}>
+                <div
+                    className={css.cart_item_card_increment_arrow}
+                    onClick={() => {
+                        updateCartItemQuantity(productId, quantity + 1);
+                    }}
+                >
                     <ArrowSvg />
                 </div>
             </div>
