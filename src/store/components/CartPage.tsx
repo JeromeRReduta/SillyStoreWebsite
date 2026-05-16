@@ -53,7 +53,7 @@ export default function CartPage(): JSX.Element {
     if (cart.length === 0) {
         return (
             <>
-                <div className={css.empty_cart}>
+                <div className={css.cart_empty}>
                     Add items to your cart to see them here.
                 </div>
             </>

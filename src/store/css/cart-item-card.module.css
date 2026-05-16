@@ -1,0 +1,164 @@
+/** MODULE */
+
+:root {
+    --cart_item_img_c_side_len: 10rem;
+}
+
+.cart_item_card > * {
+    padding: 0.5rem;
+}
+
+.cart_item_card {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-areas:
+        "img_c    title         price"
+        "img_c    count_bar     price";
+    grid-template-columns: 10fr 80fr 10fr;
+    grid-template-rows: 50fr 50fr;
+}
+
+.cart_item_card_img_container {
+    grid-area: img_c;
+    width: var(--cart_item_img_c_side_len);
+    height: var(--cart_item_img_c_side_len);
+}
+
+.cart_item_card_img {
+    width: 100%;
+}
+
+.cart_item_card_title {
+    grid-area: title;
+    font-size: 3rem;
+}
+
+.cart_item_card_price {
+    grid-area: price;
+    margin: auto;
+}
+
+.cart_item_card_quantity_bar {
+    grid-area: count_bar;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    height: 3rem;
+}
+
+.left_arrow {
+    rotate: 180deg;
+}
+
+.right_arrow {
+}
+.cart_item_card_quantity_bar > * {
+    height: 100%;
+    flex: 1 1 33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart_item_card_arrow_container > svg {
+    margin: auto;
+    height: 100%;
+}
+
+.cart_item_card_arrow_container > svg:hover {
+    cursor: pointer;
+    fill: var(--color_primary);
+}
+
+.cart_item_card_left_arrow {
+}
+
+.cart_item_card_quantity {
+    margin: auto;
+}
+
+.cart_item_card_right_arrow {
+}
+
+/* <section className={css.cart_item_card}>
+            <div className={css.cart_item_card_img_container}>
+                <img
+                    className={css.cart_item_card_img}
+                    src={imageSrc}
+                    alt={title}
+                />
+            </div>
+            <h1 className={css.cart_item_card_title}>{title}</h1>
+            <div className={css.cart_item_card_price}>{price}</div>
+            <div className={css.cart_item_card_quantity}>{quantity}</div>
+        </section> */
+/* .product_card > * {
+    padding: 0.5rem;
+}
+
+.product_card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    height: 100%;
+    border-radius: 2rem;
+}
+.product_card_img_container {
+    flex: 40 1 40%;
+    padding: 0rem;
+    overflow: hidden;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+}
+.product_card_title {
+    flex: 30 1 30%;
+
+}
+.product_card_buy_now {
+    flex: 30 1 30%;
+    font-size: 1rem;
+    border-radius: 2rem;
+
+    margin: 0.5rem;
+    width: auto;
+}
+
+.product_card_img {
+    width: 100%;
+}
+.product_card_img {
+}
+.product_card_description {
+} */
+
+/** THEMES */
+.cart_item_card {
+    background-color: var(--color_light);
+}
+
+.cart_item_card_img_container {
+}
+
+.cart_item_card_img {
+}
+
+.cart_item_card_title {
+}
+
+.cart_item_card_price {
+}
+
+.cart_item_card_quantity_bar {
+}
+
+.cart_item_card_left_arrow {
+}
+
+.cart_item_card_quantity {
+}
+
+.cart_item_card_right_arrow {
+}

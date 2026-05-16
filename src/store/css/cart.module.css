@@ -1,0 +1,22 @@
+/** MODULE */
+.cart_not_logged_in {
+}
+
+.cart_empty {
+}
+
+.cart_list {
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+}
+
+/** THEMES */
+.cart_not_logged_in {
+}
+
+.cart_empty {
+}
+
+.cart_list {
+}
