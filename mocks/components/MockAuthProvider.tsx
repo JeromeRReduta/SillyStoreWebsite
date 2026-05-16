@@ -3,6 +3,9 @@ import MockAuthContext from "../data-storage/MockAuthContext";
 import { AuthContextValues } from "../../src/account/data-storage/AuthContext";
 import { useCookies } from "react-cookie";
 import { useMockLogin, useMockRegister } from "../hooks/useMockSignIn";
+import useMockCart from "../hooks/useMockCart";
+import { useQueryClient } from "@tanstack/react-query";
+import frontendConfigs from "../../src/configs/FrontendConfigs";
 
 export default function MockAuthProvider({
     children,
@@ -13,6 +16,27 @@ export default function MockAuthProvider({
         "token",
         { token: string }
     >(["token"]);
+    const queryClient = useQueryClient();
+
+    const { savePendingCartAsync } = useMockCart();
+    //     const getCartItems = useEffectEvent(
+    //         () =>
+    //             void (async () => {
+    //                 if (!cookies.token) {
+    //                     frontendLogger.debug("not logged in - doing nothing");
+    //                     return;
+    //                 }
+    //                 await savePendingCartAsync();
+    //                 queryClient.setQueryData(
+    //                     [frontendConfigs.queryKeys.cart],
+    //                     () => undefined,
+    //                 );
+    //             })(),
+    //     );
+
+    //     useEffect(() => {
+    //         getCartItems();
+    //     }, [cookies.token]);
     const { mutate: register } = useMockRegister();
     const { mutate: login } = useMockLogin();
 
@@ -25,6 +49,13 @@ export default function MockAuthProvider({
     }
 
     function logout(): void {
+        void (async () => {
+            await savePendingCartAsync();
+        })();
+        queryClient.removeQueries({
+            queryKey: [frontendConfigs.queryKeys.cart],
+            exact: true,
+        });
         removeCookies("token");
     }
 

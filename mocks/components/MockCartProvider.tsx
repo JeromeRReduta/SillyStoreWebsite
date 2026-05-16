@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import React, { JSX, useEffect, useEffectEvent } from "react";
 import MockCartContext from "../data-storage/MockCartContext";
 import { CartContextValues } from "../../src/store/components/CartContext";
 import {
@@ -6,8 +6,6 @@ import {
     useMutation,
     useQueryClient,
 } from "@tanstack/react-query";
-import { OrderStatus } from "../../SillyStoreCommon/domain-objects/Order";
-import { OverwritePendingCartBody } from "../../src/store/services/useOverwritePendingCart";
 import useMockGetPendingCart from "../hooks/useMockGetPendingCart";
 import frontendConfigs from "../../src/configs/FrontendConfigs";
 import frontendLogger from "../../src/configs/frontendLogger";
@@ -52,6 +50,7 @@ export default function MockCartProvider({
     const { mutateAsync: overwritePendingCartAsync } =
         useMockOverwritePendingCart();
     const { mutateAsync: finalizeOrderAsync } = useMockFinalizeOrder();
+
     async function savePendingCartAsync(): Promise<void> {
         if (data === undefined) {
             frontendLogger.warn("No cart to update!");

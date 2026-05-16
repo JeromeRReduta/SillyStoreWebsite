@@ -32,6 +32,7 @@ import frontendLogger from "../../configs/frontendLogger";
 export default function CartPage(): JSX.Element {
     const { isLoggedOut } = useMockAuth();
     const { data: cart, status, error, purchaseAsync } = useMockCart();
+
     function handlePurchase(): void {
         void (async () => {
             await purchaseAsync();
