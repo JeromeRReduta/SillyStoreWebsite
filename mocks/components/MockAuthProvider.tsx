@@ -18,7 +18,7 @@ export default function MockAuthProvider({
     >(["token"]);
     const queryClient = useQueryClient();
 
-    const { savePendingCartAsync } = useMockCart();
+    const { savePendingCart } = useMockCart();
     //     const getCartItems = useEffectEvent(
     //         () =>
     //             void (async () => {
@@ -49,9 +49,7 @@ export default function MockAuthProvider({
     }
 
     function logout(): void {
-        void (async () => {
-            await savePendingCartAsync();
-        })();
+        savePendingCart();
         queryClient.removeQueries({
             queryKey: [frontendConfigs.queryKeys.cart],
             exact: true,

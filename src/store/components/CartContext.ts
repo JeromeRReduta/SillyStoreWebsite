@@ -13,8 +13,10 @@ export interface CartContextValues {
         productId: number,
         quantity: number,
     ) => void;
-    readonly savePendingCartAsync: () => Promise<void>;
-    readonly purchaseAsync: () => Promise<void>;
+    // readonly savePendingCartAsync: () => Promise<void>;
+    // readonly purchaseAsync: () => Promise<void>;
+    readonly savePendingCart: () => void;
+    readonly purchase: () => void;
 }
 
 const CartContext: Context<CartContextValues | null> =

@@ -6,7 +6,7 @@ import css from "../css/cart.module.css";
 import CartItemCard from "./CartItemCard";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
 import useMockGetPendingCart from "../../../mocks/hooks/useMockGetPendingCart";
-import { data, Link } from "react-router";
+import { data, Link, useNavigate } from "react-router";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import useMockAuth from "../../../mocks/useMockAuth";
 import useMockCart from "../../../mocks/hooks/useMockCart";
@@ -31,13 +31,8 @@ import frontendLogger from "../../configs/frontendLogger";
  */
 export default function CartPage(): JSX.Element {
     const { isLoggedOut } = useMockAuth();
-    const { data: cart, status, error, purchaseAsync } = useMockCart();
-
-    function handlePurchase(): void {
-        void (async () => {
-            await purchaseAsync();
-        })();
-    }
+    const { data: cart, status, error, purchase } = useMockCart();
+    const navigate = useNavigate();
 
     if (isLoggedOut()) {
         return (
@@ -82,7 +77,15 @@ export default function CartPage(): JSX.Element {
                 }
             />
 
-            <button className={css.cart_purchase} onClick={handlePurchase}>
+            <button
+                className={css.cart_purchase}
+                onClick={() => {
+                    purchase();
+                    void navigate(
+                        frontendConfigs.absolutePaths.internal.checkoutSuccess,
+                    );
+                }}
+            >
                 Buy
             </button>
         </>

@@ -25,7 +25,7 @@ const frontendConfigs: IFrontendConfigs = {
             about: "/about",
             store: "/",
             cart: "/checkout",
-            checkoutSucess: "/checkout/success",
+            checkoutSuccess: "/checkout/success",
             lockedOut: "/no",
             login: "/account/login",
             register: "/account/register",
