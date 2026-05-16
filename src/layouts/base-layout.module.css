@@ -150,7 +150,10 @@ body > div,
     height: 100%;
 }
 
-.layout_header,
+.layout_header {
+    padding: 0rem 0.5rem 0rem 0.5rem;
+}
+
 .layout_main {
     padding: 1.5rem;
 }
@@ -163,12 +166,12 @@ body > div,
     }
 
     .layout_header {
-        flex: 10 1 10%;
+        flex: 0 1 min-content;
         width: 100%;
     }
 
     .layout_main {
-        flex: 90 1 90%;
+        /* flex: 95 0 95%; */
         width: 100%;
     }
 }
@@ -179,7 +182,7 @@ body > div,
         grid-template-areas:
             "header     header      header"
             ".          main        .";
-        grid-template-rows: 10fr 90fr;
+        grid-template-rows: min-content 1fr;
         grid-template-columns: 20fr 60fr 20fr;
     }
 
