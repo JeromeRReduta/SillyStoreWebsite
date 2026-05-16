@@ -6,11 +6,12 @@ import css from "../css/cart.module.css";
 import CartItemCard from "./CartItemCard";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
 import useMockGetPendingCart from "../../../mocks/hooks/useMockGetPendingCart";
-import { data, Link, useNavigate } from "react-router";
+import { data, Link, Navigate, useNavigate } from "react-router";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import useMockAuth from "../../../mocks/useMockAuth";
 import useMockCart from "../../../mocks/hooks/useMockCart";
 import frontendLogger from "../../configs/frontendLogger";
+import { useCookies } from "react-cookie";
 
 /** TODO:
  *
@@ -30,7 +31,12 @@ import frontendLogger from "../../configs/frontendLogger";
  *
  */
 export default function CartPage(): JSX.Element {
+    const [_cookies, setCookies, _removeCookies] = useCookies<
+        "locked_out",
+        { locked_out: string }
+    >(["locked_out"]);
     const { isLoggedOut } = useMockAuth();
+    const navigate = useNavigate();
     const { data: cart, status, error, purchase } = useMockCart();
     const [disabled, setDisabled] = useState<boolean>(false);
     const [buttonText, setButtonText] = useState<string>("Buy");
@@ -41,6 +47,13 @@ export default function CartPage(): JSX.Element {
         setButtonText(
             "Your purchase has been sent! Enjoy your order in [FOREVER] business days!",
         );
+
+        const isUrBad = Math.random() < 0.5;
+        frontendLogger.debug("bad roll? ", isUrBad);
+        if (isUrBad) {
+            setCookies("locked_out", "BOTTLE OF BAD LUCK");
+            void navigate(frontendConfigs.absolutePaths.internal.lockedOut);
+        }
     }
 
     if (isLoggedOut()) {
