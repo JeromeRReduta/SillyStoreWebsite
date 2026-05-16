@@ -11,9 +11,12 @@ import {
 import {
     MutationFunctionContext,
     UseMutateFunction,
+    useQueryClient,
 } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
 import useMockAuth from "../../../mocks/useMockAuth";
+import useMockCart from "../../../mocks/hooks/useMockCart";
+import frontendLogger from "../../configs/frontendLogger";
 
 type SupportedMethods = "LOGIN" | "REGISTER";
 
@@ -32,6 +35,7 @@ export default function SignInPage({
 }): JSX.Element {
     const { register, login } = useMockAuth();
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     const { register: registerPath, login: loginPath } =
         frontendConfigs.absolutePaths.internal;
@@ -60,8 +64,10 @@ export default function SignInPage({
             role: "client",
         };
         mutate(dto, {
-            onSuccess: () =>
-                void navigate(frontendConfigs.absolutePaths.internal.store),
+            onSuccess: () => {
+                frontendLogger.debug("refreshing cart...");
+                void navigate(frontendConfigs.absolutePaths.internal.store);
+            },
         });
     }
 

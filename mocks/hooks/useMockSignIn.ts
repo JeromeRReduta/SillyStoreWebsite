@@ -1,4 +1,8 @@
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import {
+    useMutation,
+    UseMutationResult,
+    useQueryClient,
+} from "@tanstack/react-query";
 import {
     ICreateUserRequest,
     IGetUserByCredentialsRequest,
@@ -7,12 +11,14 @@ import {
 import frontendLogger from "../../src/configs/frontendLogger";
 import wasteTime from "../utils/wasteTime";
 import { useCookies } from "react-cookie";
+import frontendConfigs from "../../src/configs/FrontendConfigs";
 
 const mockToken = "bababooey";
 
 function useMockSignIn<
     TRequest = ICreateUserRequest | IGetUserByCredentialsRequest,
 >(messageHead: string): UseMutationResult<TokenResponse, Error, TRequest> {
+    const queryClient = useQueryClient();
     const [_cookies, setCookies, _removeCookies] = useCookies<
         "token",
         { token: string }
@@ -21,6 +27,9 @@ function useMockSignIn<
     async function mutationFn(dto: TRequest): Promise<TokenResponse> {
         frontendLogger.debug(messageHead, "w/ info", dto, "...");
         await wasteTime(3000);
+        await queryClient.invalidateQueries({
+            queryKey: [frontendConfigs.queryKeys.cart],
+        });
         return mockToken;
     }
 

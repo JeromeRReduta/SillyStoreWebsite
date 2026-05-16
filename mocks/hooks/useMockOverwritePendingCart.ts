@@ -14,7 +14,8 @@ export default function useMockOverwritePendingCart(): UseMutationResult<
     ): Promise<ICartItemResponse[]> {
         frontendLogger.debug("Updating cart...");
         await wasteTime(3000);
-        frontendLogger.debug("Cart updated to", cart);
+        frontendLogger.debug("Cart updated!");
+        frontendLogger.trace("Cart is now", cart);
         return cart;
     }
 

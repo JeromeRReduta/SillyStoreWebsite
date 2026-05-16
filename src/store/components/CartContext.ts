@@ -1,9 +1,15 @@
 import { Context, createContext } from "react";
 import { TokenResponse } from "../../../SillyStoreCommon/dtos/userDtos";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
-import { QueryStatus, UseMutateAsyncFunction } from "@tanstack/react-query";
+import {
+    QueryObserverResult,
+    QueryStatus,
+    RefetchOptions,
+    UseMutateAsyncFunction,
+} from "@tanstack/react-query";
 import { OverwritePendingCartBody } from "../services/useOverwritePendingCart";
 import { OrderStatus } from "../../../SillyStoreCommon/domain-objects/Order";
+import { ICartItem } from "../../../SillyStoreCommon/domain-objects/CartItem";
 
 export interface CartContextValues {
     readonly data: ICartItemResponse[] | undefined;

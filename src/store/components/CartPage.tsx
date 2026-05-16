@@ -35,6 +35,14 @@ export default function CartPage(): JSX.Element {
     const [disabled, setDisabled] = useState<boolean>(false);
     const [buttonText, setButtonText] = useState<string>("Buy");
 
+    function handlePurchase(): void {
+        purchase();
+        setDisabled(true);
+        setButtonText(
+            "Your purchase has been sent! Enjoy your order in [FOREVER] business days!",
+        );
+    }
+
     if (isLoggedOut()) {
         return (
             <div className={css.cart_not_logged_in}>
@@ -81,13 +89,7 @@ export default function CartPage(): JSX.Element {
             <button
                 className={css.cart_purchase}
                 disabled={disabled}
-                onClick={() => {
-                    purchase();
-                    setDisabled(true);
-                    setButtonText(
-                        "Your purchase has been sent! Enjoy your order in [9999] business days!",
-                    );
-                }}
+                onClick={handlePurchase}
             >
                 {buttonText}
             </button>

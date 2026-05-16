@@ -15,7 +15,7 @@ export default function MockCartProvider({
     children: React.ReactNode;
 }): JSX.Element {
     const queryClient = useQueryClient();
-    const { data, status, error } = useMockGetPendingCart();
+    const { data, status, error, refetch } = useMockGetPendingCart();
     const { mutate: overwritePendingCart } = useMockOverwritePendingCart();
     const { mutate: finalizeOrder } = useMockFinalizeOrder();
 
