@@ -1,13 +1,12 @@
 import type { JSX } from "react";
-import css from "./nav.module.css";
-import { Link } from "react-router";
-import useAuth from "../account/services/useAuth";
-import frontendConfigs from "../configs/FrontendConfigs";
 import { useCookies } from "react-cookie";
-import frontendLogger from "../configs/frontendLogger";
-import ShoppingCartSvg from "./shopping-cart.svg?react";
+import { Link } from "react-router";
 import { TokenResponse } from "../../SillyStoreCommon/dtos/userDtos";
 import useMockAuth from "../../mocks/useMockAuth";
+import frontendConfigs from "../configs/FrontendConfigs";
+import frontendLogger from "../configs/frontendLogger";
+import css from "./nav.module.css";
+import ShoppingCartSvg from "./shopping-cart.svg?react";
 
 export default function Nav(): JSX.Element {
     const [cookies, _setCookies, _removeCookies] = useCookies<

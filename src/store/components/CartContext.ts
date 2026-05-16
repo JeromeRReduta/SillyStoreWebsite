@@ -1,15 +1,6 @@
+import { QueryStatus } from "@tanstack/react-query";
 import { Context, createContext } from "react";
-import { TokenResponse } from "../../../SillyStoreCommon/dtos/userDtos";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
-import {
-    QueryObserverResult,
-    QueryStatus,
-    RefetchOptions,
-    UseMutateAsyncFunction,
-} from "@tanstack/react-query";
-import { OverwritePendingCartBody } from "../services/useOverwritePendingCart";
-import { OrderStatus } from "../../../SillyStoreCommon/domain-objects/Order";
-import { ICartItem } from "../../../SillyStoreCommon/domain-objects/CartItem";
 
 export interface CartContextValues {
     readonly data: ICartItemResponse[] | undefined;
@@ -19,8 +10,6 @@ export interface CartContextValues {
         productId: number,
         quantity: number,
     ) => void;
-    // readonly savePendingCartAsync: () => Promise<void>;
-    // readonly purchaseAsync: () => Promise<void>;
     readonly savePendingCart: () => void;
     readonly purchase: () => void;
 }

@@ -1,14 +1,12 @@
 import type { JSX } from "react";
-import useGetAllProducts from "../services/useGetAllProducts";
-import ProductCard from "./ProductCard";
-import css from "../css/store-page.module.css";
+import useMockGetAllProducts from "../../../mocks/hooks/useMockGetAllProducts";
+import { IProductResponse } from "../../../SillyStoreCommon/dtos/productDtos";
+import ErrorComponent from "../../utils/components/Error";
 import FlatList from "../../utils/components/FlatList";
 import JustAddedBar from "../../utils/components/JustAddedBar";
 import Loading from "../../utils/components/Loading";
-import ErrorComponent from "../../utils/components/Error";
-import MockServices from "../../../mocks/MockServices";
-import { IProductResponse } from "../../../SillyStoreCommon/dtos/productDtos";
-import useMockGetAllProducts from "../../../mocks/hooks/useMockGetAllProducts";
+import css from "../css/store-page.module.css";
+import ProductCard from "./ProductCard";
 
 export default function StorePage(): JSX.Element {
     const { data: products, status, error } = useMockGetAllProducts();

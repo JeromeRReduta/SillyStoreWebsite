@@ -1,13 +1,13 @@
-import React, { JSX } from "react";
-import MockCartContext from "../data-storage/MockCartContext";
-import { CartContextValues } from "../../src/store/components/CartContext";
 import { useQueryClient } from "@tanstack/react-query";
-import useMockGetPendingCart from "../hooks/useMockGetPendingCart";
+import React, { JSX } from "react";
+import { ICartItemResponse } from "../../SillyStoreCommon/dtos/cartItemDtos";
 import frontendConfigs from "../../src/configs/FrontendConfigs";
 import frontendLogger from "../../src/configs/frontendLogger";
-import { ICartItemResponse } from "../../SillyStoreCommon/dtos/cartItemDtos";
-import useMockOverwritePendingCart from "../hooks/useMockOverwritePendingCart";
+import { CartContextValues } from "../../src/store/components/CartContext";
+import MockCartContext from "../data-storage/MockCartContext";
 import useMockFinalizeOrder from "../hooks/useMockFinalizeOrder";
+import useMockGetPendingCart from "../hooks/useMockGetPendingCart";
+import useMockOverwritePendingCart from "../hooks/useMockOverwritePendingCart";
 
 export default function MockCartProvider({
     children,
@@ -15,7 +15,7 @@ export default function MockCartProvider({
     children: React.ReactNode;
 }): JSX.Element {
     const queryClient = useQueryClient();
-    const { data, status, error, refetch } = useMockGetPendingCart();
+    const { data, status, error } = useMockGetPendingCart();
     const { mutate: overwritePendingCart } = useMockOverwritePendingCart();
     const { mutate: finalizeOrder } = useMockFinalizeOrder();
 

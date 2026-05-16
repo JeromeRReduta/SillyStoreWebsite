@@ -1,22 +1,16 @@
+import { UseMutateFunction, useQueryClient } from "@tanstack/react-query";
 import type { JSX } from "react";
 import { Link, useNavigate } from "react-router";
-import css from "../css/sign-in.module.css";
-import frontendConfigs from "../../configs/FrontendConfigs";
-import LabeledTextInput from "../../utils/components/LabeledTextInput";
+import useMockAuth from "../../../mocks/useMockAuth";
 import {
     ICreateUserRequest,
     IGetUserByCredentialsRequest,
     TokenResponse,
 } from "../../../SillyStoreCommon/dtos/userDtos";
-import {
-    MutationFunctionContext,
-    UseMutateFunction,
-    useQueryClient,
-} from "@tanstack/react-query";
-import { useCookies } from "react-cookie";
-import useMockAuth from "../../../mocks/useMockAuth";
-import useMockCart from "../../../mocks/hooks/useMockCart";
+import frontendConfigs from "../../configs/FrontendConfigs";
 import frontendLogger from "../../configs/frontendLogger";
+import LabeledTextInput from "../../utils/components/LabeledTextInput";
+import css from "../css/sign-in.module.css";
 
 type SupportedMethods = "LOGIN" | "REGISTER";
 
@@ -35,7 +29,6 @@ export default function SignInPage({
 }): JSX.Element {
     const { register, login } = useMockAuth();
     const navigate = useNavigate();
-    const queryClient = useQueryClient();
 
     const { register: registerPath, login: loginPath } =
         frontendConfigs.absolutePaths.internal;

@@ -1,17 +1,16 @@
 import { useState, type JSX } from "react";
+import { useCookies } from "react-cookie";
+import { Link, useNavigate } from "react-router";
+import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
+import useMockCart from "../../../mocks/hooks/useMockCart";
+import useMockAuth from "../../../mocks/useMockAuth";
+import frontendConfigs from "../../configs/FrontendConfigs";
+import frontendLogger from "../../configs/frontendLogger";
 import ErrorComponent from "../../utils/components/Error";
-import Loading from "../../utils/components/Loading";
 import FlatList from "../../utils/components/FlatList";
+import Loading from "../../utils/components/Loading";
 import css from "../css/cart.module.css";
 import CartItemCard from "./CartItemCard";
-import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
-import useMockGetPendingCart from "../../../mocks/hooks/useMockGetPendingCart";
-import { data, Link, Navigate, useNavigate } from "react-router";
-import frontendConfigs from "../../configs/FrontendConfigs";
-import useMockAuth from "../../../mocks/useMockAuth";
-import useMockCart from "../../../mocks/hooks/useMockCart";
-import frontendLogger from "../../configs/frontendLogger";
-import { useCookies } from "react-cookie";
 
 /** TODO:
  *
