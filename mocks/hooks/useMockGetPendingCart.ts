@@ -35,8 +35,7 @@ export default function useMockGetPendingCart(): UseQueryResult<
     async function queryFn(): Promise<ICartItemResponse[]> {
         frontendLogger.debug("Getting cart items...");
         frontendLogger.debug("Logged in?", !!cookies.token);
-        const isSignedOutAtStart = !!cookies.token;
-        if (isSignedOutAtStart) {
+        if (!cookies.token) {
             return [];
         }
         await wasteTime(3000);

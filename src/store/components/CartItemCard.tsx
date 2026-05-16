@@ -3,6 +3,7 @@ import css from "../css/cart-item-card.module.css";
 import { ICartItem } from "../../../SillyStoreCommon/domain-objects/CartItem";
 import ArrowSvg from "../../assets/right-arrow.svg?react";
 import useMockCart from "../../../mocks/hooks/useMockCart";
+import useCart from "../services/useCart";
 
 // TODO - holy shit refactor this & css
 export default function CartItemCard({
@@ -10,7 +11,7 @@ export default function CartItemCard({
 }: {
     cartItem: ICartItem;
 }): JSX.Element {
-    const { updateCartItemQuantity } = useMockCart();
+    const { updateCartItemQuantity } = useCart();
     return (
         <section className={css.cart_item_card}>
             <div className={css.cart_item_card_img_container}>

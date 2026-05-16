@@ -3,7 +3,7 @@ import { IProductResponse } from "../../../SillyStoreCommon/dtos/productDtos";
 
 export interface JustAddedValues {
     readonly product: IProductResponse | null;
-    emit(product: IProductResponse | null): void;
+    emit: (product: IProductResponse | null) => void;
     readonly serialKey: number;
 }
 
