@@ -12,33 +12,14 @@ export default function MockAuthProvider({
 }: {
     children: React.ReactNode;
 }) {
+    const queryClient = useQueryClient();
+    const { savePendingCart } = useMockCart();
+    const { mutate: register } = useMockRegister();
+    const { mutate: login } = useMockLogin();
     const [cookies, _setCookies, removeCookies] = useCookies<
         "token",
         { token: string }
     >(["token"]);
-    const queryClient = useQueryClient();
-
-    const { savePendingCart } = useMockCart();
-    //     const getCartItems = useEffectEvent(
-    //         () =>
-    //             void (async () => {
-    //                 if (!cookies.token) {
-    //                     frontendLogger.debug("not logged in - doing nothing");
-    //                     return;
-    //                 }
-    //                 await savePendingCartAsync();
-    //                 queryClient.setQueryData(
-    //                     [frontendConfigs.queryKeys.cart],
-    //                     () => undefined,
-    //                 );
-    //             })(),
-    //     );
-
-    //     useEffect(() => {
-    //         getCartItems();
-    //     }, [cookies.token]);
-    const { mutate: register } = useMockRegister();
-    const { mutate: login } = useMockLogin();
 
     function isLoggedIn(): boolean {
         return !!cookies.token;

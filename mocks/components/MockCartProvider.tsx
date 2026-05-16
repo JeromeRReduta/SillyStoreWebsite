@@ -16,12 +16,8 @@ export default function MockCartProvider({
 }): JSX.Element {
     const queryClient = useQueryClient();
     const { data, status, error } = useMockGetPendingCart();
-    const {
-        mutate: overwritePendingCart,
-        mutateAsync: overwritePendingCartAsync,
-    } = useMockOverwritePendingCart();
-    const { mutate: finalizeOrder, mutateAsync: finalizeOrderAsync } =
-        useMockFinalizeOrder();
+    const { mutate: overwritePendingCart } = useMockOverwritePendingCart();
+    const { mutate: finalizeOrder } = useMockFinalizeOrder();
 
     function updateCartItemQuantity(productId: number, quantity: number) {
         const updateCart = (old: ICartItemResponse[]) =>
@@ -38,20 +34,13 @@ export default function MockCartProvider({
                 .filter((elem: ICartItemResponse | null) => elem !== null);
         queryClient.setQueryData([frontendConfigs.queryKeys.cart], updateCart);
     }
+
     function savePendingCart(): void {
         if (data === undefined) {
             frontendLogger.warn("No cart to update!");
             return;
         }
         overwritePendingCart(data);
-    }
-
-    async function savePendingCartAsync(): Promise<void> {
-        if (data === undefined) {
-            frontendLogger.warn("No cart to update!");
-            return;
-        }
-        await overwritePendingCartAsync(data);
     }
 
     function purchase(): void {
@@ -63,22 +52,11 @@ export default function MockCartProvider({
         finalizeOrder(null);
     }
 
-    async function purchaseAsync(): Promise<void> {
-        if (data === undefined) {
-            frontendLogger.warn("No cart to update!");
-            return;
-        }
-        await overwritePendingCartAsync(data);
-        await finalizeOrderAsync(null);
-    }
-
     const values: CartContextValues = {
         data,
         status,
         error,
         updateCartItemQuantity,
-        // savePendingCartAsync,
-        // purchaseAsync,
         savePendingCart,
         purchase,
     };
