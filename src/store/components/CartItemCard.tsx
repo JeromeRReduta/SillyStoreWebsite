@@ -20,15 +20,11 @@ export default function CartItemCard({
             </div>
             <h1 className={css.cart_item_card_title}>{title}</h1>
             <div className={css.cart_item_card_quantity_bar}>
-                <div
-                    className={`${css.cart_item_card_arrow_container} ${css.left_arrow}`}
-                >
+                <div className={css.cart_item_card_decrement_arrow}>
                     <ArrowSvg />
                 </div>
                 <div className={css.cart_item_card_quantity}>{quantity}</div>
-                <div
-                    className={`${css.cart_item_card_arrow_container} ${css.right_arrow}`}
-                >
+                <div className={css.cart_item_card_increment_arrow}>
                     <ArrowSvg />
                 </div>
             </div>

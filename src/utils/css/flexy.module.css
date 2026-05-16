@@ -1,0 +1,40 @@
+/** Util classes for flexbox */
+
+.flexy-horizontal {
+    display: flex;
+    align-items: center;
+}
+
+.flexy-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flexy-horizontal-left {
+    composes: flexy-horizontal;
+    justify-content: flex-start;
+}
+
+.flexy-horizontal-right {
+    composes: flexy-horizontal;
+    justify-content: flex-end;
+}
+
+.flexy-horizontal-center {
+    composes: flexy-horizontal;
+    justify-content: center;
+}
+
+.flexy-vertical-left {
+    composes: flexy-vertical;
+    justify-content: flex-start;
+}
+.flexy-vertical-right {
+    composes: flexy-vertical;
+    justify-content: flex-end;
+}
+.flexy-vertical-center {
+    composes: flexy-vertical;
+    justify-content: center;
+}
