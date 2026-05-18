@@ -1,17 +1,15 @@
-import React, { useState } from "react";
-import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
+import { useQueryClient } from "@tanstack/react-query";
+import React from "react";
 import { OrderStatus } from "../../../SillyStoreCommon/domain-objects/Order";
-import { ICartItem } from "../../../SillyStoreCommon/domain-objects/CartItem";
-import CartContext, { CartContextValues } from "./CartContext";
+import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
+import frontendConfigs from "../../configs/FrontendConfigs";
+import frontendLogger from "../../configs/frontendLogger";
+import useFinalizeOrder from "../services/useFinalizeOrder";
 import useGetPendingCart from "../services/useGetPendingCart";
 import useOverwritePendingCart, {
     OverwritePendingCartBody,
 } from "../services/useOverwritePendingCart";
-import useFinalizeOrder from "../services/useFinalizeOrder";
-import { useQueryClient } from "@tanstack/react-query";
-import useMockOverwritePendingCart from "../../../mocks/hooks/useMockOverwritePendingCart";
-import frontendConfigs from "../../configs/FrontendConfigs";
-import frontendLogger from "../../configs/frontendLogger";
+import CartContext, { CartContextValues } from "./CartContext";
 
 interface CartProviderParams {
     readonly children: React.ReactNode;
