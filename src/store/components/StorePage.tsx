@@ -9,7 +9,7 @@ import ProductCard from "./ProductCard";
 import useGetAllProducts from "../services/useGetAllProducts";
 
 export default function StorePage(): JSX.Element {
-    const { data: products, status, error } = useGetAllProducts();
+    const { data: remoteProducts, status, error } = useGetAllProducts();
 
     if (status === "error") {
         return (
@@ -28,7 +28,7 @@ export default function StorePage(): JSX.Element {
             <FlatList
                 listClassName={css.product_list}
                 listItemClassName={css.product_list_item}
-                data={products}
+                data={remoteProducts}
                 renderItem={(product: IProductResponse) => (
                     <ProductCard product={product} />
                 )}
