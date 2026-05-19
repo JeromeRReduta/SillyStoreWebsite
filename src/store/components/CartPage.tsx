@@ -11,6 +11,7 @@ import css from "../css/cart.module.css";
 import CartItemCard from "./CartItemCard";
 import useAuth from "../../account/services/useAuth";
 import useCart from "../services/useCart";
+import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
 
 /** TODO:
  *
@@ -30,10 +31,7 @@ import useCart from "../services/useCart";
  *
  */
 export default function CartPage(): JSX.Element {
-    const [_cookies, setCookies, _removeCookies] = useCookies<
-        "locked_out",
-        { locked_out: string }
-    >(["locked_out"]);
+    const [_cookies, setCookie, _removeCookie] = useWebsiteCookies();
     const { isLoggedOut } = useAuth();
     const navigate = useNavigate();
     const { data: cart, status, error, purchase } = useCart();
@@ -50,7 +48,7 @@ export default function CartPage(): JSX.Element {
         const isUrBad = Math.random() < 0.5;
         frontendLogger.debug("bad roll? ", isUrBad);
         if (isUrBad) {
-            setCookies("locked_out", "BOTTLE OF BAD LUCK");
+            setCookie("locked_out", "BOTTLE OF BAD LUCK");
             void navigate(frontendConfigs.absolutePaths.internal.lockedOut);
         }
     }

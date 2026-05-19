@@ -1,19 +1,11 @@
 import type { JSX } from "react";
-import { useCookies } from "react-cookie";
 import { Link } from "react-router";
-import { TokenResponse } from "../../SillyStoreCommon/dtos/userDtos";
 import useAuth from "../account/services/useAuth";
 import frontendConfigs from "../configs/FrontendConfigs";
-import frontendLogger from "../configs/frontendLogger";
 import css from "./nav.module.css";
 import ShoppingCartSvg from "./shopping-cart.svg?react";
 
 export default function Nav(): JSX.Element {
-    const [cookies, _setCookies, _removeCookies] = useCookies<
-        "token",
-        { token: TokenResponse }
-    >(["token"]);
-    frontendLogger.debug(cookies.token);
     return (
         <nav className={css.layout_nav}>
             <LeftLinks />
