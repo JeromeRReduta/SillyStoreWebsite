@@ -5,6 +5,7 @@ import frontendConfigs from "../../configs/FrontendConfigs";
 import useCart from "../../store/services/useCart";
 import { useLogin, useRegister } from "../services/useSignIn";
 import AuthContext, { type AuthContextValues } from "./AuthContext";
+import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
 
 export default function AuthProvider({
     children,
@@ -15,13 +16,10 @@ export default function AuthProvider({
     const { savePendingCart } = useCart();
     const { mutate: register } = useRegister();
     const { mutate: login } = useLogin();
-    const [cookies, _setCookies, removeCookies] = useCookies<
-        "token",
-        { token: string }
-    >(["token"]);
+    const [{ local_token }, _setCookies, removeCookies] = useWebsiteCookies();
 
     function isLoggedIn(): boolean {
-        return !!cookies.token;
+        return !!local_token;
     }
 
     function isLoggedOut(): boolean {
@@ -34,7 +32,7 @@ export default function AuthProvider({
             queryKey: [frontendConfigs.queryKeys.cart],
             exact: true,
         });
-        removeCookies("token");
+        removeCookies("local_token");
     }
 
     const values: AuthContextValues = {
