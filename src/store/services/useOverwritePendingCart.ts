@@ -3,11 +3,11 @@ import {
     UseMutationResult,
     useQueryClient,
 } from "@tanstack/react-query";
-import { useCookies } from "react-cookie";
 import { ICartItem } from "../../../SillyStoreCommon/domain-objects/CartItem";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import frontendLogger from "../../configs/frontendLogger";
 import standardJsonFetch from "../../utils/services/StandardJsonFetch";
+import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
 
 export interface OverwritePendingCartBody {
     cartItems: Pick<ICartItem, "productId" | "quantity">[];
@@ -18,10 +18,8 @@ export default function useOverwritePendingCart(): UseMutationResult<
     Error,
     OverwritePendingCartBody
 > {
-    const [{ token: jwt }, _setCookies, _removeCookies] = useCookies<
-        "token",
-        { token: string }
-    >(["token"]);
+    const [{ local_token: jwt }, _setCookies, _removeCookies] =
+        useWebsiteCookies();
 
     const queryClient = useQueryClient();
 
