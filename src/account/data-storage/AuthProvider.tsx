@@ -1,11 +1,10 @@
 import { useQueryClient } from "@tanstack/react-query";
 import type React from "react";
-import { useCookies } from "react-cookie";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import useCart from "../../store/services/useCart";
+import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
 import { useLogin, useRegister } from "../services/useSignIn";
 import AuthContext, { type AuthContextValues } from "./AuthContext";
-import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
 
 export default function AuthProvider({
     children,

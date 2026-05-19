@@ -8,10 +8,10 @@ import {
     IGetUserByCredentialsRequest,
     TokenResponse,
 } from "../../../SillyStoreCommon/dtos/userDtos";
-import { useCookies } from "react-cookie";
-import frontendLogger from "../../configs/frontendLogger";
 import frontendConfigs from "../../configs/FrontendConfigs";
+import frontendLogger from "../../configs/frontendLogger";
 import standardJsonFetch from "../../utils/services/StandardJsonFetch";
+import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
 
 function useSignIn<
     TRequest = ICreateUserRequest | IGetUserByCredentialsRequest,
@@ -19,10 +19,7 @@ function useSignIn<
     method: "LOGIN" | "REGISTER",
 ): UseMutationResult<TokenResponse, Error, TRequest> {
     const queryClient = useQueryClient();
-    const [cookies, setCookies, _removeCookies] = useCookies<
-        "token",
-        { token: string }
-    >(["token"]);
+    const [{ local_token }, setCookie, _removeCookie] = useWebsiteCookies();
 
     async function mutationFn(dto: TRequest): Promise<TokenResponse> {
         const endpoint =
@@ -30,20 +27,21 @@ function useSignIn<
         const url = frontendConfigs.absolutePaths.external.api + endpoint;
         const messageHead = method === "LOGIN" ? "Logging in" : "Registering";
         frontendLogger.debug(messageHead, "w/ info", dto, "...");
-        const { token }: { token: string } = await standardJsonFetch({
-            bodyObj: dto,
-            jwt: cookies.token,
-            method: "POST",
-            url,
-        });
+        const { tokenResponse }: { tokenResponse: string } =
+            await standardJsonFetch({
+                bodyObj: dto,
+                jwt: local_token,
+                method: "POST",
+                url,
+            });
         await queryClient.invalidateQueries({
             queryKey: [frontendConfigs.queryKeys.cart],
         });
-        return token;
+        return tokenResponse;
     }
 
-    function onSuccess(token: string): void {
-        setCookies("token", token);
+    function onSuccess(tokenResponse: TokenResponse): void {
+        setCookie("local_token", tokenResponse);
     }
 
     return useMutation({
