@@ -3,11 +3,11 @@ import {
     UseMutationResult,
     useQueryClient,
 } from "@tanstack/react-query";
-import { useCookies } from "react-cookie";
+import { OrderStatus } from "../../../SillyStoreCommon/domain-objects/Order";
 import { IOrderResponse } from "../../../SillyStoreCommon/dtos/orderDtos";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import standardJsonFetch from "../../utils/services/StandardJsonFetch";
-import { OrderStatus } from "../../../SillyStoreCommon/domain-objects/Order";
+import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
 
 export default function useFinalizeOrder(): UseMutationResult<
     IOrderResponse,
@@ -15,10 +15,8 @@ export default function useFinalizeOrder(): UseMutationResult<
     null
 > {
     const queryClient = useQueryClient();
-    const [{ token: jwt }, _setCookies, _removeCookies] = useCookies<
-        "token",
-        { token: string }
-    >(["token"]);
+    const [{ local_token: jwt }, _setCookies, _removeCookies] =
+        useWebsiteCookies();
     async function mutationFn(): Promise<IOrderResponse> {
         const bodyObj: { status: OrderStatus } = { status: "completed" };
         const url = `${frontendConfigs.absolutePaths.external.api}/orders/pending`;
