@@ -1,16 +1,60 @@
 import type { JSX } from "react";
-import css from "../css/cart-item-card.module.css";
 import { ICartItem } from "../../../SillyStoreCommon/domain-objects/CartItem";
 import ArrowSvg from "../../assets/right-arrow.svg?react";
-import useMockCart from "../../../mocks/hooks/useMockCart";
+import css from "../css/cart-item-card.module.css";
 import useCart from "../services/useCart";
 
-// TODO - holy shit refactor this & css
+/**
+ *
+ * TODO - hooks
+ * 0. remote products:
+ * * useGetAllProducts {data: remoteProducts}
+ * 1. local cookies:
+ *  * useJwt => {localToken}
+ *      - init state = useSignIn
+ *  * useLockedOut => {lockedOut}
+ * 2. Remote cookies
+ *  * Tanstack fetch cookies - useSignIn
+ * 3. Local cart
+ *  * useState: localCart (initState = remoteCart)
+ * 4. Remote cart
+ *  * Tanstack fetch cart - useGetAllPendingCartItems => {data: remoteCart}
+ *  * Tanstack fetch cart - useMergePendingCart => {(no data)} (invalidates cart entries (exact = false) so we refetch remotecart data)
+ * 5. Remote order
+ *  * Tanstack finalize order - useFinalizeOrder => {data: remoteFinalizedOrder}
+ *
+ *
+ *  Can do smth like:
+ * 1. CartProvider
+ *      effect: when localToken changes, invalidate [cart] entries (not exact)
+ *      effect: when remoteCart changes, setLocalCart(remoteCart)
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
 export default function CartItemCard({
-    cartItem: { imageSrc, price, productId, quantity, title },
+    cartItem,
 }: {
     cartItem: ICartItem;
 }): JSX.Element {
+    const {
+        imageSrc,
+        price,
+        productId,
+        quantity,
+        title,
+        orderId,
+        description,
+    } = cartItem;
     const { updateCartItemQuantity } = useCart();
     return (
         <section className={css.cart_item_card}>
@@ -26,7 +70,7 @@ export default function CartItemCard({
                 <div
                     className={css.cart_item_card_decrement_arrow}
                     onClick={() => {
-                        updateCartItemQuantity(productId, quantity - 1);
+                        updateCartItemQuantity(cartItem);
                     }}
                 >
                     <ArrowSvg />

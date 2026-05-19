@@ -64,17 +64,7 @@ export default function CartPage(): JSX.Element {
             </div>
         );
     }
-    if (status === "error") {
-        return (
-            <ErrorComponent
-                message={`Sorry, something went wrong: ${error?.message ?? ""}`}
-            />
-        );
-    }
-    if (status === "pending" || cart === undefined) {
-        return <Loading message={"Fetching cart..."} />;
-    }
-    if (cart.length === 0) {
+    if (!cart || cart.length === 0) {
         return (
             <>
                 <div className={css.cart_empty}>
@@ -83,6 +73,17 @@ export default function CartPage(): JSX.Element {
             </>
         );
     }
+    if (status === "error") {
+        return (
+            <ErrorComponent
+                message={`Sorry, something went wrong: ${error?.message ?? ""}`}
+            />
+        );
+    }
+    if (status === "pending") {
+        return <Loading message={"Fetching cart..."} />;
+    }
+
     // success case:
     return (
         <>

@@ -31,10 +31,7 @@ export default function MockAuthProvider({
 
     function logout(): void {
         savePendingCart();
-        queryClient.removeQueries({
-            queryKey: [frontendConfigs.queryKeys.cart],
-            exact: true,
-        });
+
         removeCookies("token");
     }
 

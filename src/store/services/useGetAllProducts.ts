@@ -8,10 +8,9 @@ export default function useGetAllProducts(): UseQueryResult<
 > {
     async function queryFn(): Promise<IProductResponse[]> {
         const url = `${frontendConfigs.absolutePaths.external.api}/products`;
-        const response: Response = await standardJsonFetch({
+        return await standardJsonFetch({
             url,
         });
-        return (await response.json()) as IProductResponse[];
     }
 
     return useQuery({
@@ -19,15 +18,3 @@ export default function useGetAllProducts(): UseQueryResult<
         queryFn,
     });
 }
-
-// async function defaultQuery(): Promise<IProductResponse[]> {
-//     const url: string = `${frontendConfigs.absolutePaths.external.api}/products`;
-//     const response: Response = await fetch(url);
-//     if (!response.ok) {
-//         throw new Error("Something went wrong!");
-//     }
-//     if (response.status === 204) {
-//         return [];
-//     }
-//     return (await response.json()) as IProductResponse[];
-// }

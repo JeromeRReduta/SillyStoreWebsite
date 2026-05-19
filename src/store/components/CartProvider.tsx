@@ -11,35 +11,50 @@ import useOverwritePendingCart, {
 } from "../services/useOverwritePendingCart";
 import CartContext, { CartContextValues } from "./CartContext";
 
-interface CartProviderParams {
-    readonly children: React.ReactNode;
-    getPendingCartService: () => Promise<ICartItemResponse[]>;
-    overwritePendingCartService: (
-        body: OverwritePendingCartBody,
-    ) => Promise<void>;
-    finalizeOrderService: () => Promise<OrderStatus>;
-}
-
-export default function CartProvider({ children }: CartProviderParams) {
+export default function CartProvider({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
     const queryClient = useQueryClient();
     const { data, status, error } = useGetPendingCart();
     const { mutate: overwritePendingCart } = useOverwritePendingCart();
     const { mutate: finalizeOrder } = useFinalizeOrder();
 
-    function updateCartItemQuantity(productId: number, quantity: number) {
-        const updateCart = (old: ICartItemResponse[]) =>
-            old
-                .map((elem) => {
-                    if (elem.productId !== productId) {
-                        return elem;
-                    }
-                    if (quantity === 0) {
-                        return null;
-                    }
-                    return { ...elem, quantity };
-                })
-                .filter((elem: ICartItemResponse | null) => elem !== null);
-        queryClient.setQueryData([frontendConfigs.queryKeys.cart], updateCart);
+    function updateCart(newItem: ICartItemResponse): ICartItemResponse[] {
+        if (!data) {
+            return [newItem];
+        }
+        const copy = [];
+        let found = false;
+        for (const oldItem of data) {
+            frontendLogger.debug("comparing old", oldItem, "with new", newItem);
+            if (oldItem.productId !== newItem.productId) {
+                copy.push(oldItem);
+                continue;
+            }
+            found = true;
+            if (newItem.quantity > 0) {
+                // if we match & have quantity > 0, push cart item w/ updated quantity
+                copy.push({ ...oldItem, quantity: newItem.quantity });
+            }
+            // if we find match and quantity = 0, don't copy cart item
+        }
+        if (!found) {
+            copy.push(newItem);
+        }
+        return copy;
+    }
+
+    function updateCartItemQuantity(newItem: ICartItemResponse): void {
+        queryClient.setQueryData(
+            [frontendConfigs.queryKeys.cart],
+            updateCart(newItem),
+        );
+        frontendLogger.info(
+            "query client is now",
+            queryClient.getQueryData([frontendConfigs.queryKeys.cart]),
+        );
     }
 
     function savePendingCart(): void {
@@ -47,7 +62,7 @@ export default function CartProvider({ children }: CartProviderParams) {
             frontendLogger.warn("No cart to update!");
             return;
         }
-        overwritePendingCart(data);
+        overwritePendingCart({ cartItems: data });
     }
 
     function purchase(): void {
@@ -55,7 +70,7 @@ export default function CartProvider({ children }: CartProviderParams) {
             frontendLogger.warn("No cart to update!");
             return;
         }
-        overwritePendingCart(data);
+        overwritePendingCart({ cartItems: data });
         finalizeOrder(null);
     }
 

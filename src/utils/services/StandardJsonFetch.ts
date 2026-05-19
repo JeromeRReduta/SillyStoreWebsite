@@ -1,4 +1,5 @@
 import { TokenResponse } from "../../../SillyStoreCommon/dtos/userDtos";
+import frontendLogger from "../../configs/frontendLogger";
 
 export interface IStandardJsonFetchInfo {
     readonly bodyObj?: unknown;
@@ -7,19 +8,31 @@ export interface IStandardJsonFetchInfo {
     readonly url: string;
 }
 
-export default async function standardJsonFetch({
+export default async function standardJsonFetch<TResponseBody = unknown>({
     bodyObj,
     jwt,
     method = "GET",
     url,
-}: IStandardJsonFetchInfo): Promise<Response> {
+}: IStandardJsonFetchInfo): Promise<TResponseBody> {
+    // Todo: change this to just get .json()
     const headers: Record<string, string> = createHeaders(jwt);
     const body: string = JSON.stringify(bodyObj);
+    frontendLogger.debug(`
+            Running standard JSON fetch w/ data:
+            Attempting to access: ${url} (${method});
+            headers: {
+                Content-Type: ${headers["Content-Type"]},
+                Token exists?: ${(!!jwt).toString()},
+            };
+            ${body}
+        `);
     const response: Response = await fetch(url, { body, headers, method });
     if (!response.ok) {
-        throw new Error("Something went wrong!");
+        throw new Error("error occurred");
     }
-    return response;
+    const json: TResponseBody = (await response.json()) as TResponseBody;
+    frontendLogger.debug("json", json);
+    return json;
 }
 
 function createHeaders(jwt?: TokenResponse): Record<string, string> {

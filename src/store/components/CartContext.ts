@@ -6,10 +6,7 @@ export interface CartContextValues {
     readonly data: ICartItemResponse[] | undefined;
     readonly status: QueryStatus;
     readonly error: Error | null;
-    readonly updateCartItemQuantity: (
-        productId: number,
-        quantity: number,
-    ) => void;
+    readonly updateCartItemQuantity: (cartItem: ICartItemResponse) => void;
     readonly savePendingCart: () => void;
     readonly purchase: () => void;
 }

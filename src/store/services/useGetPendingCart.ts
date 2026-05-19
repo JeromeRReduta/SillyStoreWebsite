@@ -20,19 +20,11 @@ export default function useGetPendingCart(): UseQueryResult<
 
     async function queryFn(): Promise<ICartItemResponse[]> {
         frontendLogger.debug("Getting cart items...");
-        if (!cookies.token) {
-            return [];
-        }
-        frontendLogger.debug("URL: ", url);
-        frontendLogger.debug("jwt", cookies.token);
-
-        const response: Response = await standardJsonFetch({
+        return await standardJsonFetch({
             url,
             jwt: cookies.token,
         });
-        return (await response.json()) as ICartItemResponse[];
     }
-
     return useQuery({
         queryKey: [frontendConfigs.queryKeys.cart],
         queryFn,

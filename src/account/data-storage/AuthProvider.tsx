@@ -1,15 +1,10 @@
+import { useQueryClient } from "@tanstack/react-query";
 import type React from "react";
-import AuthContext, { type AuthContextValues } from "./AuthContext";
 import { useCookies } from "react-cookie";
-import {
-    ICreateUserRequest,
-    IGetUserByCredentialsRequest,
-    TokenResponse,
-} from "../../../SillyStoreCommon/dtos/userDtos";
-import { MutateOptions, useQueryClient } from "@tanstack/react-query";
-import useCart from "../../store/services/useCart";
 import frontendConfigs from "../../configs/FrontendConfigs";
+import useCart from "../../store/services/useCart";
 import { useLogin, useRegister } from "../services/useSignIn";
+import AuthContext, { type AuthContextValues } from "./AuthContext";
 
 export default function AuthProvider({
     children,
@@ -17,7 +12,7 @@ export default function AuthProvider({
     children: React.ReactNode;
 }) {
     const queryClient = useQueryClient();
-    // const { savePendingCart } = useCart();
+    const { savePendingCart } = useCart();
     const { mutate: register } = useRegister();
     const { mutate: login } = useLogin();
     const [cookies, _setCookies, removeCookies] = useCookies<
@@ -33,21 +28,19 @@ export default function AuthProvider({
         return !isLoggedIn();
     }
 
-    // function logout(): void {
-    //     savePendingCart();
-    //     queryClient.removeQueries({
-    //         queryKey: [frontendConfigs.queryKeys.cart],
-    //         exact: true,
-    //     });
-    //     removeCookies("token");
-    // }
+    function logout(): void {
+        savePendingCart();
+        queryClient.removeQueries({
+            queryKey: [frontendConfigs.queryKeys.cart],
+            exact: true,
+        });
+        removeCookies("token");
+    }
 
     const values: AuthContextValues = {
         isLoggedIn,
         isLoggedOut,
-        logout: function (): void {
-            throw new Error("Function not implemented.");
-        },
+        logout,
         register,
         login,
     };

@@ -1,14 +1,17 @@
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import {
+    useMutation,
+    UseMutationResult,
+    useQueryClient,
+} from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
 import { ICartItem } from "../../../SillyStoreCommon/domain-objects/CartItem";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import frontendLogger from "../../configs/frontendLogger";
 import standardJsonFetch from "../../utils/services/StandardJsonFetch";
 
-export type OverwritePendingCartBody = Pick<
-    ICartItem,
-    "productId" | "quantity"
->[];
+export interface OverwritePendingCartBody {
+    cartItems: Pick<ICartItem, "productId" | "quantity">[];
+}
 
 export default function useOverwritePendingCart(): UseMutationResult<
     void,
@@ -20,21 +23,22 @@ export default function useOverwritePendingCart(): UseMutationResult<
         { token: string }
     >(["token"]);
 
+    const queryClient = useQueryClient();
+
     async function mutationFn(cart: OverwritePendingCartBody): Promise<void> {
         const url = `${frontendConfigs.absolutePaths.external.api}/cart/pending`;
         const method = "PUT";
         frontendLogger.debug("Overwriting cart w/ dto: ", cart);
-        const response: Response = await standardJsonFetch({
+        await standardJsonFetch({
             bodyObj: cart,
             jwt,
             method,
             url,
         });
-        frontendLogger.debug(
-            "check - response code is",
-            response.status,
-            "(expected: 204)",
-        );
+        queryClient.removeQueries({
+            queryKey: [frontendConfigs.queryKeys.cart],
+            exact: true,
+        });
     }
 
     return useMutation({
