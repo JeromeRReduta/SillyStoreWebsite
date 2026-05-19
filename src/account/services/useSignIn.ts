@@ -30,16 +30,14 @@ function useSignIn<
         const url = frontendConfigs.absolutePaths.external.api + endpoint;
         const messageHead = method === "LOGIN" ? "Logging in" : "Registering";
         frontendLogger.debug(messageHead, "w/ info", dto, "...");
-        const response = await standardJsonFetch({
+        const { token }: { token: string } = await standardJsonFetch({
             bodyObj: dto,
             jwt: cookies.token,
             method: "POST",
             url,
         });
-        const { token } = (await response.json()) as { token: TokenResponse };
         await queryClient.invalidateQueries({
             queryKey: [frontendConfigs.queryKeys.cart],
-            exact: true,
         });
         return token;
     }
