@@ -27,6 +27,7 @@ export default function AuthProvider({
     }
 
     async function logoutAsync(): Promise<void> {
+        frontendLogger.debug("COOKIES FOR SYNC", local_token);
         await synchronizeCartsAsync();
         frontendLogger.debug("DONE w/ SYNC");
         queryClient.removeQueries({

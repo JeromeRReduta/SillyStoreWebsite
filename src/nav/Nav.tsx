@@ -37,23 +37,16 @@ function LeftLinks(): JSX.Element {
 function RightLinks(): JSX.Element {
     const { isLoggedIn, logoutAsync } = useAuth();
     const { login, cart } = frontendConfigs.absolutePaths.internal;
-    async function logThing(): Promise<void> {
-        await frontendLogger.debug("LOGGING OUT");
+
+    function handleLogout(): void {
+        void (async () => {
+            await logoutAsync();
+        })();
     }
 
     const accountLinks: JSX.Element = isLoggedIn() ? (
         <>
-            <Link
-                className={css.nav_link}
-                to="#"
-                onClick={
-                    // void (async () => {
-                    //     await logoutAsync();
-                    // })
-
-                    void logThing
-                }
-            >
+            <Link className={css.nav_link} to="#" onClick={handleLogout}>
                 Logout
             </Link>
         </>

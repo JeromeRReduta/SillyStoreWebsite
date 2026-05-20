@@ -32,11 +32,10 @@ import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
  */
 export default function CartPage(): JSX.Element {
     const { isLoggedOut } = useAuth();
-    const { localCart, status, error } = useCart();
+    const { localCart, status } = useCart();
 
     frontendLogger.debug("THING: ", localCart);
     frontendLogger.debug("THING: ", status);
-    frontendLogger.debug("THING: ", error);
     if (isLoggedOut()) {
         return (
             <div className={css.cart_not_logged_in}>
@@ -46,6 +45,18 @@ export default function CartPage(): JSX.Element {
             </div>
         );
     }
+
+    // if (status === "error") {
+    //     return (
+    //         <ErrorComponent
+    //             message={`Sorry, something went wrong: ${error?.message ?? ""}`}
+    //         />
+    //     );
+    // }
+    if (status === "pending") {
+        return <Loading message={"Fetching cart..."} />;
+    }
+
     if (localCart.length === 0) {
         return (
             <>
@@ -54,16 +65,6 @@ export default function CartPage(): JSX.Element {
                 </div>
             </>
         );
-    }
-    if (status === "error") {
-        return (
-            <ErrorComponent
-                message={`Sorry, something went wrong: ${error?.message ?? ""}`}
-            />
-        );
-    }
-    if (status === "pending") {
-        return <Loading message={"Fetching cart..."} />;
     }
 
     // success case:

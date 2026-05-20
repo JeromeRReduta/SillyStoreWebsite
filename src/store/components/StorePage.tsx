@@ -7,10 +7,13 @@ import Loading from "../../utils/components/Loading";
 import css from "../css/store-page.module.css";
 import ProductCard from "./ProductCard";
 import useGetAllProducts from "../services/useGetAllProducts";
+import frontendLogger from "../../configs/frontendLogger";
+import useCart from "../services/useCart";
 
 export default function StorePage(): JSX.Element {
     const { data: remoteProducts, status, error } = useGetAllProducts();
-
+    const { localCart } = useCart();
+    frontendLogger.info("local cart: ", localCart);
     if (status === "error") {
         return (
             <ErrorComponent

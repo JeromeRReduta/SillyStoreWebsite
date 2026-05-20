@@ -131,10 +131,18 @@ export default function CartProvider({
         const newCart: ICartItemResponse[] = [];
         for (const item of localCart) {
             if (item.productId !== newItem.productId) {
+                frontendLogger.debug("adding item", item);
+                frontendLogger.info("Now newcart = ", newCart);
                 newCart.push(item);
                 continue;
             }
             found = true;
+            newCart.push(newItem);
+
+            frontendLogger.debug("adding item", newItem);
+            frontendLogger.info("Now newcart = ", newCart);
+        }
+        if (!found) {
             newCart.push(newItem);
         }
         frontendLogger.debug(found ? "Updated" : "Inserted", "dto:", newItem);
@@ -142,6 +150,7 @@ export default function CartProvider({
     }
 
     async function synchronizeCartsAsync(): Promise<void> {
+        frontendLogger.debug("LOGGING OUT & Syncing carts");
         mergePendingCart({ cartItems: localCart });
         await queryClient.invalidateQueries({
             queryKey: [frontendConfigs.queryKeys.cart],

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import useMockCart from "../../../mocks/hooks/useMockCart";
 import useCart from "../services/useCart";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
+import frontendLogger from "../../configs/frontendLogger";
 
 export default function ProductCard({
     product,
@@ -71,34 +72,16 @@ interface IButtonInfo {
     // readonly onClick: (() => void) | undefined;
 }
 function BuyNowButton({ product }: { product: IProductResponse }): JSX.Element {
-    const { id, price } = product;
-    const { isLoggedIn, isLoggedOut } = useAuth();
+    const { price } = product;
+    const { isLoggedOut } = useAuth();
     const navigate = useNavigate();
-    // const { data, updateCartItemQuantity } = useCart();
-    const { localCart: data, upsertIntoLocalCart } = useCart();
+    const { upsertIntoLocalCart } = useCart();
     const { emit } = useJustAdded();
-    // const [buttonInfo, setButtonInfo] = useState<IButtonInfo>({
-    //     disabled: false,
-    //     text: "",
-    //     onClick: undefined,
-    // });
+    const [disabled, setDisabled] = useState<boolean>(false);
+    const text: string = disabled
+        ? `$${price.toFixed(2)}\n(In Cart)`
+        : `$${price.toFixed(2)}`;
 
-    const isInPendingCart =
-        isLoggedIn() &&
-        data?.some((cartItem) => product.id === cartItem.productId);
-
-    const initButtonState: IButtonInfo = isInPendingCart
-        ? {
-              disabled: true,
-              text: `$${price.toFixed(2)} (IN CART)`,
-          }
-        : {
-              disabled: false,
-              text: `$${price.toFixed(2)}`,
-          };
-
-    const [{ disabled, text }, setButtonInfo] =
-        useState<IButtonInfo>(initButtonState);
     // const updateButton = useEffectEvent(() => {
     //     if (isLoggedOut()) {
     //         setButtonInfo({
@@ -139,10 +122,7 @@ function BuyNowButton({ product }: { product: IProductResponse }): JSX.Element {
             void navigate(frontendConfigs.absolutePaths.internal.login);
             return;
         }
-        setButtonInfo({
-            disabled: true,
-            text: `$${price.toFixed(2)}\n(In Cart)`,
-        });
+        setDisabled(true);
         emit(product);
         upsertIntoLocalCart({
             ...product,

@@ -27,5 +27,6 @@ export default function useGetPendingCart(): UseQueryResult<
     return useQuery({
         queryKey: [frontendConfigs.queryKeys.cart],
         queryFn,
+        retry: false,
     });
 }
