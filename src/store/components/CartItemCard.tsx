@@ -3,6 +3,7 @@ import { ICartItem } from "../../../SillyStoreCommon/domain-objects/CartItem";
 import ArrowSvg from "../../assets/right-arrow.svg?react";
 import css from "../css/cart-item-card.module.css";
 import useCart from "../services/useCart";
+import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
 
 /**
  *
@@ -44,17 +45,10 @@ import useCart from "../services/useCart";
 export default function CartItemCard({
     cartItem,
 }: {
-    cartItem: ICartItem;
+    cartItem: Omit<ICartItemResponse, "orderId">;
 }): JSX.Element {
-    const {
-        imageSrc,
-        price,
-        productId,
-        quantity,
-        title,
-        orderId,
-        description,
-    } = cartItem;
+    const { imageSrc, price, productId, quantity, title, description } =
+        cartItem;
     const { upsertIntoLocalCart } = useCart();
     return (
         <section className={css.cart_item_card}>

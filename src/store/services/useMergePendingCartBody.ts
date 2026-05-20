@@ -20,13 +20,13 @@ export default function useMergePendingCart(): UseMutationResult<
 > {
     const [{ local_token: jwt }, _setCookies, _removeCookies] =
         useWebsiteCookies();
-
     const queryClient = useQueryClient();
 
     async function mutationFn(cart: MergePendingCartBody): Promise<void> {
+        frontendLogger.info("cookie here: ", jwt);
+
         const url = `${frontendConfigs.absolutePaths.external.api}/cart/pending`;
         const method = "PUT";
-        frontendLogger.debug("Overwriting cart w/ dto: ", cart);
         await standardJsonFetch({
             bodyObj: cart,
             jwt,

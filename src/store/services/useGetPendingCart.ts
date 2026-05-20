@@ -10,13 +10,13 @@ export interface IFetchInfo extends ResponseInit {
 }
 
 export default function useGetPendingCart(): UseQueryResult<
-    ICartItemResponse[]
+    Omit<ICartItemResponse, "orderId">[]
 > {
     const [{ local_token: jwt }, _setCookie, _removeCookie] =
         useWebsiteCookies();
     const url = `${frontendConfigs.absolutePaths.external.api}/cart/pending`;
 
-    async function queryFn(): Promise<ICartItemResponse[]> {
+    async function queryFn(): Promise<Omit<ICartItemResponse, "orderId">[]> {
         frontendLogger.info("cookies: ", jwt);
         frontendLogger.debug("Getting cart items...");
         return await standardJsonFetch({
@@ -24,9 +24,12 @@ export default function useGetPendingCart(): UseQueryResult<
             jwt,
         });
     }
+
     return useQuery({
         queryKey: [frontendConfigs.queryKeys.cart],
         queryFn,
+        refetchOnReconnect: true,
         retry: false,
+        enabled: () => !!jwt,
     });
 }

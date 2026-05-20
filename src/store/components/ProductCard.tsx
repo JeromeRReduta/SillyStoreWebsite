@@ -40,10 +40,6 @@ export default function ProductCard({
             return;
         }
         emit(product);
-        // setButtonInfo({
-        //     disabled: true,
-        //     text: `$${price.toFixed(2)} (in cart)`,
-        // });
     }
     const truncatedDescription: string =
         description.length < descriptionLength
@@ -128,7 +124,6 @@ function BuyNowButton({ product }: { product: IProductResponse }): JSX.Element {
             ...product,
             quantity: 1,
             productId: product.id,
-            orderId: -1,
         });
     }
 

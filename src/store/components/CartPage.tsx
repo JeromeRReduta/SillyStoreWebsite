@@ -53,9 +53,9 @@ export default function CartPage(): JSX.Element {
     //         />
     //     );
     // }
-    if (status === "pending") {
-        return <Loading message={"Fetching cart..."} />;
-    }
+    // if (status === "pending") {
+    //     return <Loading message={"Fetching cart..."} />;
+    // }
 
     if (localCart.length === 0) {
         return (
@@ -74,10 +74,10 @@ export default function CartPage(): JSX.Element {
                 data={localCart}
                 listClassName={css.cart_list}
                 listItemClassName={css.cart_list_item}
-                renderItem={(cartItem: ICartItemResponse) => (
+                renderItem={(cartItem: Omit<ICartItemResponse, "orderId">) => (
                     <CartItemCard cartItem={cartItem} />
                 )}
-                keyExtractor={(cartItem: ICartItemResponse) =>
+                keyExtractor={(cartItem: Omit<ICartItemResponse, "orderId">) =>
                     cartItem.productId
                 }
             />
