@@ -1,0 +1,30 @@
+/** MODULE */
+
+.store_page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* ty https://stackoverflow.com/a/46278335 */
+
+.product_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.product_list_item {
+    flex: 0 0 10rem;
+    height: 15rem;
+}
+
+/** THEME */
+
+.product_list {
+}
+
+.product_list_item {
+}

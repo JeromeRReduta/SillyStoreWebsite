@@ -1,0 +1,108 @@
+/** MODULE */
+
+:root {
+    --cart_item_img_c_side_len: 6rem;
+    --cart_item_img_c_half: calc(var(--cart_item_img_c_side_len)/2);
+}
+
+.cart_item_card {
+    display: grid;
+    /* gap: 1.5rem; */
+    grid-template-areas:
+        "img_c      title   price"
+        "img_c      q_bar   price";
+    grid-template-columns: 10fr 80fr 10fr;
+    grid-template-rows: repeat(2, var(--cart_item_img_c_half));
+}
+
+.cart_item_card > * {
+    padding: 0.5rem;
+}
+
+.cart_item_card_img_container {
+    grid-area: img_c;
+    width: var(--cart_item_img_c_side_len);
+    height: var(--cart_item_img_c_side_len);
+}
+
+.cart_item_card_img {
+    height: 100%;
+}
+
+.cart_item_card_title {
+    composes: flexy-horizontal-left from "../../utils/css/flexy.module.css";
+    grid-area: title;
+    font-size: 2rem;
+}
+
+.cart_item_card_price {
+    composes: flexy-horizontal-center from "../../utils/css/flexy.module.css";
+    grid-area: price;
+}
+
+.cart_item_card_quantity_bar {
+    composes: flexy-horizontal-center from "../../utils/css/flexy.module.css";
+    grid-area: q_bar;
+}
+
+.cart_item_card_decrement_arrow {
+    composes: flexy-horizontal-left from "../../utils/css/flexy.module.css";
+    /** when you rotate arrow 180 deg, the arrow becomes right-aligned */
+    flex: 40 1 40%;
+    rotate: 180deg;
+}
+
+.cart_item_card_quantity {
+    composes: flexy-horizontal-center from "../../utils/css/flexy.module.css";
+    flex: 20 1 20%;
+}
+
+.cart_item_card_increment_arrow {
+    composes: flexy-horizontal-left from "../../utils/css/flexy.module.css";
+    flex: 40 1 40%;
+}
+
+.cart_item_card_decrement_arrow > svg,
+.cart_item_card_increment_arrow > svg {
+    height: calc(var(--cart_item_img_c_half) - 1rem);
+}
+
+/** THEMES */
+.cart_item_card {
+    background-color: var(--color_light);
+}
+
+.cart_item_card_img_container {
+}
+
+.cart_item_card_img {
+}
+
+.cart_item_card_title {
+}
+
+.cart_item_card_price {
+}
+
+.cart_item_card_quantity_bar {
+}
+
+.cart_item_card_left_arrow {
+}
+
+.cart_item_card_quantity {
+}
+
+.cart_item_card_right_arrow {
+}
+
+.cart_item_card_decrement_arrow:hover,
+.cart_item_card_increment_arrow:hover {
+    color: var(--color_primary);
+    cursor: pointer;
+}
+
+.cart_item_card_decrement_arrow > svg,
+.cart_item_card_increment_arrow > svg {
+    fill: currentColor;
+}

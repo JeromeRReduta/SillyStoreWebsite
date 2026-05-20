@@ -1,0 +1,53 @@
+/** LAYOUT */
+.layout_nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.layout_nav_left {
+}
+
+.layout_nav_right {
+}
+
+.nav_link {
+    border-radius: 2rem;
+    padding: 0.5rem;
+    border: 1px solid;
+}
+
+.nav_link:hover {
+}
+
+/** MODULE */
+
+.nav_cart {
+    color: var(--color_primary) !important;
+}
+
+/** THEMES */
+.nav_link {
+    border-color: transparent;
+    color: var(--color_light);
+}
+
+.nav_link:hover {
+    color: var(--color_light);
+    border-color: var(--color_light);
+}
+
+.nav_left_links,
+.nav_right_links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav_left_links {
+    justify-content: flex-start;
+}
+
+.nav_right_links {
+    justify-content: flex-end;
+}

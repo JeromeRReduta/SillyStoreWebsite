@@ -1,0 +1,19 @@
+/** LAYOUT */
+.fade_in_elem {
+}
+
+/** MODULE */
+.fade_in_elem {
+    animation: fade-in 10s;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/** THEMES */

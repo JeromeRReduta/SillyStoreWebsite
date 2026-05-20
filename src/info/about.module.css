@@ -1,0 +1,41 @@
+/** LAYOUT */
+.about {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1.5rem;
+}
+
+.about_intro {
+}
+
+.about_links {
+}
+/**  MODULE */
+.about {
+}
+
+.about_intro {
+}
+
+.about_links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.about_links > a {
+    padding-top: 1rem;
+}
+
+/** THEMES */
+.about {
+}
+
+.about_intro {
+}
+
+.about_links {
+}
