@@ -4,6 +4,7 @@ import ArrowSvg from "../../assets/right-arrow.svg?react";
 import css from "../css/cart-item-card.module.css";
 import useCart from "../services/useCart";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
+import frontendLogger from "../../configs/frontendLogger";
 
 /**
  *
@@ -49,7 +50,8 @@ export default function CartItemCard({
 }): JSX.Element {
     const { imageSrc, price, productId, quantity, title, description } =
         cartItem;
-    const { upsertIntoLocalCart } = useCart();
+    const { adjustProductQuantity } = useCart();
+
     return (
         <section className={css.cart_item_card}>
             <div className={css.cart_item_card_img_container}>
@@ -64,7 +66,7 @@ export default function CartItemCard({
                 <div
                     className={css.cart_item_card_decrement_arrow}
                     onClick={() => {
-                        // updateCartItemQuantity(cartItem);
+                        adjustProductQuantity(productId, -1);
                     }}
                 >
                     <ArrowSvg />
@@ -73,7 +75,7 @@ export default function CartItemCard({
                 <div
                     className={css.cart_item_card_increment_arrow}
                     onClick={() => {
-                        // updateCartItemQuantity(productId, quantity + 1);
+                        adjustProductQuantity(productId, 1);
                     }}
                 >
                     <ArrowSvg />

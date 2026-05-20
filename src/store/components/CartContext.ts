@@ -12,6 +12,7 @@ export interface CartContextValues {
     ) => void;
     readonly synchronizeCartsAsync: () => Promise<void>;
     readonly purchaseAsync: () => Promise<void>;
+    readonly adjustProductQuantity: (productId: number, by: number) => void;
 
     // readonly updateCartItemQuantity: (cartItem: ICartItemResponse) => void;
     // readonly savePendingCart: () => void;
