@@ -93,20 +93,17 @@ function PurchaseButton(): JSX.Element {
         ? "Thank you, your purchase will arrive in [FOREVER] hours"
         : "Purchase";
 
-    async function handlePurchase(): Promise<void> {
-        await purchaseAsync();
-        setDisabled(true);
+    function handlePurchase(): void {
+        void (async () => {
+            await purchaseAsync();
+            setDisabled(true);
+        })();
     }
-
     return (
         <button
             className={css.cart_purchase}
             disabled={disabled}
-            onClick={
-                void (async () => {
-                    await handlePurchase();
-                })
-            }
+            onClick={handlePurchase}
         >
             {text}
         </button>
