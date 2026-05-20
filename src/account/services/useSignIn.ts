@@ -27,21 +27,23 @@ function useSignIn<
         const url = frontendConfigs.absolutePaths.external.api + endpoint;
         const messageHead = method === "LOGIN" ? "Logging in" : "Registering";
         frontendLogger.debug(messageHead, "w/ info", dto, "...");
-        const { tokenResponse }: { tokenResponse: string } =
-            await standardJsonFetch({
-                bodyObj: dto,
-                jwt: local_token,
-                method: "POST",
-                url,
-            });
+        const { token }: { token: string } = await standardJsonFetch<{
+            token: string;
+        }>({
+            bodyObj: dto,
+            jwt: local_token,
+            method: "POST",
+            url,
+        });
+
+        return token;
+    }
+
+    async function onSuccess(tokenResponse: TokenResponse): Promise<void> {
+        setCookie("local_token", tokenResponse);
         await queryClient.invalidateQueries({
             queryKey: [frontendConfigs.queryKeys.cart],
         });
-        return tokenResponse;
-    }
-
-    function onSuccess(tokenResponse: TokenResponse): void {
-        setCookie("local_token", tokenResponse);
     }
 
     return useMutation({

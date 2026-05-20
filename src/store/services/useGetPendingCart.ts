@@ -17,6 +17,7 @@ export default function useGetPendingCart(): UseQueryResult<
     const url = `${frontendConfigs.absolutePaths.external.api}/cart/pending`;
 
     async function queryFn(): Promise<ICartItemResponse[]> {
+        frontendLogger.info("cookies: ", jwt);
         frontendLogger.debug("Getting cart items...");
         return await standardJsonFetch({
             url,

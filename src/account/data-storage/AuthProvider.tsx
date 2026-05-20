@@ -5,6 +5,7 @@ import useCart from "../../store/services/useCart";
 import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
 import { useLogin, useRegister } from "../services/useSignIn";
 import AuthContext, { type AuthContextValues } from "./AuthContext";
+import frontendLogger from "../../configs/frontendLogger";
 
 export default function AuthProvider({
     children,
@@ -12,7 +13,7 @@ export default function AuthProvider({
     children: React.ReactNode;
 }) {
     const queryClient = useQueryClient();
-    const { savePendingCart } = useCart();
+    const { synchronizeCartsAsync } = useCart();
     const { mutate: register } = useRegister();
     const { mutate: login } = useLogin();
     const [{ local_token }, _setCookies, removeCookies] = useWebsiteCookies();
@@ -25,18 +26,21 @@ export default function AuthProvider({
         return !isLoggedIn();
     }
 
-    function logout(): void {
-        savePendingCart();
+    async function logoutAsync(): Promise<void> {
+        await synchronizeCartsAsync();
+        frontendLogger.debug("DONE w/ SYNC");
         queryClient.removeQueries({
             queryKey: [frontendConfigs.queryKeys.cart],
         });
+        frontendLogger.debug("REMOVED QUERY");
         removeCookies("local_token");
+        frontendLogger.debug("removed token - is now", local_token);
     }
 
     const values: AuthContextValues = {
         isLoggedIn,
         isLoggedOut,
-        logout,
+        logoutAsync,
         register,
         login,
     };

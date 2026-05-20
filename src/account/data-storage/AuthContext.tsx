@@ -8,7 +8,7 @@ import {
 export interface AuthContextValues {
     readonly isLoggedIn: () => boolean;
     readonly isLoggedOut: () => boolean;
-    readonly logout: () => void;
+    readonly logoutAsync: () => Promise<void>;
     readonly register: UseMutateFunction<string, Error, ICreateUserRequest>;
     readonly login: UseMutateFunction<
         string,

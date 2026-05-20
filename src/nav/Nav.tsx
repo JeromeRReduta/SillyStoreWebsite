@@ -4,6 +4,7 @@ import useAuth from "../account/services/useAuth";
 import frontendConfigs from "../configs/FrontendConfigs";
 import css from "./nav.module.css";
 import ShoppingCartSvg from "./shopping-cart.svg?react";
+import frontendLogger from "../configs/frontendLogger";
 
 export default function Nav(): JSX.Element {
     return (
@@ -34,12 +35,25 @@ function LeftLinks(): JSX.Element {
 }
 
 function RightLinks(): JSX.Element {
-    const { isLoggedIn, logout } = useAuth();
+    const { isLoggedIn, logoutAsync } = useAuth();
     const { login, cart } = frontendConfigs.absolutePaths.internal;
+    async function logThing(): Promise<void> {
+        await frontendLogger.debug("LOGGING OUT");
+    }
 
     const accountLinks: JSX.Element = isLoggedIn() ? (
         <>
-            <Link className={css.nav_link} to="#" onClick={logout}>
+            <Link
+                className={css.nav_link}
+                to="#"
+                onClick={
+                    // void (async () => {
+                    //     await logoutAsync();
+                    // })
+
+                    void logThing
+                }
+            >
                 Logout
             </Link>
         </>

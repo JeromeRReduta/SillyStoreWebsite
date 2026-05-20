@@ -31,29 +31,12 @@ import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
  *
  */
 export default function CartPage(): JSX.Element {
-    const [_cookies, setCookie, _removeCookie] = useWebsiteCookies();
     const { isLoggedOut } = useAuth();
-    const navigate = useNavigate();
-    const { localCart: cart, status, error, purchaseAsync } = useCart();
-    const [disabled, setDisabled] = useState<boolean>(false);
-    const [buttonText, setButtonText] = useState<string>("Buy");
+    const { localCart, status, error } = useCart();
 
-    frontendLogger.debug("state: ", cart);
-
-    function handlePurchase(): void {
-        setDisabled(true);
-        setButtonText(
-            "Your purchase has been sent! Enjoy your order in [FOREVER] business days!",
-        );
-
-        const isUrBad = Math.random() < 0.5;
-        frontendLogger.debug("bad roll? ", isUrBad);
-        if (isUrBad) {
-            setCookie("locked_out", "BOTTLE OF BAD LUCK");
-            void navigate(frontendConfigs.absolutePaths.internal.lockedOut);
-        }
-    }
-
+    frontendLogger.debug("THING: ", localCart);
+    frontendLogger.debug("THING: ", status);
+    frontendLogger.debug("THING: ", error);
     if (isLoggedOut()) {
         return (
             <div className={css.cart_not_logged_in}>
@@ -63,7 +46,7 @@ export default function CartPage(): JSX.Element {
             </div>
         );
     }
-    if (!cart || cart.length === 0) {
+    if (localCart.length === 0) {
         return (
             <>
                 <div className={css.cart_empty}>
@@ -72,22 +55,22 @@ export default function CartPage(): JSX.Element {
             </>
         );
     }
-    // if (status === "error") {
-    //     return (
-    //         <ErrorComponent
-    //             message={`Sorry, something went wrong: ${error?.message ?? ""}`}
-    //         />
-    //     );
-    // }
-    // if (status === "pending") {
-    //     return <Loading message={"Fetching cart..."} />;
-    // }
+    if (status === "error") {
+        return (
+            <ErrorComponent
+                message={`Sorry, something went wrong: ${error?.message ?? ""}`}
+            />
+        );
+    }
+    if (status === "pending") {
+        return <Loading message={"Fetching cart..."} />;
+    }
 
     // success case:
     return (
         <>
             <FlatList
-                data={cart}
+                data={localCart}
                 listClassName={css.cart_list}
                 listItemClassName={css.cart_list_item}
                 renderItem={(cartItem: ICartItemResponse) => (
@@ -97,14 +80,34 @@ export default function CartPage(): JSX.Element {
                     cartItem.productId
                 }
             />
-
-            <button
-                className={css.cart_purchase}
-                disabled={disabled}
-                onClick={handlePurchase}
-            >
-                {buttonText}
-            </button>
+            <PurchaseButton />
         </>
+    );
+}
+
+function PurchaseButton(): JSX.Element {
+    const { purchaseAsync } = useCart();
+    const [disabled, setDisabled] = useState<boolean>(false);
+    const text = disabled
+        ? "Thank you, your purchase will arrive in [FOREVER] hours"
+        : "Purchase";
+
+    async function handlePurchase(): Promise<void> {
+        await purchaseAsync();
+        setDisabled(true);
+    }
+
+    return (
+        <button
+            className={css.cart_purchase}
+            disabled={disabled}
+            onClick={
+                void (async () => {
+                    await handlePurchase();
+                })
+            }
+        >
+            {text}
+        </button>
     );
 }

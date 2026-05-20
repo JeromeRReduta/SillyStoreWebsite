@@ -3,7 +3,7 @@ import { Context, createContext } from "react";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
 
 export interface CartContextValues {
-    readonly localCart: ICartItemResponse[] | undefined;
+    readonly localCart: ICartItemResponse[];
     readonly remoteCart: ICartItemResponse[] | undefined;
     readonly status: QueryStatus;
     readonly error: Error | null;
