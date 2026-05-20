@@ -19,7 +19,7 @@ function useSignIn<
     method: "LOGIN" | "REGISTER",
 ): UseMutationResult<TokenResponse, Error, TRequest> {
     const queryClient = useQueryClient();
-    const [{ local_token }, setCookie, _removeCookie] = useWebsiteCookies();
+    const [{ local_token }, setCookie, _removeCookie] = useWebsiteCookies(); // TODO: make removing this an effect in provider I think
 
     async function mutationFn(dto: TRequest): Promise<TokenResponse> {
         const endpoint =

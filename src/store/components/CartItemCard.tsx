@@ -7,19 +7,19 @@ import useCart from "../services/useCart";
 /**
  *
  * TODO - hooks
- * 0. remote products:
- * * useGetAllProducts {data: remoteProducts}
- * 1. local cookies:
- *  * useJwt => {localToken}
+ * (x) 0. remote products:
+ * * (x) useGetAllProducts {data: remoteProducts}
+ * 1. (x) local cookies:
+ *  (SKIPPED - made useWebsiteCookies)* useJwt => {localToken}
  *      - init state = useSignIn
- *  * useLockedOut => {lockedOut}
- * 2. Remote cookies
+ *  * (SKIPPED - made useWebsiteCookies) useLockedOut => {lockedOut}
+ * 2. (SKIPPED? - saving for later I think) Remote cookies
  *  * Tanstack fetch cookies - useSignIn
- * 3. Local cart
- *  * useState: localCart (initState = remoteCart)
+ * 3. (x) Local cart
+ *  * (x) useState: localCart (initState = remoteCart)
  * 4. Remote cart
- *  * Tanstack fetch cart - useGetAllPendingCartItems => {data: remoteCart}
- *  * Tanstack fetch cart - useMergePendingCart => {(no data)} (invalidates cart entries (exact = false) so we refetch remotecart data)
+ *  * (x) Tanstack fetch cart - useGetAllPendingCartItems => {data: remoteCart}
+ *  * (x) Tanstack fetch cart - useMergePendingCart => {(no data)} (invalidates cart entries (exact = false) so we refetch remotecart data)
  * 5. Remote order
  *  * Tanstack finalize order - useFinalizeOrder => {data: remoteFinalizedOrder}
  *
@@ -55,7 +55,7 @@ export default function CartItemCard({
         orderId,
         description,
     } = cartItem;
-    const { updateCartItemQuantity } = useCart();
+    const { upsertIntoLocalCart } = useCart();
     return (
         <section className={css.cart_item_card}>
             <div className={css.cart_item_card_img_container}>
@@ -70,7 +70,7 @@ export default function CartItemCard({
                 <div
                     className={css.cart_item_card_decrement_arrow}
                     onClick={() => {
-                        updateCartItemQuantity(cartItem);
+                        // updateCartItemQuantity(cartItem);
                     }}
                 >
                     <ArrowSvg />
@@ -79,7 +79,7 @@ export default function CartItemCard({
                 <div
                     className={css.cart_item_card_increment_arrow}
                     onClick={() => {
-                        updateCartItemQuantity(productId, quantity + 1);
+                        // updateCartItemQuantity(productId, quantity + 1);
                     }}
                 >
                     <ArrowSvg />

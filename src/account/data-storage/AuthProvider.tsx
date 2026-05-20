@@ -29,7 +29,6 @@ export default function AuthProvider({
         savePendingCart();
         queryClient.removeQueries({
             queryKey: [frontendConfigs.queryKeys.cart],
-            exact: true,
         });
         removeCookies("local_token");
     }

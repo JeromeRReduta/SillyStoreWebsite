@@ -3,12 +3,17 @@ import { Context, createContext } from "react";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
 
 export interface CartContextValues {
-    readonly data: ICartItemResponse[] | undefined;
+    readonly localCart: ICartItemResponse[] | undefined;
+    readonly remoteCart: ICartItemResponse[] | undefined;
     readonly status: QueryStatus;
     readonly error: Error | null;
-    readonly updateCartItemQuantity: (cartItem: ICartItemResponse) => void;
-    readonly savePendingCart: () => void;
-    readonly purchase: () => void;
+    readonly upsertIntoLocalCart: (newItem: ICartItemResponse) => void;
+    readonly synchronizeCartsAsync: () => Promise<void>;
+    readonly purchaseAsync: () => Promise<void>;
+
+    // readonly updateCartItemQuantity: (cartItem: ICartItemResponse) => void;
+    // readonly savePendingCart: () => void;
+    // readonly purchase: () => void;
 }
 
 const CartContext: Context<CartContextValues | null> =

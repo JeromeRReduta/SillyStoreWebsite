@@ -29,7 +29,6 @@ export default function useFinalizeOrder(): UseMutationResult<
         });
         queryClient.removeQueries({
             queryKey: [frontendConfigs.queryKeys.cart],
-            exact: true,
         });
         return response;
     }

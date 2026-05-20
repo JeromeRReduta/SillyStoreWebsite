@@ -32,7 +32,6 @@ export default function ProductCard({
     // const { disabled, text } = buttonInfo;
     const { isLoggedOut } = useAuth();
     const navigate = useNavigate();
-    const { updateCartItemQuantity } = useCart();
 
     function handleAddToCart(): void {
         if (isLoggedOut()) {
@@ -75,7 +74,8 @@ function BuyNowButton({ product }: { product: IProductResponse }): JSX.Element {
     const { id, price } = product;
     const { isLoggedIn, isLoggedOut } = useAuth();
     const navigate = useNavigate();
-    const { data, updateCartItemQuantity } = useCart();
+    // const { data, updateCartItemQuantity } = useCart();
+    const { localCart: data, upsertIntoLocalCart } = useCart();
     const { emit } = useJustAdded();
     // const [buttonInfo, setButtonInfo] = useState<IButtonInfo>({
     //     disabled: false,
@@ -85,8 +85,7 @@ function BuyNowButton({ product }: { product: IProductResponse }): JSX.Element {
 
     const isInPendingCart =
         isLoggedIn() &&
-        !!data &&
-        data.some((cartItem: ICartItemResponse) => id === cartItem.productId);
+        data?.some((cartItem) => product.id === cartItem.productId);
 
     const initButtonState: IButtonInfo = isInPendingCart
         ? {
@@ -145,7 +144,12 @@ function BuyNowButton({ product }: { product: IProductResponse }): JSX.Element {
             text: `$${price.toFixed(2)}\n(In Cart)`,
         });
         emit(product);
-        updateCartItemQuantity(id, 1);
+        upsertIntoLocalCart({
+            ...product,
+            quantity: 1,
+            productId: product.id,
+            orderId: -1,
+        });
     }
 
     return (

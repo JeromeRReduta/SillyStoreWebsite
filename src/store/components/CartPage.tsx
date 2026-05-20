@@ -34,12 +34,13 @@ export default function CartPage(): JSX.Element {
     const [_cookies, setCookie, _removeCookie] = useWebsiteCookies();
     const { isLoggedOut } = useAuth();
     const navigate = useNavigate();
-    const { data: cart, status, error, purchase } = useCart();
+    const { localCart: cart, status, error, purchaseAsync } = useCart();
     const [disabled, setDisabled] = useState<boolean>(false);
     const [buttonText, setButtonText] = useState<string>("Buy");
 
+    frontendLogger.debug("state: ", cart);
+
     function handlePurchase(): void {
-        purchase();
         setDisabled(true);
         setButtonText(
             "Your purchase has been sent! Enjoy your order in [FOREVER] business days!",
@@ -71,16 +72,16 @@ export default function CartPage(): JSX.Element {
             </>
         );
     }
-    if (status === "error") {
-        return (
-            <ErrorComponent
-                message={`Sorry, something went wrong: ${error?.message ?? ""}`}
-            />
-        );
-    }
-    if (status === "pending") {
-        return <Loading message={"Fetching cart..."} />;
-    }
+    // if (status === "error") {
+    //     return (
+    //         <ErrorComponent
+    //             message={`Sorry, something went wrong: ${error?.message ?? ""}`}
+    //         />
+    //     );
+    // }
+    // if (status === "pending") {
+    //     return <Loading message={"Fetching cart..."} />;
+    // }
 
     // success case:
     return (
