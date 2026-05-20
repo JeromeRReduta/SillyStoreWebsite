@@ -16,7 +16,7 @@ export default async function standardJsonFetch<TResponseBody = unknown>({
 }: IStandardJsonFetchInfo): Promise<TResponseBody> {
     // Todo: change this to just get .json()
     const headers: Record<string, string> = createHeaders(jwt);
-    const body: string = JSON.stringify(bodyObj);
+    const body: string = JSON.stringify(bodyObj, null, "\t");
     frontendLogger.debug(`
             Running standard JSON fetch w/ data:
             Attempting to access: ${url} (${method});
@@ -24,14 +24,17 @@ export default async function standardJsonFetch<TResponseBody = unknown>({
                 Content-Type: ${headers["Content-Type"]},
                 Token exists?: ${(!!jwt).toString()},
             };
-            ${body}
+            ${body ?? "(no body)"}
         `);
     const response: Response = await fetch(url, { body, headers, method });
     if (!response.ok) {
         throw new Error("error occurred");
     }
-    const json: TResponseBody = (await response.json()) as TResponseBody;
-    frontendLogger.debug("json", json);
+    const json: TResponseBody =
+        response.status === 204
+            ? ({} as TResponseBody)
+            : ((await response.json()) as TResponseBody);
+    frontendLogger.debug("json from", url, json);
     return json;
 }
 

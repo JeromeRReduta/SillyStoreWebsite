@@ -72,9 +72,11 @@ function BuyNowButton({ product }: { product: IProductResponse }): JSX.Element {
     const { price } = product;
     const { isLoggedOut } = useAuth();
     const navigate = useNavigate();
-    const { upsertIntoLocalCart } = useCart();
+    const { localCart, upsertIntoLocalCart } = useCart();
     const { emit } = useJustAdded();
-    const [disabled, setDisabled] = useState<boolean>(false);
+    const disabled: boolean = localCart.some(
+        (item) => item.productId === product.id,
+    );
     const priceStr: string = priceToText(price);
     const text: string = disabled ? `${priceStr}\n(In Cart)` : priceStr;
 
@@ -118,7 +120,6 @@ function BuyNowButton({ product }: { product: IProductResponse }): JSX.Element {
             void navigate(frontendConfigs.absolutePaths.internal.login);
             return;
         }
-        setDisabled(true);
         emit(product);
         upsertIntoLocalCart({
             ...product,

@@ -9,6 +9,8 @@ import useGetPendingCart from "../services/useGetPendingCart";
 import useMergePendingCart from "../services/useMergePendingCartBody";
 import CartContext, { CartContextValues } from "./CartContext";
 import { applescript } from "globals";
+import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
+import { useNavigate } from "react-router";
 
 export default function CartProvider({
     children,
@@ -22,9 +24,8 @@ export default function CartProvider({
     const [localCart, setLocalCart] = useState<
         Omit<ICartItemResponse, "orderId">[]
     >(remoteCart ?? []);
-    const { mutate: mergePendingCart } = useMergePendingCart();
-    const { mutate: finalizeOrder } = useFinalizeOrder();
-    const queryClient = useQueryClient();
+    const { mutateAsync: mergePendingCartAsync } = useMergePendingCart();
+    const { mutateAsync: finalizeOrderAsync } = useFinalizeOrder();
 
     const areCartsEqual: boolean = cartEquals(prevRemoteCart, remoteCart);
     frontendLogger.debug("carts equal?", areCartsEqual);
@@ -114,16 +115,17 @@ export default function CartProvider({
 
     async function synchronizeCartsAsync(): Promise<void> {
         frontendLogger.debug("LOGGING OUT & Syncing carts");
-        mergePendingCart({ cartItems: localCart });
-        await queryClient.invalidateQueries({
-            queryKey: [frontendConfigs.queryKeys.cart],
-        });
+        await mergePendingCartAsync({ cartItems: localCart });
     }
 
     async function purchaseAsync(): Promise<void> {
         await synchronizeCartsAsync();
-        finalizeOrder(null);
+        await finalizeOrderAsync(null);
+        setLocalCart([]);
+        setPrevRemoteCart([]);
     }
+
+    // Bug: when I log in, make a cart, and purchase - button disables itself. But when I make a cart, log out, log back in, and purchase, state is updated and cart disappears
 
     const values: CartContextValues = {
         localCart,

@@ -27,13 +27,17 @@ export default function useFinalizeOrder(): UseMutationResult<
             url,
             method,
         });
+        return response;
+    }
+
+    function onSuccess(): void {
         queryClient.removeQueries({
             queryKey: [frontendConfigs.queryKeys.cart],
         });
-        return response;
     }
 
     return useMutation({
         mutationFn,
+        onSuccess,
     });
 }

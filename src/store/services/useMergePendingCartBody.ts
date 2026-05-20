@@ -33,6 +33,9 @@ export default function useMergePendingCart(): UseMutationResult<
             method,
             url,
         });
+    }
+
+    function onSettled(): void {
         queryClient.removeQueries({
             queryKey: [frontendConfigs.queryKeys.cart],
         });
@@ -41,5 +44,6 @@ export default function useMergePendingCart(): UseMutationResult<
     return useMutation({
         mutationKey: [frontendConfigs.queryKeys.cart],
         mutationFn,
+        onSettled,
     });
 }

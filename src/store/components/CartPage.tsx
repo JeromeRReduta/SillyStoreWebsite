@@ -1,4 +1,4 @@
-import { useState, type JSX } from "react";
+import { useEffect, useEffectEvent, useState, type JSX } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
@@ -33,6 +33,17 @@ import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
 export default function CartPage(): JSX.Element {
     const { isLoggedOut } = useAuth();
     const { localCart, status } = useCart();
+    const navigate = useNavigate();
+    const [{ locked_out }, _setCookie, _removeCookie] = useWebsiteCookies();
+
+    const goToBadPlace = useEffectEvent(() => {
+        if (locked_out) {
+            void navigate(frontendConfigs.absolutePaths.internal.lockedOut);
+        }
+    });
+    useEffect(() => {
+        goToBadPlace();
+    }, [locked_out]);
 
     frontendLogger.debug("THING: ", localCart);
     frontendLogger.debug("THING: ", status);
@@ -87,25 +98,27 @@ export default function CartPage(): JSX.Element {
 }
 
 function PurchaseButton(): JSX.Element {
-    const { purchaseAsync } = useCart();
-    const [disabled, setDisabled] = useState<boolean>(false);
-    const text = disabled
-        ? "Thank you, your purchase will arrive in [FOREVER] hours"
-        : "Purchase";
+    const [_cookies, setCookie, _removeCookie] = useWebsiteCookies();
 
+    const { purchaseAsync } = useCart();
+    function sendMessageOrPunish(): void {
+        if (Math.random() < 1 / 3) {
+            setCookie("locked_out", "BOTTLE OF BAD LUCK");
+        } else {
+            alert(
+                "Thanks for purchasing! Your order will arrive in [FOREVER] [HOURS]",
+            );
+        }
+    }
     function handlePurchase(): void {
         void (async () => {
             await purchaseAsync();
-            setDisabled(true);
+            sendMessageOrPunish();
         })();
     }
     return (
-        <button
-            className={css.cart_purchase}
-            disabled={disabled}
-            onClick={handlePurchase}
-        >
-            {text}
+        <button className={css.cart_purchase} onClick={handlePurchase}>
+            Purchase
         </button>
     );
 }
