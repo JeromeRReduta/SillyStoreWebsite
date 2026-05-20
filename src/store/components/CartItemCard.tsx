@@ -3,6 +3,8 @@ import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
 import ArrowSvg from "../../assets/right-arrow.svg?react";
 import css from "../css/cart-item-card.module.css";
 import useCart from "../services/useCart";
+import frontendLogger from "../../configs/frontendLogger";
+import priceToText from "../../utils/priceToText";
 
 export default function CartItemCard({
     cartItem: { imageSrc, price, productId, quantity, title },
@@ -10,7 +12,7 @@ export default function CartItemCard({
     cartItem: Omit<ICartItemResponse, "orderId">;
 }): JSX.Element {
     const { adjustProductQuantity } = useCart();
-
+    const priceStr: string = priceToText(price * quantity);
     return (
         <section className={css.cart_item_card}>
             <div className={css.cart_item_card_img_container}>
@@ -40,7 +42,7 @@ export default function CartItemCard({
                     <ArrowSvg />
                 </div>
             </div>
-            <div className={css.cart_item_card_price}>{price}</div>
+            <div className={css.cart_item_card_price}>{priceStr}</div>
         </section>
     );
 }

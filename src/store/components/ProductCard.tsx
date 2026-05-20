@@ -9,6 +9,7 @@ import useMockCart from "../../../mocks/hooks/useMockCart";
 import useCart from "../services/useCart";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
 import frontendLogger from "../../configs/frontendLogger";
+import priceToText from "../../utils/priceToText";
 
 export default function ProductCard({
     product,
@@ -74,9 +75,8 @@ function BuyNowButton({ product }: { product: IProductResponse }): JSX.Element {
     const { upsertIntoLocalCart } = useCart();
     const { emit } = useJustAdded();
     const [disabled, setDisabled] = useState<boolean>(false);
-    const text: string = disabled
-        ? `$${price.toFixed(2)}\n(In Cart)`
-        : `$${price.toFixed(2)}`;
+    const priceStr: string = priceToText(price);
+    const text: string = disabled ? `${priceStr}\n(In Cart)` : priceStr;
 
     // const updateButton = useEffectEvent(() => {
     //     if (isLoggedOut()) {
