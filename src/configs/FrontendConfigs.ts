@@ -42,7 +42,7 @@ const frontendConfigs: IFrontendConfigs = {
         cart: "CART",
     },
     limits: {
-        descriptionLength: 150,
+        titleLength: 30,
     },
 };
 

@@ -1,15 +1,16 @@
 /** MODULE */
 
 .just_added {
+    font-size: 2rem;
+    height: 5rem;
+    padding: 1.5rem;
 }
 
 /** THEMES */
 
 .just_added {
-    font-size: 3rem;
     animation: fade-out 3s;
     color: transparent;
-    height: 4rem;
     text-align: center;
 }
 

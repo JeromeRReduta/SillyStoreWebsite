@@ -1,7 +1,7 @@
 /** MODULE */
 
 :root {
-    --cart_item_img_c_side_len: 6rem;
+    --cart_item_img_c_side_len: 10rem;
     --cart_item_img_c_half: calc(var(--cart_item_img_c_side_len)/2);
 }
 
@@ -11,12 +11,13 @@
     grid-template-areas:
         "img_c      title   price"
         "img_c      q_bar   price";
-    grid-template-columns: 10fr 80fr 10fr;
-    grid-template-rows: repeat(2, var(--cart_item_img_c_half));
+    grid-template-columns: 20fr 60fr 20fr;
+    grid-template-rows: 65fr 35fr;
+    height: var(--cart_item_img_c_side_len);
 }
 
 .cart_item_card > * {
-    padding: 0.5rem;
+    padding: 1rem;
 }
 
 .cart_item_card_img_container {
@@ -26,7 +27,8 @@
 }
 
 .cart_item_card_img {
-    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .cart_item_card_title {
@@ -43,6 +45,7 @@
 .cart_item_card_quantity_bar {
     composes: flexy-horizontal-center from "../../utils/css/flexy.module.css";
     grid-area: q_bar;
+    width: 100%;
 }
 
 .cart_item_card_decrement_arrow {
@@ -64,7 +67,7 @@
 
 .cart_item_card_decrement_arrow > svg,
 .cart_item_card_increment_arrow > svg {
-    height: calc(var(--cart_item_img_c_half) - 1rem);
+    height: 2rem;
 }
 
 /** THEMES */

@@ -16,8 +16,8 @@ export default function ProductCard({
 }: {
     product: IProductResponse;
 }): JSX.Element {
-    const { imageSrc, title, description, price } = product;
-    const descriptionLength: number = frontendConfigs.limits.descriptionLength;
+    const { imageSrc, title } = product;
+    const maxTitleLength: number = frontendConfigs.limits.titleLength;
     const { emit } = useJustAdded();
 
     /**
@@ -42,10 +42,11 @@ export default function ProductCard({
         }
         emit(product);
     }
-    const truncatedDescription: string =
-        description.length < descriptionLength
-            ? description
-            : description.substring(0, descriptionLength) + "...";
+    frontendLogger.info("AH", title.length, maxTitleLength);
+    const truncatedTitle: string =
+        title.length <= maxTitleLength
+            ? title
+            : title.substring(0, maxTitleLength) + "...";
     return (
         <div className={css.product_card}>
             <div className={css.product_card_img_container}>
@@ -55,19 +56,12 @@ export default function ProductCard({
                     alt="image"
                 />
             </div>
-            <h3 className={css.product_card_title}>{title}</h3>
-            {/* <div className={css.product_card_description}>
-                {truncatedDescription}
-            </div> */}
+            <h3 className={css.product_card_title}>{truncatedTitle}</h3>
             <BuyNowButton product={product} />
         </div>
     );
 }
-interface IButtonInfo {
-    readonly disabled: boolean;
-    readonly text: string;
-    // readonly onClick: (() => void) | undefined;
-}
+
 function BuyNowButton({ product }: { product: IProductResponse }): JSX.Element {
     const { price } = product;
     const { isLoggedOut } = useAuth();
@@ -79,41 +73,6 @@ function BuyNowButton({ product }: { product: IProductResponse }): JSX.Element {
     );
     const priceStr: string = priceToText(price);
     const text: string = disabled ? `${priceStr}\n(In Cart)` : priceStr;
-
-    // const updateButton = useEffectEvent(() => {
-    //     if (isLoggedOut()) {
-    //         setButtonInfo({
-    //             disabled: false,
-    //             text: `$${price.toFixed(2)}`,
-    //             onClick: () => {
-    //                 void navigate(frontendConfigs.absolutePaths.internal.login);
-    //             },
-    //         });
-    //     } else if (
-    //         !data?.some((item: ICartItemResponse) => item.productId === id)
-    //     ) {
-    //         setButtonInfo({
-    //             disabled: false,
-    //             text: `$${price.toFixed(2)}`,
-    //             onClick: () => {
-    //                 updateCartItemQuantity(id, 1);
-    //                 setButtonInfo({
-    //                     disabled: true,
-    //                     text: `$${price.toFixed(2)} (In Cart)`,
-    //                     onClick: undefined,
-    //                 });
-    //             },
-    //         });
-    //     } else {
-    //         // base case: item already exists in your cart
-    //         setButtonInfo({
-    //             disabled: true,
-    //             text: `$${price.toFixed(2)} (In Cart)`,
-    //             onClick: undefined,
-    //         });
-    //     }
-    // });
-    // useEffect(() => {updateButton()}, [data]);
 
     function handleAddToCart() {
         if (isLoggedOut()) {
