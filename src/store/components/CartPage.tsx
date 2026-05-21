@@ -99,16 +99,25 @@ export default function CartPage(): JSX.Element {
 
 function PurchaseButton(): JSX.Element {
     const [_cookies, setCookie, _removeCookie] = useWebsiteCookies();
+    const { localCart } = useCart();
 
     const { purchaseAsync } = useCart();
     function sendMessageOrPunish(): void {
-        if (Math.random() < 1 / 3) {
-            setCookie("locked_out", "BOTTLE OF BAD LUCK");
-        } else {
-            alert(
-                "Thanks for purchasing! Your order will arrive in [FOREVER] [HOURS]",
+        const badItemNamesInCart: string[] = localCart
+            .map((item) => item.title)
+            .filter(
+                (title) =>
+                    title === "34 Square Feet of Human Skin" ||
+                    title === "Unethically Sourced Bones",
             );
+        if (badItemNamesInCart.length === 0) {
+            alert(
+                "Purchase confirmed! Your order will arrive in [FOREVER] [YEARS].",
+            );
+            return;
         }
+        const lockedOutValue = badItemNamesInCart.join(" AND ");
+        setCookie("locked_out", lockedOutValue);
     }
     function handlePurchase(): void {
         void (async () => {
