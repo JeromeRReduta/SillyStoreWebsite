@@ -4,13 +4,14 @@
         "target": "ESNext",
         "useDefineForClassFields": true,
 
-        "lib": ["ESNext"],
-        "module": "nodenext",
+        "lib": ["ESNext", "DOM"],
+        "module": "esnext",
         "types": ["node"],
         "skipLibCheck": true,
+        "jsx": "react-jsx",
 
         /* Bundler mode */
-        "moduleResolution": "nodenext",
+        "moduleResolution": "bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "esModuleInterop": true,
@@ -24,6 +25,7 @@
         "noUnusedParameters": true,
         "noImplicitReturns": true
     },
+
     "include": [
         "vite.config.ts",
         "src",
