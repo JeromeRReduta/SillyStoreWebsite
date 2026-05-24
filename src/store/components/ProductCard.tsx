@@ -1,15 +1,13 @@
-import css from "../css/product-card.module.css";
-import { useEffect, useEffectEvent, useState, type JSX } from "react";
-import frontendConfigs from "../../configs/FrontendConfigs";
-import useJustAdded from "../../utils/services/useJustAdded";
+import { type JSX } from "react";
+import { useNavigate } from "react-router";
 import { IProductResponse } from "../../../SillyStoreCommon/dtos/productDtos";
 import useAuth from "../../account/services/useAuth";
-import { useNavigate } from "react-router";
-import useMockCart from "../../../mocks/hooks/useMockCart";
-import useCart from "../services/useCart";
-import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
+import frontendConfigs from "../../configs/FrontendConfigs";
 import frontendLogger from "../../configs/frontendLogger";
 import priceToText from "../../utils/priceToText";
+import useJustAdded from "../../utils/services/useJustAdded";
+import css from "../css/product-card.module.css";
+import useCart from "../services/useCart";
 
 export default function ProductCard({
     product,

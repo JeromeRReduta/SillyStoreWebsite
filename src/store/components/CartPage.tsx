@@ -1,17 +1,14 @@
-import { useEffect, useEffectEvent, useState, type JSX } from "react";
-import { useCookies } from "react-cookie";
+import { useEffect, useEffectEvent, type JSX } from "react";
 import { Link, useNavigate } from "react-router";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
+import useAuth from "../../account/services/useAuth";
 import frontendConfigs from "../../configs/FrontendConfigs";
 import frontendLogger from "../../configs/frontendLogger";
-import ErrorComponent from "../../utils/components/Error";
 import FlatList from "../../utils/components/FlatList";
-import Loading from "../../utils/components/Loading";
-import css from "../css/cart.module.css";
-import CartItemCard from "./CartItemCard";
-import useAuth from "../../account/services/useAuth";
-import useCart from "../services/useCart";
 import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
+import css from "../css/cart.module.css";
+import useCart from "../services/useCart";
+import CartItemCard from "./CartItemCard";
 
 /** TODO:
  *

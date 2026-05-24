@@ -1,10 +1,9 @@
 import type { JSX } from "react";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
 import ArrowSvg from "../../assets/right-arrow.svg?react";
+import priceToText from "../../utils/priceToText";
 import css from "../css/cart-item-card.module.css";
 import useCart from "../services/useCart";
-import frontendLogger from "../../configs/frontendLogger";
-import priceToText from "../../utils/priceToText";
 
 export default function CartItemCard({
     cartItem: { imageSrc, price, productId, quantity, title },
