@@ -16,30 +16,6 @@ export default function ProductCard({
 }): JSX.Element {
     const { imageSrc, title } = product;
     const maxTitleLength: number = frontendConfigs.limits.titleLength;
-    const { emit } = useJustAdded();
-
-    /**
-     * If not logged in, should just show prices
-     * If you ARE logged in, should add quantity bar to it like in cart-item card thing
-     * Incrementing & decrementing should affect cart as well
-     * In fact, might want to make it the same structurally - just w/ different css
-     *
-     * Edit: scratch that - make it so button does diff things based on login status:
-     *  Not logged in: => sign in page
-     *  Logged in: emit & update cart state
-     *
-     */
-    // const { disabled, text } = buttonInfo;
-    const { isLoggedOut } = useAuth();
-    const navigate = useNavigate();
-
-    function handleAddToCart(): void {
-        if (isLoggedOut()) {
-            void navigate(frontendConfigs.absolutePaths.internal.login);
-            return;
-        }
-        emit(product);
-    }
     frontendLogger.info("AH", title.length, maxTitleLength);
     const truncatedTitle: string =
         title.length <= maxTitleLength
@@ -63,9 +39,9 @@ export default function ProductCard({
 function BuyNowButton({ product }: { product: IProductResponse }): JSX.Element {
     const { price } = product;
     const { isLoggedOut } = useAuth();
-    const navigate = useNavigate();
     const { localCart, upsertIntoLocalCart } = useCart();
     const { emit } = useJustAdded();
+    const navigate = useNavigate();
     const disabled: boolean = localCart.some(
         (item) => item.productId === product.id,
     );
