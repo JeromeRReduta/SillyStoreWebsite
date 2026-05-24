@@ -4,7 +4,6 @@ import useAuth from "../account/services/useAuth";
 import frontendConfigs from "../configs/FrontendConfigs";
 import css from "./nav.module.css";
 import ShoppingCartSvg from "./shopping-cart.svg?react";
-import frontendLogger from "../configs/frontendLogger";
 
 export default function Nav(): JSX.Element {
     return (

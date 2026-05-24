@@ -1,23 +1,17 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useEffectEvent, useMemo, useState } from "react";
-import { OrderStatus } from "../../../SillyStoreCommon/domain-objects/Order";
+import React, { useState } from "react";
 import { ICartItemResponse } from "../../../SillyStoreCommon/dtos/cartItemDtos";
-import frontendConfigs from "../../configs/FrontendConfigs";
 import frontendLogger from "../../configs/frontendLogger";
 import useFinalizeOrder from "../services/useFinalizeOrder";
 import useGetPendingCart from "../services/useGetPendingCart";
 import useMergePendingCart from "../services/useMergePendingCartBody";
 import CartContext, { CartContextValues } from "./CartContext";
-import { applescript } from "globals";
-import useWebsiteCookies from "../../utils/services/useWebsiteCookies";
-import { useNavigate } from "react-router";
 
 export default function CartProvider({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const { data: remoteCart, status, error, refetch } = useGetPendingCart(); // update local cart every time remotecart changes state
+    const { data: remoteCart, status, error } = useGetPendingCart();
     const [prevRemoteCart, setPrevRemoteCart] = useState<
         Omit<ICartItemResponse, "orderId">[] | undefined
     >(remoteCart);
